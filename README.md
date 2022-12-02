@@ -1,1 +1,1 @@
-# Key Accounting Admin Panel
+# Key Accounting Admin Panel Minimal Kit
