@@ -1,0 +1,15 @@
+[ + ] Integrate Admin Panel
+[ + ] Login/Registration Authentication 
+[ + ] Load User After Login 
+[ + ] Integrate AlertBar Message 
+[ + ] Create User List 
+[ . ] Implement Used Add Functionality  
+[ . ] Implement Used Edit Functionality  
+[ . ] Implement Used Delete Functionality 
+[ . ] Create Blog List
+[ . ] Implement Blog Add Functionality  
+[ . ] Implement Blog Edit Functionality  
+[ . ] Implement Blog Delete Functionality 
+[ . ] Create Page List With Language Translator
+
+[ . ] Implement Page Edit Functionality Language Translator
