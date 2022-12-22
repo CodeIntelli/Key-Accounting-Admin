@@ -5,10 +5,11 @@ import { Link, Container, Typography, Divider, Stack, Button } from '@mui/materi
 // hooks
 import useResponsive from '../hooks/useResponsive';
 // components
-import Logo from '../components/logo';
 import Iconify from '../components/iconify';
 // sections
 import { LoginForm } from '../sections/auth/login';
+
+import Logo from '../components/logo/Logo.png';
 
 // ----------------------------------------------------------------------
 
@@ -46,20 +47,20 @@ export default function LoginPage() {
   return (
     <>
       <Helmet>
-        <title> Login | Minimal UI </title>
+        <title> Login | Key CMD Accounting </title>
       </Helmet>
 
       <StyledRoot>
-        <Logo
-          sx={{
-            position: 'fixed',
-            top: { xs: 16, sm: 24, md: 40 },
-            left: { xs: 16, sm: 24, md: 40 },
-          }}
-        />
-
         {mdUp && (
           <StyledSection>
+            <img
+              src={Logo}
+              alt="company"
+              style={{
+                width: '150px',
+                marginLeft: '20px',
+              }}
+            />
             <Typography variant="h3" sx={{ px: 5, mt: 10, mb: 5 }}>
               Hi, Welcome Back
             </Typography>
@@ -69,16 +70,36 @@ export default function LoginPage() {
 
         <Container maxWidth="sm">
           <StyledContent>
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                margin: '20px 10px',
+              }}
+            >
+              <div
+                style={{
+                  background: 'rgb(231 231 231)',
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  flexDirection: 'column',
+                  lineHeight: '0px',
+                  borderRadius: '11px',
+                  width: '60%',
+                }}
+              >
+                <h5>Use This Credentials</h5>
+                <p>fullstack.dk@gmail.com</p>
+                <p>Shiv@6464</p>
+              </div>
+            </div>
             <Typography variant="h4" gutterBottom>
-              Sign in to Minimal
+              Sign in to Key CMD Accounting
             </Typography>
 
-            <Typography variant="body2" sx={{ mb: 5 }}>
-              Don’t have an account? {''}
-              <Link variant="subtitle2">Get started</Link>
-            </Typography>
-
-            
+            <Typography variant="body2" sx={{ mb: 5 }} />
 
             <LoginForm />
           </StyledContent>

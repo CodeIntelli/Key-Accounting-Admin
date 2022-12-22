@@ -110,7 +110,7 @@ export default function EbookPage() {
   return (
     <>
       <Helmet>
-        <title> Dashboard: Products | Minimal UI </title>
+        <title> Ebook | Key CMD Accounting </title>
       </Helmet>
 
       <Container>

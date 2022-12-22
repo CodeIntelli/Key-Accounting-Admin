@@ -110,7 +110,7 @@ export default function ActivityPage() {
   return (
     <>
       <Helmet>
-        <title> Dashboard: Products | Minimal UI </title>
+        <title> Page Content | Key CMD Accounting </title>
       </Helmet>
 
       <Container>

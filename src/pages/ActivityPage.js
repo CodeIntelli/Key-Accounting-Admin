@@ -12,7 +12,7 @@ export default function ActivityPage() {
   return (
     <>
       <Helmet>
-        <title> Dashboard | Minimal UI </title>
+        <title> Activity | Key CMD Accounting </title>
       </Helmet>
 
       <Container maxWidth="xl">

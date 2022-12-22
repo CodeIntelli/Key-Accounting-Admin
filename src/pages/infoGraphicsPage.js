@@ -110,7 +110,7 @@ export default function InfoGraphics() {
   return (
     <>
       <Helmet>
-        <title> Dashboard: Products | Minimal UI </title>
+        <title> Info Graphics | Key CMD Accounting </title>
       </Helmet>
 
       <Container>

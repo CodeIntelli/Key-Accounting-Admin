@@ -110,7 +110,7 @@ export default function CaseStudiesPage() {
   return (
     <>
       <Helmet>
-        <title> Dashboard: Products | Minimal UI </title>
+        <title> Case Studies | Key CMD Accounting </title>
       </Helmet>
 
       <Container>

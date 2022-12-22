@@ -21,7 +21,7 @@ export default function BlogPage() {
   return (
     <>
       <Helmet>
-        <title> Dashboard: Blog | Minimal UI </title>
+        <title>Blog | Key CMD Accounting </title>
       </Helmet>
 
       <Container>

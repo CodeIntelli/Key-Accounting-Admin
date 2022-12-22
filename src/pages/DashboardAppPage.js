@@ -40,7 +40,7 @@ export default function DashboardAppPage({ navigation }) {
   return (
     <>
       <Helmet>
-        <title> Dashboard | Minimal UI </title>
+        <title> Dashboard | Key CMD Accounting </title>
       </Helmet>
 
       <Container maxWidth="xl">
@@ -50,19 +50,34 @@ export default function DashboardAppPage({ navigation }) {
 
         <Grid container spacing={3}>
           <Grid item xs={12} sm={6} md={3}>
-            <AppWidgetSummary title="Weekly Sales" total={714000} icon={'ant-design:android-filled'} />
+            <AppWidgetSummary title="Total Blogs" color="success" icon={'simple-icons:blogger'} />
           </Grid>
 
           <Grid item xs={12} sm={6} md={3}>
-            <AppWidgetSummary title="New Users" total={1352831} color="info" icon={'ant-design:apple-filled'} />
+            <AppWidgetSummary title="Total Pages" color="info" icon={'ooui:special-pages-ltr'} />
           </Grid>
 
           <Grid item xs={12} sm={6} md={3}>
-            <AppWidgetSummary title="Item Orders" total={1723315} color="warning" icon={'ant-design:windows-filled'} />
+            <AppWidgetSummary title="User Activity" color="warning" icon={'ic:baseline-work-history'} />
           </Grid>
 
           <Grid item xs={12} sm={6} md={3}>
-            <AppWidgetSummary title="Bug Reports" total={234} color="error" icon={'ant-design:bug-filled'} />
+            <AppWidgetSummary title="Total Ebook" icon={'mdi:notebook-check'} />
+          </Grid>
+          <Grid item xs={12} sm={6} md={3}>
+            <AppWidgetSummary title="Total Checklist" color="success" icon={'material-symbols:checklist'} />
+          </Grid>
+
+          <Grid item xs={12} sm={6} md={3}>
+            <AppWidgetSummary title="Total Infographics" color="info" icon={'fluent:diagram-24-regular'} />
+          </Grid>
+
+          <Grid item xs={12} sm={6} md={3}>
+            <AppWidgetSummary title="Total Case Studies" color="warning" icon={'fluent-mdl2:test-case'} />
+          </Grid>
+
+          <Grid item xs={12} sm={6} md={3}>
+            <AppWidgetSummary title="Total User" icon={'mdi:users-group'} />
           </Grid>
         </Grid>
       </Container>

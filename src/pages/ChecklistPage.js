@@ -110,7 +110,7 @@ export default function ChecklistPage() {
   return (
     <>
       <Helmet>
-        <title> Dashboard: Products | Minimal UI </title>
+        <title> Checklist | Key CMD Accounting </title>
       </Helmet>
 
       <Container>
