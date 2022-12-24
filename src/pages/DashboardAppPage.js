@@ -7,7 +7,7 @@ import { useTheme } from '@mui/material/styles';
 import { Grid, Container, Typography } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 // components
-import Iconify from '../components/iconify';
+import Iconify from '../components/iconify/Iconify';
 // sections
 import { AppWidgetSummary } from '../sections/@dashboard/app';
 import { loadUser } from '../redux/Actions/authAction';
