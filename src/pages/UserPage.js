@@ -22,6 +22,7 @@ import {
   TableContainer,
   TablePagination,
 } from '@mui/material';
+import { Link } from 'react-router-dom';
 // components
 import Label from '../components/label';
 import Iconify from '../components/iconify';
@@ -157,9 +158,11 @@ export default function UserPage() {
           <Typography variant="h4" gutterBottom>
             User
           </Typography>
-          <Button variant="contained" startIcon={<Iconify icon="eva:plus-fill" />}>
-            New User
-          </Button>
+          <Link to={'/dashboard/adduser'}>
+            <Button variant="contained" startIcon={<Iconify icon="eva:plus-fill" />}>
+              New User
+            </Button>
+          </Link>
         </Stack>
 
         <Card>

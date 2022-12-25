@@ -2,14 +2,16 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { login, register, logout, loadUser } from '../Actions/authAction';
 
 const user = JSON.parse(localStorage.getItem('user'));
+console.log('🤩 ~ file: authSlice.js:5 ~ user', user);
 
 const initialState = user ? { isAuthenticated: true, user } : { isAuthenticated: false, user: null };
+console.log('🤩 ~ file: authSlice.js:8 ~ initialState', initialState);
 
 const authSlice = createSlice({
   name: 'auth',
   initialState,
   extraReducers: {
-    [register.loading]: (state, action) => {
+    [register.pending]: (state, action) => {
       state.isLoading = true;
       state.isAuthenticated = false;
     },
@@ -21,7 +23,7 @@ const authSlice = createSlice({
       state.isLoading = false;
       state.isAuthenticated = false;
     },
-    [loadUser.loading]: (state, action) => {
+    [loadUser.pending]: (state, action) => {
       state.isLoading = true;
       state.isAuthenticated = false;
     },
@@ -35,10 +37,10 @@ const authSlice = createSlice({
       state.isAuthenticated = false;
       state.errMessage = action.payload;
     },
-    [login.loading]: (state, action) => {
+    [login.pending]: (state, action) => {
       state.isLoading = true;
       state.isAuthenticated = true;
-      state.user = action.payload.user;
+      state.user = null;
     },
     [login.fulfilled]: (state, action) => {
       state.isLoading = false;
@@ -46,6 +48,11 @@ const authSlice = createSlice({
       state.user = action.payload.user;
     },
     [login.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.isAuthenticated = false;
+      state.user = null;
+    },
+    [logout.pending]: (state, action) => {
       state.isLoading = false;
       state.isAuthenticated = false;
       state.user = null;

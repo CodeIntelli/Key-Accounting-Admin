@@ -14,6 +14,7 @@ import ChecklistPage from './pages/ChecklistPage';
 import EbookPage from './pages/EbookPage';
 import CaseStudiesPage from './pages/caseStudiesPage';
 import InfoGraphicsPage from './pages/infoGraphicsPage';
+import AddUser from './pages/AddUser';
 
 // ----------------------------------------------------------------------
 
@@ -31,6 +32,7 @@ export default function Router() {
         { path: 'activity', element: <ActivityAppPage /> },
         { path: 'checklist', element: <ChecklistPage /> },
         { path: 'ebook', element: <EbookPage /> },
+        { path: 'adduser', element: <AddUser /> },
         { path: 'casestudies', element: <CaseStudiesPage /> },
         { path: 'infographics', element: <InfoGraphicsPage /> },
       ],

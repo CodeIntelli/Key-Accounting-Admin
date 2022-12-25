@@ -2,7 +2,8 @@ import axios from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { setMessage } from '../Reducers/messageSlice';
 
-const API_URL = 'https://ecom.tutorialstaging.tech/api/v1/';
+const API_URL = process.env.REACT_APP_API_BASE_URL;
+console.log('🤩 ~ file: authAction.js:6 ~ API_URL', API_URL);
 
 export const register = createAsyncThunk('auth/register', async ({ username, email, password }, thunkAPI) => {
   try {
@@ -22,16 +23,18 @@ export const register = createAsyncThunk('auth/register', async ({ username, ema
 });
 
 export const login = createAsyncThunk('auth/login', async ({ email, password }, thunkAPI) => {
-  console.log('This Login API Called', email, password);
+  debugger; // eslint-disable-line no-debugger
+  console.log('🤩 ~ file: authAction.js:26 ~ login ~ email, password', email, password);
   try {
-    const result = await axios.post(`${API_URL}login`, {
+    const { data } = await axios.post(`${API_URL}auth/login`, {
       email,
       password,
     });
-    if (result.data.user.email) {
-      console.log('🚀 ~ file: authAction.js:22 ~ .then ~ response.data', result.data);
-      localStorage.setItem('user', JSON.stringify(result.data.user));
-      localStorage.setItem('x-access-token', result.data.token);
+    const result = data.result;
+    console.log('🚀 ~ file: authAction.js:22 ~ .then ~ response.data', result);
+    if (result) {
+      localStorage.setItem('user', JSON.stringify(result.user));
+      localStorage.setItem('x-access-token', result.token);
     }
     console.log('Successfully Login', result.data);
     return { user: result.data };
@@ -46,13 +49,11 @@ export const login = createAsyncThunk('auth/login', async ({ email, password }, 
 export const loadUser = createAsyncThunk('auth/loaduser', async (thunkAPI) => {
   try {
     const cookieData = localStorage.getItem('x-access-token');
-    console.log('🚀 ~ file: authAction.js:64 ~ loadUser ~ cookieData', cookieData);
-    const result = await axios.get(`${API_URL}profile`, {
+    const result = await axios.get(`${API_URL}user/me`, {
       headers: {
         authorization: `Bearer ${cookieData}`,
       },
     });
-    console.log('🚀 ~ file: authAction.js:70 ~ loadUser ~ result', result);
     return { user: result.data };
   } catch (error) {
     const message =
