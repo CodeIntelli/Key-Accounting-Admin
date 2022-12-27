@@ -1,7 +1,10 @@
 import PropTypes from 'prop-types';
+import React from 'react';
 // @mui
 import { styled } from '@mui/material/styles';
 import { Box, Stack, AppBar, Toolbar, IconButton } from '@mui/material';
+import { ToastContainer, toast } from 'react-toastify';
+// import { successToast } from '../../../utils/Toast';
 // utils
 import { bgBlur } from '../../../utils/cssStyles';
 // components
@@ -43,36 +46,55 @@ Header.propTypes = {
 };
 
 export default function Header({ onOpenNav }) {
+  const [logoutUser, setLogoutUser] = React.useState('false');
+  if (logoutUser && logoutUser === true) {
+    // successToast('😇 User logged out Successfully');
+    toast.success('😇 User logged out Successfully', {
+      position: 'top-right',
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: 'colored',
+    });
+  }
+  const setLogoutUserStatus = (data) => {
+    setLogoutUser(data);
+  };
   return (
-    <StyledRoot>
-      <StyledToolbar>
-        <IconButton
-          onClick={onOpenNav}
-          sx={{
-            mr: 1,
-            color: 'text.primary',
-            display: { lg: 'none' },
-          }}
-        >
-          <Iconify icon="eva:menu-2-fill" />
-        </IconButton>
+    <>
+      <StyledRoot>
+        <StyledToolbar>
+          <IconButton
+            onClick={onOpenNav}
+            sx={{
+              mr: 1,
+              color: 'text.primary',
+              display: { lg: 'none' },
+            }}
+          >
+            <Iconify icon="eva:menu-2-fill" />
+          </IconButton>
 
-        {/* <Searchbar /> */}
-        <Box sx={{ flexGrow: 1 }} />
+          {/* <Searchbar /> */}
+          <Box sx={{ flexGrow: 1 }} />
 
-        <Stack
-          direction="row"
-          alignItems="center"
-          spacing={{
-            xs: 0.5,
-            sm: 1,
-          }}
-        >
-          {/* <LanguagePopover />
+          <Stack
+            direction="row"
+            alignItems="center"
+            spacing={{
+              xs: 0.5,
+              sm: 1,
+            }}
+          >
+            {/* <LanguagePopover />
         <NotificationsPopover /> */}
-          <AccountPopover />
-        </Stack>
-      </StyledToolbar>
-    </StyledRoot>
+            <AccountPopover setLogoutUser={setLogoutUserStatus} />
+          </Stack>
+        </StyledToolbar>
+      </StyledRoot>
+    </>
   );
 }

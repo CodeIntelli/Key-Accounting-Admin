@@ -3,7 +3,9 @@ import { Helmet } from 'react-helmet-async';
 import { styled } from '@mui/material/styles';
 import { Link, Container, Typography, Divider, Stack, Button } from '@mui/material';
 // hooks
+import Lottie from 'react-lottie';
 import useResponsive from '../hooks/useResponsive';
+import animationData from '../lotties/login.json';
 // components
 import Logo from '../components/logo';
 import Iconify from '../components/iconify';
@@ -38,6 +40,14 @@ const StyledContent = styled('div')(({ theme }) => ({
   padding: theme.spacing(12, 0),
 }));
 
+const defaultOptions = {
+  loop: true,
+  autoplay: true,
+  animationData,
+  rendererSettings: {
+    preserveAspectRatio: 'xMidYMid slice',
+  },
+};
 // ----------------------------------------------------------------------
 
 export default function LoginPage() {
@@ -60,10 +70,7 @@ export default function LoginPage() {
 
         {mdUp && (
           <StyledSection>
-            <Typography variant="h3" sx={{ px: 5, mt: 10, mb: 5 }}>
-              Hi, Welcome Back
-            </Typography>
-            <img src="/assets/illustrations/illustration_login.png" alt="login" />
+            <Lottie options={defaultOptions} height={500} width={500} />
           </StyledSection>
         )}
 
@@ -77,8 +84,6 @@ export default function LoginPage() {
               Don’t have an account? {''}
               <Link variant="subtitle2">Get started</Link>
             </Typography>
-
-            
 
             <LoginForm />
           </StyledContent>

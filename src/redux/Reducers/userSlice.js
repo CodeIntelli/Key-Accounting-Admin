@@ -1,5 +1,4 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { login, register } from '../Actions/authAction';
 
 /* USER_REGISTER_REQUEST,
   USER_REGISTER_SUCCESS,

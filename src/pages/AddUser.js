@@ -73,9 +73,7 @@ const CreateUser = () => {
       company,
     };
     await dispatch(AddUser(storedData));
-    if (user && user) {
-      setSuccessMsg(`User Created Successfully # ${user._id}`);
-    }
+    setSuccessMsg(`User Created Successfully`);
     setOpen(true);
   };
 
@@ -231,6 +229,7 @@ const CreateUser = () => {
                     type="number"
                     variant="outlined"
                     value={phone}
+                    inputProps={{ minLength: 10, maxLength: 12 }}
                     onChange={(e) => setphone(e.target.value)}
                   />
                   <TextField
@@ -258,7 +257,6 @@ const CreateUser = () => {
                     state.length > 0
                       ? 1
                       : 0.5,
-                  cursor: 'not-allowed',
                 }}
               >
                 <LoadingButton
@@ -269,14 +267,14 @@ const CreateUser = () => {
                     padding: '10px 20px',
                     opacity: 1,
                     cursor:
-                      email.length > 0 &&
-                      password.length > 0 &&
-                      company.length > 0 &&
-                      phone.length >= 10 &&
-                      firstname.length > 0 &&
-                      lastname.length > 0 &&
-                      country.length > 0 &&
-                      state.length > 0
+                      email.trim().length > 0 &&
+                      password.trim().length > 0 &&
+                      company.trim().length > 0 &&
+                      phone.trim().length >= 10 &&
+                      firstname.trim().length > 0 &&
+                      lastname.trim().length > 0 &&
+                      country.trim().length > 0 &&
+                      state.trim().length > 0
                         ? 'pointer'
                         : 'not-allowed',
                   }}

@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useNavigation } from 'react-router-dom';
+import { useNavigate, useNavigation } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { faker } from '@faker-js/faker';
 // @mui
@@ -7,6 +7,7 @@ import { useTheme } from '@mui/material/styles';
 import { Grid, Container, Typography } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 // components
+import { errorToast, successToast } from '../utils/Toast';
 import Iconify from '../components/iconify/Iconify';
 // sections
 import { AppWidgetSummary } from '../sections/@dashboard/app';
@@ -15,28 +16,21 @@ import { clearMessage } from '../redux/Reducers/messageSlice';
 
 // ----------------------------------------------------------------------
 
-export default function DashboardAppPage({ navigation }) {
+export default function DashboardAppPage() {
   const theme = useTheme();
   const dispatch = useDispatch();
-  // const navigation = useNavigation();
-  const { isAuthenticated, user } = useSelector((state) => state.auth);
-  console.log(user);
-  useEffect(() => {
-    dispatch(clearMessage());
-  }, [dispatch]);
+  const navigate = useNavigate();
+  const { isAuthenticated, user, error } = useSelector((state) => state.auth);
 
   useEffect(() => {
-    if (isAuthenticated) {
-      dispatch(loadUser());
+    dispatch(loadUser());
+    if (error) {
+      const errMsg = error.includes('JsonWebTokenError') ? 'something went Wrong' : error;
+      errorToast(errMsg);
+      navigate('/login', { replace: true });
     }
-  }, []);
-
-  if (user && user) {
-    console.log(user);
-  } else {
-    console.log('Else Block Executed');
-    navigation.navigate('/login');
-  }
+    // dispatch(clearMessage());
+  }, [dispatch, error]);
 
   return (
     <>

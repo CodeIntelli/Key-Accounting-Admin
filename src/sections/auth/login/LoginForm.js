@@ -4,10 +4,12 @@ import { useNavigate } from 'react-router-dom';
 import { Link, Stack, IconButton, InputAdornment, TextField, Checkbox } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 import { useDispatch, useSelector } from 'react-redux';
+import { toast, ToastContainer } from 'react-toastify';
 // components
 import Iconify from '../../../components/iconify';
 import { clearMessage } from '../../../redux/Reducers/messageSlice';
-import { login } from '../../../redux/Actions/authAction';
+import { loadUser, login } from '../../../redux/Actions/authAction';
+import { successToast } from '../../../utils/Toast';
 
 // ----------------------------------------------------------------------
 
@@ -15,33 +17,25 @@ export default function LoginForm() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const { isAuthenticated } = useSelector((state) => state.auth);
+  const { isAuthenticated, user } = useSelector((state) => state.auth);
   const { message } = useSelector((state) => state.message);
   const [showPassword, setShowPassword] = useState(false);
   const [email, setemailValue] = useState('');
   const [password, setpasswordValue] = useState('');
 
   useEffect(() => {
-    dispatch(clearMessage());
+    dispatch(loadUser());
   }, [dispatch]);
 
   const handleClick = () => {
     console.log(email, password);
-
-    dispatch(login({ email, password }))
-      .unwrap()
-      .then((res) => {
-        console.log(res);
-        navigate('/dashboard', { replace: true });
-        window.location.reload();
-      })
-      .catch((e) => {
-        console.log(e);
-      });
+    dispatch(login({ email, password }));
+    successToast('Login Successfully');
+    navigate('/dashboard', { replace: true });
     // navigate('/dashboard', { replace: true });
   };
 
-  if (isAuthenticated) {
+  if (user && user) {
     return navigate('/dashboard', { replace: true });
   }
 
@@ -79,7 +73,6 @@ export default function LoginForm() {
       </Stack>
 
       <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ my: 2 }}>
-        <Checkbox name="remember" label="Remember me" />
         <Link variant="subtitle2" underline="hover">
           Forgot password?
         </Link>
