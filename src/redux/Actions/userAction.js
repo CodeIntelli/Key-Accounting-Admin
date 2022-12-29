@@ -1,27 +1,150 @@
+/* 
+============ Basic Setup ============ 
+*/
 import axios from 'axios';
-import { USER_REGISTER_FAIL, USER_REGISTER_REQUEST, USER_REGISTER_SUCCESS } from '../Reducers/userSlice';
+import Cookies from 'js-cookie';
+import { CLEAR_ERRORS, LOGIN_FAIL, LOGIN_REQUEST, LOGIN_SUCCESS } from '../Constant/userConstant';
 
-const API_URL = process.env.REACT_APP_API_BASE_URL;
-console.log('🤩 ~ file: authAction.js:6 ~ API_URL', API_URL);
+/* 
 
-export const AddUser = (userData) => async (dispatch) => {
-  console.log('🤩 ~ file: userAction.js:24 ~ register ~ userData', userData);
+======= Header Configuration =======
+
+*/
+const BASE_URL = process.env.REACT_APP_API_ENDPOINT;
+const token = Cookies.get('x-access-token') ? Cookies.get('x-access-token') : localStorage.getItem('x-access-token');
+const formHeader = {
+  headers: {
+    'Content-Type': 'multipart/form-data',
+    authorization: `Bearer ${token_Data}`,
+  },
+};
+const headerConfig = {
+  headers: {
+    'Content-Type': 'application/json',
+    authorization: `Bearer ${token_Data}`,
+  },
+};
+
+/* 
+
+============ API Calling ===============
+type: API Type will be called in Reducer
+
+*/
+
+/* 
+
+All API Endpoint
+
+* Authentication
+
+Login = auth/login
+
+Forgot Password = auth/forgotPassword
+
+Logout = auth/logout
+
+Reset Password = auth/resetPassword/:token
+
+* User
+
+List User = /user/users?limit=5&page=1
+
+Add User = auth/register
+
+Get Profile = user/me
+
+Read user By Id = user/:id
+
+Edit Profile = user/:id
+
+Edit Password = auth/changePassword
+
+Remove User  = user/active/:id
+
+Delete User = user/:id
+
+Upload User Image = user/profile
+
+
+* Sub Categories
+
+
+Add Sub Category = //category/subcategory
+
+List Sub Category = /category/subcategory
+
+Get Sub Category By Id = /category/subcategory/:id
+
+Get Sub Category By Category = 
+
+Edit Sub Category = category/subcategory/:id
+
+Remove Sub Category = category/subcategory/:id {Patch}
+
+Delete Sub Category = category/subcategory/:id {Delete}
+
+* Categories
+
+Add Category = /category
+
+List Category = /category
+
+Get Category = /category/:id
+
+Edit Category = /category/:id
+
+Remove Category = /category/:id
+
+Delete Category = /category/:id
+
+* Blog 
+
+Add Blog = 
+
+List Blog = 
+
+Get Blog By Id= 
+
+Get Blog By User Id = 
+
+Edit Blog = 
+
+Remove Blog = 
+
+Delete Blog = 
+
+* Pages
+
+Get Page Content By Page = 
+
+Edit Page Content = 
+
+* Activity
+
+Get All Activity =
+
+Get Activity By user Id = 
+
+*/
+
+export const login = (userData) => async (dispatch) => {
   try {
-    dispatch({ type: USER_REGISTER_REQUEST.type });
-
-    const config = {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-    };
-    const { data } = await axios.post(`${API_URL}auth/register`, userData);
-    console.log('🤩 ~ file: userAction.js:34 ~ register ~ data', data);
-    dispatch({ type: USER_REGISTER_SUCCESS.type, payload: data.result });
+    dispatch({ type: LOGIN_REQUEST });
+    const { data } = await axios.post(`${BASE_URL}`, userData, headerConfig);
+    Cookies.set('x-access-token', data?.result?.token);
+    localStorage.setItem('x-access-token', data?.result?.token);
+    dispatch({ type: LOGIN_SUCCESS, payload: data?.result });
   } catch (error) {
-    console.log(error);
-    dispatch({
-      type: USER_REGISTER_FAIL.type,
-      payload: error.response.data.message,
-    });
+    dispatch({ type: LOGIN_FAIL, payload: error.response.data.message });
   }
+};
+
+/* 
+ 
+===========Clearing Errors=================
+
+*/
+export const clearErrors = () => async (dispatch) => {
+  dispatch({ type: CLEAR_ERRORS });
 };
