@@ -100,19 +100,19 @@ Delete Category = /category/:id
 
 * Blog 
 
-Add Blog = 
+Add Blog = /blog?cat_id=:id
 
-List Blog = 
+List Blog = /blog?limit=2
 
-Get Blog By Id= 
+Get Blog By Id= blog/639aa672fb57a6d9a614049c 
 
-Get Blog By User Id = 
+Get Blog By User Id = blog/user/6396fd325e51b473bf35845a
 
-Edit Blog = 
+Edit Blog = blog/639aa649ae43816182b26e16
 
-Remove Blog = 
+Remove Blog = blog/639aa649ae43816182b26e16
 
-Delete Blog = 
+Delete Blog = blog/639aa649ae43816182b26e16
 
 * Pages
 
