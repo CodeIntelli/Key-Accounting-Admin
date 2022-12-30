@@ -7,9 +7,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { toast, ToastContainer } from 'react-toastify';
 // components
 import Iconify from '../../../components/iconify';
-import { clearMessage } from '../../../redux/Reducers/messageSlice';
-import { loadUser, login } from '../../../redux/Actions/authAction';
-import { successToast } from '../../../utils/Toast';
+// import { clearMessage } from '../../../redux/Reducers/messageSlice';
+// import { loadUser, login } from '../../../redux/Actions/authAction';
+import { errorToast, successToast } from '../../../utils/Toast';
+import { loadUser, login } from '../../../redux/Actions/userAction';
 
 // ----------------------------------------------------------------------
 
@@ -17,15 +18,21 @@ export default function LoginForm() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const { isAuthenticated, user } = useSelector((state) => state.auth);
-  const { message } = useSelector((state) => state.message);
+  const { isAuthenticated, user, error } = useSelector((state) => state.auth);
   const [showPassword, setShowPassword] = useState(false);
   const [email, setemailValue] = useState('');
   const [password, setpasswordValue] = useState('');
 
   useEffect(() => {
     dispatch(loadUser());
-  }, [dispatch]);
+    if (error) {
+      const errMsg = error.includes('JsonWebTokenError') ? 'Session Time Out Please Login Again' : error;
+      errorToast(errMsg);
+    }
+    if (user && user) {
+      navigate('/dashboard/app', { replace: true });
+    }
+  }, [dispatch, error]);
 
   const handleClick = () => {
     console.log(email, password);
@@ -35,9 +42,9 @@ export default function LoginForm() {
     // navigate('/dashboard', { replace: true });
   };
 
-  if (user && user) {
-    return navigate('/dashboard', { replace: true });
-  }
+  // if (user && user) {
+  //   return navigate('/dashboard', { replace: true });
+  // }
 
   return (
     <>

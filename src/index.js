@@ -3,7 +3,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
 import { Provider } from 'react-redux';
 import App from './App';
-import { store } from './redux/Store';
+import store from './redux/Store';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 

@@ -11,8 +11,9 @@ import { errorToast, successToast } from '../utils/Toast';
 import Iconify from '../components/iconify/Iconify';
 // sections
 import { AppWidgetSummary } from '../sections/@dashboard/app';
-import { loadUser } from '../redux/Actions/authAction';
-import { clearMessage } from '../redux/Reducers/messageSlice';
+import { loadUser } from '../redux/Actions/userAction';
+// import { loadUser } from '../redux/Actions/authAction';
+// import { clearMessage } from '../redux/Reducers/messageSlice';
 
 // ----------------------------------------------------------------------
 
@@ -23,14 +24,19 @@ export default function DashboardAppPage() {
   const { isAuthenticated, user, error } = useSelector((state) => state.auth);
 
   useEffect(() => {
-    dispatch(loadUser());
     if (error) {
-      const errMsg = error.includes('JsonWebTokenError') ? 'something went Wrong' : error;
+      const errMsg = error.includes('JsonWebTokenError') ? 'Session Time Out Please Login Again' : error;
       errorToast(errMsg);
       navigate('/login', { replace: true });
     }
     // dispatch(clearMessage());
-  }, [dispatch, error]);
+  }, [error]);
+
+  useEffect(() => {
+    dispatch(loadUser());
+  }, []);
+
+  // const user = '';
 
   return (
     <>
@@ -40,7 +46,7 @@ export default function DashboardAppPage() {
 
       <Container maxWidth="xl">
         <Typography variant="h4" sx={{ mb: 5 }}>
-          Hi, Welcome back {user ? `${user.firstName} ${user.lastName}` : null}
+          Hi, Welcome back {user && user ? `${user.firstName} ${user.lastName}` : null}
         </Typography>
 
         <Grid container spacing={3}>

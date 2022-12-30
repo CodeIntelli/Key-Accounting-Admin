@@ -6692,7 +6692,7 @@ lodash.uniq@^4.5.0:
   resolved "https://registry.npmjs.org/lodash.uniq/-/lodash.uniq-4.5.0.tgz"
   integrity sha512-xfBaXQd9ryd9dlSDvnvI0lvxfLJlYAZzXomUYzLKtUeOQvOP5piqAWuGtrhWeqaXK9hhoM/iyJc5AV+XfsX3HQ==
 
-lodash@^4.17.20, lodash@^4.17.21, lodash@^4.7.0:
+lodash@^4.17.20, lodash@^4.17.21, lodash@^4.17.4, lodash@^4.7.0:
   version "4.17.21"
   resolved "https://registry.npmjs.org/lodash/-/lodash-4.17.21.tgz"
   integrity sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==
@@ -8307,6 +8307,15 @@ recursive-readdir@^2.2.2:
   dependencies:
     minimatch "3.0.4"
 
+redux-dataloader@^1.3.0:
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/redux-dataloader/-/redux-dataloader-1.3.0.tgz#5fd89fa21ba9a046845db6b000770455c94f1342"
+  integrity sha512-i95RbVdohW61/6csefA6YAiSmeAD/4mR3mpj4RRVcAbt7/xfPKpeEaAO2pjDwdwqB+WCIMFrZvCi+Il5aAGfZQ==
+  dependencies:
+    babel-runtime "^6.26.0"
+    lodash "^4.17.4"
+    retryit "^1.2.0"
+
 redux-devtools-extension@^2.13.9:
   version "2.13.9"
   resolved "https://registry.yarnpkg.com/redux-devtools-extension/-/redux-devtools-extension-2.13.9.tgz#6b764e8028b507adcb75a1cae790f71e6be08ae7"
@@ -8487,6 +8496,11 @@ retry@^0.13.1:
   version "0.13.1"
   resolved "https://registry.npmjs.org/retry/-/retry-0.13.1.tgz"
   integrity sha512-XQBQ3I8W1Cge0Seh+6gjj03LbmRFWuoszgK9ooCpwYIrhhoO80pfq4cUkU5DkknwfOfFteRwlZ56PYOGYyFWdg==
+
+retryit@^1.2.0:
+  version "1.3.2"
+  resolved "https://registry.yarnpkg.com/retryit/-/retryit-1.3.2.tgz#37bcaddb0eeae50002ec741399d099aeb4c2d59a"
+  integrity sha512-ZlLZ8pJ1FJk71QkDqYZqQhTxphjIaQk3nyNH+qTnQclUHcoZGoXrDOpIPYzN7VTtmhcnlM1rEh6p6gKBZyAwfg==
 
 reusify@^1.0.4:
   version "1.0.4"

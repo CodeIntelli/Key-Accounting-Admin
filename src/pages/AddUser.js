@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Select from 'react-select';
 import { Link } from 'react-router-dom';
 import Iconify from '../components/iconify';
-import { AddUser } from '../redux/Actions/userAction';
+// import { AddUser } from '../redux/Actions/userAction';
 import errAnimationData from '../lotties/error.json';
 import successAnimationData from '../lotties/success.json';
 
@@ -72,7 +72,7 @@ const CreateUser = () => {
       state,
       company,
     };
-    await dispatch(AddUser(storedData));
+    // await dispatch(AddUser(storedData));
     setSuccessMsg(`User Created Successfully`);
     setOpen(true);
   };

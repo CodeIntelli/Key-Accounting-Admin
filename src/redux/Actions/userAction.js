@@ -3,7 +3,15 @@
 */
 import axios from 'axios';
 import Cookies from 'js-cookie';
-import { CLEAR_ERRORS, LOGIN_FAIL, LOGIN_REQUEST, LOGIN_SUCCESS } from '../Constant/userConstant';
+import {
+  CLEAR_ERRORS,
+  LOGIN_FAIL,
+  LOGIN_REQUEST,
+  LOGIN_SUCCESS,
+  LOAD_USER_FAIL,
+  LOAD_USER_REQUEST,
+  LOAD_USER_SUCCESS,
+} from '../Constant/userConstant';
 
 /* 
 
@@ -11,17 +19,21 @@ import { CLEAR_ERRORS, LOGIN_FAIL, LOGIN_REQUEST, LOGIN_SUCCESS } from '../Const
 
 */
 const BASE_URL = process.env.REACT_APP_API_ENDPOINT;
-const token = Cookies.get('x-access-token') ? Cookies.get('x-access-token') : localStorage.getItem('x-access-token');
+const tokenData = Cookies.get('x-access-token')
+  ? Cookies.get('x-access-token')
+  : localStorage.getItem('x-access-token')
+  ? localStorage.getItem('x-access-token')
+  : null;
 const formHeader = {
   headers: {
     'Content-Type': 'multipart/form-data',
-    authorization: `Bearer ${token_Data}`,
+    authorization: `Bearer ${tokenData}`,
   },
 };
 const headerConfig = {
   headers: {
     'Content-Type': 'application/json',
-    authorization: `Bearer ${token_Data}`,
+    authorization: `Bearer ${tokenData}`,
   },
 };
 
@@ -131,12 +143,24 @@ Get Activity By user Id =
 export const login = (userData) => async (dispatch) => {
   try {
     dispatch({ type: LOGIN_REQUEST });
-    const { data } = await axios.post(`${BASE_URL}`, userData, headerConfig);
+    const { data } = await axios.post(`${BASE_URL}auth/login`, userData, {
+      headers: { 'Content-Type': 'application/json' },
+    });
     Cookies.set('x-access-token', data?.result?.token);
     localStorage.setItem('x-access-token', data?.result?.token);
     dispatch({ type: LOGIN_SUCCESS, payload: data?.result });
   } catch (error) {
-    dispatch({ type: LOGIN_FAIL, payload: error.response.data.message });
+    dispatch({ type: LOGIN_FAIL, payload: error?.response.data.message });
+  }
+};
+
+export const loadUser = () => async (dispatch) => {
+  try {
+    dispatch({ type: LOAD_USER_REQUEST });
+    const { data } = await axios.get(`${BASE_URL}user/me`, headerConfig);
+    dispatch({ type: LOAD_USER_SUCCESS, payload: data?.result });
+  } catch (error) {
+    dispatch({ type: LOAD_USER_FAIL, payload: error?.response?.data?.message });
   }
 };
 

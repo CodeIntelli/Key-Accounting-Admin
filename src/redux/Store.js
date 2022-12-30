@@ -1,15 +1,17 @@
-import { combineReducers, applyMiddleware } from 'redux';
+import { combineReducers, applyMiddleware, createStore } from 'redux';
 import thunk from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import { configureStore } from '@reduxjs/toolkit';
+import { authReducer } from './Reducers/userReducer';
 
 // Call Reducer Here
-const reducer = {};
+const reducer = combineReducers({ auth: authReducer });
 
 // if the value is in cart otherwise it will be blank and we can store cartitems in localstorage
-let initialState = {};
+
+const initialState = {};
 const middleware = [thunk];
 
-const store = configureStore(reducer, initialState, composeWithDevTools(applyMiddleware(...middleware)));
+const store = createStore(reducer, initialState, composeWithDevTools(applyMiddleware(...middleware)));
 
 export default store;
