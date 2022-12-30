@@ -157,7 +157,17 @@ export const login = (userData) => async (dispatch) => {
 export const loadUser = () => async (dispatch) => {
   try {
     dispatch({ type: LOAD_USER_REQUEST });
-    const { data } = await axios.get(`${BASE_URL}user/me`, headerConfig);
+    const bearerToken = Cookies.get('x-access-token')
+      ? Cookies.get('x-access-token')
+      : localStorage.getItem('x-access-token')
+      ? localStorage.getItem('x-access-token')
+      : null;
+    console.log('🚀 ~ file: userAction.js:161 ~ loadUser ~ bearerToken', bearerToken);
+    const { data } = await axios.get(`${BASE_URL}user/me`, {
+      headers: {
+        authorization: `Bearer ${bearerToken}`,
+      },
+    });
     dispatch({ type: LOAD_USER_SUCCESS, payload: data?.result });
   } catch (error) {
     dispatch({ type: LOAD_USER_FAIL, payload: error?.response?.data?.message });

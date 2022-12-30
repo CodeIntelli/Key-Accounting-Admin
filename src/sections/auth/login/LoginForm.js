@@ -10,7 +10,7 @@ import Iconify from '../../../components/iconify';
 // import { clearMessage } from '../../../redux/Reducers/messageSlice';
 // import { loadUser, login } from '../../../redux/Actions/authAction';
 import { errorToast, successToast } from '../../../utils/Toast';
-import { loadUser, login } from '../../../redux/Actions/userAction';
+import { clearErrors, loadUser, login } from '../../../redux/Actions/userAction';
 
 // ----------------------------------------------------------------------
 
@@ -24,21 +24,25 @@ export default function LoginForm() {
   const [password, setpasswordValue] = useState('');
 
   useEffect(() => {
-    dispatch(loadUser());
+    // dispatch(loadUser());
     if (error) {
       const errMsg = error.includes('JsonWebTokenError') ? 'Session Time Out Please Login Again' : error;
       errorToast(errMsg);
+      dispatch(clearErrors());
     }
-    if (user && user) {
-      navigate('/dashboard/app', { replace: true });
+    if (isAuthenticated) {
+      navigate('/dashboard', { replace: true });
     }
-  }, [dispatch, error]);
+    // if (user && user) {
+    //   navigate('/dashboard', { replace: true });
+    // }
+  }, [dispatch, error, isAuthenticated]);
 
   const handleClick = () => {
     console.log(email, password);
     dispatch(login({ email, password }));
     successToast('Login Successfully');
-    navigate('/dashboard', { replace: true });
+
     // navigate('/dashboard', { replace: true });
   };
 

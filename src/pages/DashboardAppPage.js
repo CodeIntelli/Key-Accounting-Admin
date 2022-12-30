@@ -11,7 +11,7 @@ import { errorToast, successToast } from '../utils/Toast';
 import Iconify from '../components/iconify/Iconify';
 // sections
 import { AppWidgetSummary } from '../sections/@dashboard/app';
-import { loadUser } from '../redux/Actions/userAction';
+import { clearErrors, loadUser } from '../redux/Actions/userAction';
 // import { loadUser } from '../redux/Actions/authAction';
 // import { clearMessage } from '../redux/Reducers/messageSlice';
 
@@ -21,44 +21,50 @@ export default function DashboardAppPage() {
   const theme = useTheme();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { isAuthenticated, user, error } = useSelector((state) => state.auth);
+  const { isAuthenticated, user, error, isLoading } = useSelector((state) => state.auth);
 
   useEffect(() => {
     if (error) {
       const errMsg = error.includes('JsonWebTokenError') ? 'Session Time Out Please Login Again' : error;
       errorToast(errMsg);
       navigate('/login', { replace: true });
+      dispatch(clearErrors());
+    }
+    if (!isAuthenticated) {
+      navigate('/login', { replace: true });
+    } else if (!isLoading && isAuthenticated) {
+      dispatch(loadUser());
     }
     // dispatch(clearMessage());
-  }, [error]);
+  }, [error, dispatch]);
 
-  useEffect(() => {
-    dispatch(loadUser());
-  }, []);
-
-  // const user = '';
+  console.log(user);
 
   return (
     <>
       <Helmet>
-        <title> Dashboard | Key CMD Accounting </title>
+        <title> Dashboard | React App </title>
       </Helmet>
+      {isLoading ? (
+        <>
+          <h1>Loading</h1>
+        </>
+      ) : (
+        <Container maxWidth="xl">
+          <Typography variant="h4" sx={{ mb: 5 }}>
+            Hi, Welcome back {user && user ? `${user.firstName} ${user.lastName}` : null}
+          </Typography>
 
-      <Container maxWidth="xl">
-        <Typography variant="h4" sx={{ mb: 5 }}>
-          Hi, Welcome back {user && user ? `${user.firstName} ${user.lastName}` : null}
-        </Typography>
+          <Grid container spacing={3}>
+            <Grid item xs={12} sm={6} md={3}>
+              <AppWidgetSummary title="Total Blogs" total={240} color="success" icon={'simple-icons:blogger'} />
+            </Grid>
 
-        <Grid container spacing={3}>
-          <Grid item xs={12} sm={6} md={3}>
-            <AppWidgetSummary title="Total Blogs" total={240} color="success" icon={'simple-icons:blogger'} />
-          </Grid>
+            <Grid item xs={12} sm={6} md={3}>
+              <AppWidgetSummary title="Total Pages" total={240} color="info" icon={'ooui:special-pages-ltr'} />
+            </Grid>
 
-          <Grid item xs={12} sm={6} md={3}>
-            <AppWidgetSummary title="Total Pages" total={240} color="info" icon={'ooui:special-pages-ltr'} />
-          </Grid>
-
-          <Grid item xs={12} sm={6} md={3}>
+            {/* <Grid item xs={12} sm={6} md={3}>
             <AppWidgetSummary title="User Activity" total={240} color="warning" icon={'ic:baseline-work-history'} />
           </Grid>
 
@@ -75,13 +81,14 @@ export default function DashboardAppPage() {
 
           <Grid item xs={12} sm={6} md={3}>
             <AppWidgetSummary title="Total Case Studies" total={240} color="warning" icon={'fluent-mdl2:test-case'} />
-          </Grid>
+          </Grid> */}
 
-          <Grid item xs={12} sm={6} md={3}>
-            <AppWidgetSummary title="Total User" total={240} icon={'mdi:users-group'} />
+            <Grid item xs={12} sm={6} md={3}>
+              <AppWidgetSummary title="Total User" total={240} icon={'mdi:users-group'} />
+            </Grid>
           </Grid>
-        </Grid>
-      </Container>
+        </Container>
+      )}
     </>
   );
 }

@@ -10,23 +10,23 @@ import {
 
 export const authReducer = (state = { user: {} }, action) => {
   switch (action.type) {
-    case LOAD_USER_REQUEST:
     case LOGIN_REQUEST:
-      return { loading: true };
+    case LOAD_USER_REQUEST:
+      return { isLoading: true };
 
-    case LOAD_USER_SUCCESS:
     case LOGIN_SUCCESS:
+    case LOAD_USER_SUCCESS:
       return {
         ...state,
-        loading: false,
+        isLoading: false,
         isAuthenticated: true,
         user: action.payload,
       };
-    case LOAD_USER_FAIL:
     case LOGIN_FAIL:
+    case LOAD_USER_FAIL:
       return {
         ...state,
-        loading: false,
+        isLoading: false,
         isAuthenticated: false,
         user: null,
         error: action.payload,
