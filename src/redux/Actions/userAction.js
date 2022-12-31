@@ -11,6 +11,24 @@ import {
   LOAD_USER_FAIL,
   LOAD_USER_REQUEST,
   LOAD_USER_SUCCESS,
+  ADD_USER_REQUEST,
+  ADD_USER_SUCCESS,
+  ADD_USER_FAIL,
+  ALL_USER_REQUEST,
+  ALL_USER_SUCCESS,
+  ALL_USER_FAIL,
+  UPDATE_USER_REQUEST,
+  UPDATE_USER_SUCCESS,
+  UPDATE_USER_RESET,
+  UPDATE_USER_FAIL,
+  REMOVE_USER_REQUEST,
+  REMOVE_USER_SUCCESS,
+  REMOVE_USER_RESET,
+  REMOVE_USER_FAIL,
+  DELETE_USER_REQUEST,
+  DELETE_USER_SUCCESS,
+  DELETE_USER_RESET,
+  DELETE_USER_FAIL,
 } from '../Constant/userConstant';
 
 /* 
@@ -60,23 +78,23 @@ Reset Password = auth/resetPassword/:token
 
 * User
 
-List User = /user/users?limit=5&page=1
+[ . ]List User = /user/users?limit=5&page=1
 
-Add User = auth/register
+[ . ]Add User = auth/register
 
-Get Profile = user/me
+[ . ]Get Profile = user/me
 
-Read user By Id = user/:id
+[ . ]Read user By Id = user/:id
 
-Edit Profile = user/:id
+[ . ]Edit Profile = user/:id
 
-Edit Password = auth/changePassword
+[ . ]Edit Password = auth/changePassword
 
-Remove User  = user/active/:id
+[ . ]Remove User  = user/active/:id
 
-Delete User = user/:id
+[ . ]Delete User = user/:id
 
-Upload User Image = user/profile
+[ . ]Upload User Image = user/profile
 
 
 * Sub Categories
@@ -162,7 +180,7 @@ export const loadUser = () => async (dispatch) => {
       : localStorage.getItem('x-access-token')
       ? localStorage.getItem('x-access-token')
       : null;
-    console.log('🚀 ~ file: userAction.js:161 ~ loadUser ~ bearerToken', bearerToken);
+
     const { data } = await axios.get(`${BASE_URL}user/me`, {
       headers: {
         authorization: `Bearer ${bearerToken}`,
@@ -173,6 +191,51 @@ export const loadUser = () => async (dispatch) => {
     dispatch({ type: LOAD_USER_FAIL, payload: error?.response?.data?.message });
   }
 };
+
+export const AddUser = (userData) => async (dispatch) => {
+  try {
+    dispatch({ type: ADD_USER_REQUEST });
+    const bearerToken = Cookies.get('x-access-token')
+      ? Cookies.get('x-access-token')
+      : localStorage.getItem('x-access-token')
+      ? localStorage.getItem('x-access-token')
+      : null;
+
+    const { data } = await axios.post(`${BASE_URL}auth/register/V2`, userData, {
+      headers: {
+        authorization: `Bearer ${bearerToken}`,
+      },
+    });
+    console.log('🤩 ~ file: userAction.js:206 ~ AddUser ~ data', data);
+    dispatch({ type: ADD_USER_SUCCESS, payload: data?.result });
+  } catch (error) {
+    dispatch({ type: ADD_USER_FAIL, payload: error?.response?.data?.message });
+  }
+};
+
+export const listUser = () => async (dispatch) => {
+  try {
+    dispatch({ type: ALL_USER_REQUEST });
+    const bearerToken = Cookies.get('x-access-token')
+      ? Cookies.get('x-access-token')
+      : localStorage.getItem('x-access-token')
+      ? localStorage.getItem('x-access-token')
+      : null;
+
+    const { data } = await axios.get(`${BASE_URL}user/v2/users`, {
+      headers: {
+        authorization: `Bearer ${bearerToken}`,
+      },
+    });
+    console.log('🤩 ~ file: userAction.js:227 ~ listUser ~ data', data);
+    dispatch({ type: ALL_USER_SUCCESS, payload: data?.result });
+  } catch (error) {
+    dispatch({ type: ALL_USER_FAIL, payload: error?.response?.data?.message });
+  }
+};
+export const EditUser = () => async (dispatch) => {};
+export const RemoveUser = () => async (dispatch) => {};
+export const DeleteUser = () => async (dispatch) => {};
 
 /* 
  

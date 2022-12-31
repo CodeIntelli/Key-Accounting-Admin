@@ -38,8 +38,6 @@ export default function DashboardAppPage() {
     // dispatch(clearMessage());
   }, [error, dispatch]);
 
-  console.log(user);
-
   return (
     <>
       <Helmet>

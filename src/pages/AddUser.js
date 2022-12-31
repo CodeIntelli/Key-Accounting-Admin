@@ -1,5 +1,16 @@
 import { LoadingButton } from '@mui/lab';
-import { Box, Card, Grid, IconButton, InputAdornment, TextField, Modal, Typography, Button } from '@mui/material';
+import {
+  Box,
+  Card,
+  Grid,
+  IconButton,
+  InputAdornment,
+  TextField,
+  Modal,
+  Typography,
+  Button,
+  InputLabel,
+} from '@mui/material';
 import { Country, State } from 'country-state-city';
 import Lottie from 'react-lottie';
 import React, { useEffect, useState } from 'react';
@@ -10,6 +21,7 @@ import Iconify from '../components/iconify';
 // import { AddUser } from '../redux/Actions/userAction';
 import errAnimationData from '../lotties/error.json';
 import successAnimationData from '../lotties/success.json';
+import { AddUser } from '../redux/Actions/userAction';
 
 const style = {
   position: 'absolute',
@@ -27,7 +39,7 @@ const CreateUser = () => {
   const [countryData, setCountryData] = useState();
   const [StateData, setStateData] = useState();
   const dispatch = useDispatch();
-  const { isLoading, isAuthenticated, user, error } = useSelector((state) => state.user);
+  // const { isLoading, isAuthenticated, user, error } = useSelector((state) => state.user);
 
   // Password
   const [showPassword, setShowPassword] = useState(false);
@@ -51,9 +63,19 @@ const CreateUser = () => {
       setstate(data.value);
     }
   };
+  const [avatarPreview, setAvatarPreview] = useState('/assets/images/avatars/avatar_18.jpg');
+  const [image, setImage] = useState();
+  /* Image Uploading */
+  const handleImage = async (e) => {
+    const { name, value } = e.target;
+    if (name === 'image') {
+      setAvatarPreview(URL.createObjectURL(e.target.files[0]));
+      setImage(e.target.files[0]);
+    }
+  };
 
   const handleSubmit = async () => {
-    /* const storedData = new FormData();
+    const storedData = new FormData();
     storedData.append('firstName', firstname);
     storedData.append('lastName', lastname);
     storedData.append('email', email);
@@ -61,18 +83,19 @@ const CreateUser = () => {
     storedData.append('password', password);
     storedData.append('country', country);
     storedData.append('state', state);
-    storedData.append('company', company); */
-    const storedData = {
-      firstName: firstname,
-      lastName: lastname,
-      email,
-      phoneNumber: Number(phone),
-      password,
-      country,
-      state,
-      company,
-    };
-    // await dispatch(AddUser(storedData));
+    storedData.append('company', company);
+    storedData.append('profile', image);
+    // const storedData = {
+    //   firstName: firstname,
+    //   lastName: lastname,
+    //   email,
+    //   phoneNumber: Number(phone),
+    //   password,
+    //   country,
+    //   state,
+    //   company,
+    // };
+    dispatch(AddUser(storedData));
     setSuccessMsg(`User Created Successfully`);
     setOpen(true);
   };
@@ -98,15 +121,15 @@ const CreateUser = () => {
     });
   }, []);
 
-  useEffect(() => {
-    if (error) {
-      console.log(error);
-      setErrMsg(error && error);
-    }
-    if (user && user) {
-      console.log('Created User', user);
-    }
-  }, [error, dispatch]);
+  // useEffect(() => {
+  //   if (error) {
+  //     console.log(error);
+  //     setErrMsg(error && error);
+  //   }
+  //   if (user && user) {
+  //     console.log('Created User', user);
+  //   }
+  // }, [error, dispatch]);
 
   useEffect(() => {
     const listState = [];
@@ -153,7 +176,59 @@ const CreateUser = () => {
           <Card sx={{ py: 2, px: 3 }}>
             <h1>Add User</h1>
             <Grid item xs={12} md={12}>
-              <Card sx={{ p: 3 }}>
+              <Card>
+                <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: '40px' }}>
+                  <InputLabel htmlFor="ImageUpload">
+                    <div style={{ position: 'relative' }}>
+                      <img
+                        src={avatarPreview}
+                        alt="Avatar Preview"
+                        className="img-fluid"
+                        style={{
+                          width: '100px',
+                          borderRadius: '50%',
+                          height: '100px',
+                          border: '1px solid #dbdbdb',
+                          objectFit: 'contain',
+                        }}
+                        onError={({ currentTarget }) => {
+                          currentTarget.onerror = null; // prevents looping
+                          currentTarget.src = '/assets/images/avatars/avatar_18.jpg';
+                        }}
+                      />
+                      <span
+                        style={{
+                          position: 'absolute',
+                          bottom: '5px',
+                          right: '5px',
+                        }}
+                      >
+                        <div
+                          style={{
+                            width: '25px',
+                            height: '25px',
+                            borderRadius: '50%',
+                            display: 'flex',
+                            justifyContent: 'center',
+                            color: 'white',
+                            alignItems: 'center',
+                            background: '#6ab04c ',
+                          }}
+                        >
+                          <Iconify icon="eva:plus-fill" />
+                        </div>
+                      </span>
+                    </div>
+                  </InputLabel>
+                  <input
+                    type="file"
+                    name="image"
+                    accept="image/*"
+                    style={{ display: 'none' }}
+                    id="ImageUpload"
+                    onChange={(e) => handleImage(e)}
+                  />
+                </div>
                 <Box
                   sx={{
                     display: 'grid',
@@ -294,50 +369,39 @@ const CreateUser = () => {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          {error && error ? (
-            <div>
-              <Lottie options={errDefaultOptions} height={200} width={200} />
-              <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', textAlign: 'center' }}>
-                <Typography id="modal-modal-title" variant="h6" component="h2">
-                  {errMsg}
-                </Typography>
-              </div>
+          <div>
+            <Lottie options={successDefaultOptions} height={200} width={200} />
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                textAlign: 'center',
+                flexDirection: 'column',
+              }}
+            >
+              <Typography id="modal-modal-title" variant="h6" component="h2">
+                {successMsg.includes('#') ? (
+                  <div>
+                    {successMsg.split('#')[0]} <span style={{ opacity: 0.6 }}>#{successMsg.split('#')[1]}</span>
+                  </div>
+                ) : (
+                  successMsg
+                )}
+              </Typography>
+              <Link to={'/dashboard/user'}>
+                <Button
+                  variant="contained"
+                  style={{
+                    background: '#6ab04c',
+                    marginTop: '30px',
+                  }}
+                >
+                  Check user
+                </Button>
+              </Link>
             </div>
-          ) : (
-            <div>
-              <Lottie options={successDefaultOptions} height={200} width={200} />
-              <div
-                style={{
-                  display: 'flex',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  textAlign: 'center',
-                  flexDirection: 'column',
-                }}
-              >
-                <Typography id="modal-modal-title" variant="h6" component="h2">
-                  {successMsg.includes('#') ? (
-                    <div>
-                      {successMsg.split('#')[0]} <span style={{ opacity: 0.6 }}>#{successMsg.split('#')[1]}</span>
-                    </div>
-                  ) : (
-                    successMsg
-                  )}
-                </Typography>
-                <Link to={'/dashboard/user'}>
-                  <Button
-                    variant="contained"
-                    style={{
-                      background: '#6ab04c',
-                      marginTop: '30px',
-                    }}
-                  >
-                    Check user
-                  </Button>
-                </Link>
-              </div>
-            </div>
-          )}
+          </div>
         </Box>
       </Modal>
     </div>

@@ -1,16 +1,14 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 // @mui
-import { Link, Stack, IconButton, InputAdornment, TextField, Checkbox } from '@mui/material';
+import { Link, Stack, IconButton, InputAdornment, TextField } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 import { useDispatch, useSelector } from 'react-redux';
-import { toast, ToastContainer } from 'react-toastify';
+// import { toast, ToastContainer } from 'react-toastify';
 // components
 import Iconify from '../../../components/iconify';
-// import { clearMessage } from '../../../redux/Reducers/messageSlice';
-// import { loadUser, login } from '../../../redux/Actions/authAction';
 import { errorToast, successToast } from '../../../utils/Toast';
-import { clearErrors, loadUser, login } from '../../../redux/Actions/userAction';
+import { clearErrors, login } from '../../../redux/Actions/userAction';
 
 // ----------------------------------------------------------------------
 
@@ -36,7 +34,7 @@ export default function LoginForm() {
     // if (user && user) {
     //   navigate('/dashboard', { replace: true });
     // }
-  }, [dispatch, error, isAuthenticated]);
+  }, [dispatch, error, isAuthenticated, navigate]);
 
   const handleClick = () => {
     console.log(email, password);
