@@ -27,12 +27,16 @@ import {
   Box,
   Modal,
   TextField,
+  Drawer,
+  ListItem,
+  ListItemText,
 } from '@mui/material';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import { useDispatch } from 'react-redux';
 import moment from 'moment';
+import swal from 'sweetalert';
 // components
 
 import Iconify from '../components/iconify';
@@ -40,6 +44,7 @@ import Scrollbar from '../components/scrollbar';
 import Label from '../components/label';
 // sections
 import { UserListHead } from '../sections/@dashboard/user';
+import EditUserDrawer from '../sections/@dashboard/user/EditUserDrawer';
 
 // ----------------------------------------------------------------------
 
@@ -47,13 +52,22 @@ const TABLE_HEAD = [
   { id: 'name', label: 'Name', alignRight: false },
   { id: 'email', label: 'Email', alignRight: false },
   { id: 'phoneNumber', label: 'Phone', alignRight: false },
-  { id: 'country', label: 'Country', alignRight: false },
-  { id: 'state', label: 'State', alignRight: false },
   { id: 'role', label: 'Role', alignRight: false },
   { id: 'company', label: 'Company', alignRight: false },
   { id: 'isActive', label: 'Status', alignRight: false },
   { id: 'createdAt', label: 'Created At', alignRight: false },
   { id: '' },
+];
+
+const Drawerdata = [
+  {
+    name: 'Home',
+  },
+  { name: 'Inbox' },
+  { name: 'Outbox' },
+  { name: 'Sent mail' },
+  { name: 'Draft' },
+  { name: 'Trash' },
 ];
 
 // ----------------------------------------------------------------------
@@ -78,7 +92,7 @@ export default function UserPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [searchString, setsearchString] = useState('');
   const [Modalopen, setModalopen] = useState(false);
-  const [UpdateId, setUpdateId] = useState();
+  const [UpdateData, setUpdateData] = useState();
   const [firstname, setFirstname] = useState();
   const [lastname, setlastname] = useState();
 
@@ -89,11 +103,36 @@ export default function UserPage() {
       setModalopen(true);
     }
   };
+
+  const [openDrawer, setOpenDrawer] = useState(false);
+  const drawerChanges = (data) => {
+    if (data.type !== 'obj') {
+      data.delete('type');
+      for (var [key, value] of data.entries()) {
+        console.log(key, value);
+      }
+    } else {
+      delete data.type;
+      console.log(data);
+    }
+    console.log(typeof data);
+    // console.log('Changes FROM Drawer', data);
+  };
+  const closeDrawer = () => {
+    setOpenDrawer(false);
+  };
+  const getList = () => (
+    <div style={{ width: 350 }}>
+      {/* <div onClick={() => setOpenDrawer(false)}> */}
+      <EditUserDrawer data={UpdateData} changeFunc={drawerChanges} closeDrawer={closeDrawer} />
+      {/* </div> */}
+    </div>
+  );
   // const { isLoading, user } = useSelector((state) => state.allUser);
   const dispatch = useDispatch();
 
   const setEditId = (idData) => {
-    setUpdateId(idData);
+    setUpdateData(idData);
   };
 
   const fetchUser = async () => {
@@ -137,7 +176,39 @@ export default function UserPage() {
   };
 
   const handleUpdate = () => {};
-  const handleDelete = () => {};
+  const handleDelete = (id) => {
+    console.log(id);
+    swal({
+      title: 'Are you sure?',
+      text: 'Once deleted, you will not be able to recover this user!',
+      icon: 'error',
+      buttons: true,
+      dangerMode: true,
+    }).then((willDelete) => {
+      if (willDelete) {
+        swal('User Deleted Successfully', {
+          icon: 'success',
+        });
+      } else {
+      }
+    });
+  };
+  const handleToggler = () => {
+    swal({
+      title: 'Are you sure?',
+      text: 'Are you sure you want to change the access of this user?',
+      icon: 'info',
+      buttons: true,
+      dangerMode: true,
+    }).then((willDelete) => {
+      if (willDelete) {
+        swal('User Access Change Successfully', {
+          icon: 'success',
+        });
+      } else {
+      }
+    });
+  };
 
   const doSearchName = (searchQuery) => {
     console.log('🚀 ~ file: Project.jsx:302 ~ doSearchName ~ e', searchQuery.length);
@@ -212,7 +283,11 @@ export default function UserPage() {
                 />
                 {searchString.length > 0 ? (
                   <div style={{ marginLeft: '40px' }}>
-                    <Label color={'error'} style={{ padding: '20px', fontSize: '14px' }}>
+                    <Label
+                      color={'error'}
+                      style={{ padding: '20px', fontSize: '14px' }}
+                      onClick={() => setsearchString('')}
+                    >
                       <Iconify icon={'eva:trash-2-outline'} sx={{ mr: 1 }} />
                       {sentenceCase('Clear')}
                     </Label>
@@ -262,25 +337,29 @@ export default function UserPage() {
                                       : '/assets/images/avatars/avatar_18.jpg'
                                   }
                                 />
-                                <Typography variant="subtitle2" noWrap>
-                                  {`${firstName} ${lastName}`}
-                                </Typography>
+                                <Typography variant="subtitle2">{`${firstName} ${lastName}`}</Typography>
                               </Stack>
                             </TableCell>
 
-                            <TableCell align="left">{email}</TableCell>
+                            <TableCell align="left">
+                              <div style={{ width: '150px', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                                {email}
+                              </div>
+                            </TableCell>
                             <TableCell align="left">{phoneNumber}</TableCell>
-                            <TableCell align="left">{country}</TableCell>
-                            <TableCell align="left">{state}</TableCell>
 
                             <TableCell align="left">{role}</TableCell>
                             <TableCell align="left">{company}</TableCell>
                             <TableCell align="left">
-                              <Label color={isActive ? 'success' : 'error'}>
+                              <Label
+                                color={isActive ? 'success' : 'error'}
+                                style={{ cursor: 'pointer' }}
+                                onClick={() => handleToggler()}
+                              >
                                 {sentenceCase(isActive ? 'active' : 'inactive')}
                               </Label>
                             </TableCell>
-                            <TableCell align="left">{moment(createdAt).format('LL')}</TableCell>
+                            <TableCell align="left">{moment(createdAt).format('MMM DD YY')}</TableCell>
 
                             <TableCell align="right">
                               <div>
@@ -319,7 +398,7 @@ export default function UserPage() {
           >
             <MenuItem
               onClick={() => {
-                setModalopen(true);
+                setOpenDrawer(true);
                 handleCloseMenu();
               }}
             >
@@ -327,125 +406,21 @@ export default function UserPage() {
               Edit
             </MenuItem>
 
-            <MenuItem sx={{ color: 'error.main' }}>
+            <MenuItem
+              sx={{ color: 'error.main' }}
+              onClick={() => {
+                handleDelete(UpdateData._id);
+                handleCloseMenu();
+              }}
+            >
               <Iconify icon={'eva:trash-2-outline'} sx={{ mr: 2 }} />
               Delete
             </MenuItem>
           </Popover>
 
-          <Modal
-            open={Modalopen}
-            onClose={ModalhandleClose}
-            aria-labelledby="modal-modal-title"
-            aria-describedby="modal-modal-description"
-          >
-            <Box sx={style}>
-              <Typography id="modal-modal-title" variant="h6" component="h2">
-                Update Model
-              </Typography>
-              <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: '40px' }}>
-                <InputLabel htmlFor="ImageUpload">
-                  <div style={{ position: 'relative' }}>
-                    <img
-                      src={UpdateId?.profileImg?.url}
-                      alt="Avatar Preview"
-                      className="img-fluid"
-                      style={{
-                        width: '100px',
-                        borderRadius: '50%',
-                        height: '100px',
-                        border: '1px solid #dbdbdb',
-                        objectFit: 'contain',
-                      }}
-                      onError={({ currentTarget }) => {
-                        currentTarget.onerror = null; // prevents looping
-                        currentTarget.src = '/assets/images/avatars/avatar_18.jpg';
-                      }}
-                    />
-                    <span
-                      style={{
-                        position: 'absolute',
-                        bottom: '5px',
-                        right: '5px',
-                      }}
-                    >
-                      <div
-                        style={{
-                          width: '25px',
-                          height: '25px',
-                          borderRadius: '50%',
-                          display: 'flex',
-                          justifyContent: 'center',
-                          color: 'white',
-                          alignItems: 'center',
-                          background: '#6ab04c ',
-                        }}
-                      >
-                        <Iconify icon="eva:plus-fill" />
-                      </div>
-                    </span>
-                  </div>
-                </InputLabel>
-                <input type="file" name="image" accept="image/*" style={{ display: 'none' }} id="ImageUpload" />
-              </div>
-              <TextField
-                id="outlined-firstname"
-                label="First Name"
-                variant="outlined"
-                value={UpdateId?.firstName}
-                onChange={(e) => setFirstname(e.target.value)}
-              />
-              <TextField
-                id="outlined-lastname"
-                label="Last Name"
-                variant="outlined"
-                value={UpdateId?.lastName}
-                onChange={(e) => setlastname(e.target.value)}
-              />
-              <TextField
-                id="outlined-lastname"
-                label="Email"
-                variant="outlined"
-                value={UpdateId?.email}
-                onChange={(e) => setlastname(e.target.value)}
-              />
-              <TextField
-                id="outlined-lastname"
-                label="Phone"
-                variant="outlined"
-                value={UpdateId?.phoneNumber}
-                onChange={(e) => setlastname(e.target.value)}
-              />
-              <TextField
-                id="outlined-lastname"
-                label="Country"
-                variant="outlined"
-                value={UpdateId?.country}
-                onChange={(e) => setlastname(e.target.value)}
-              />
-              <TextField
-                id="outlined-lastname"
-                label="State"
-                variant="outlined"
-                value={UpdateId?.state}
-                onChange={(e) => setlastname(e.target.value)}
-              />
-              <TextField
-                id="outlined-lastname"
-                label="Role"
-                variant="outlined"
-                value={UpdateId?.role}
-                onChange={(e) => setlastname(e.target.value)}
-              />
-              <TextField
-                id="outlined-lastname"
-                label="Company"
-                variant="outlined"
-                value={UpdateId?.company}
-                onChange={(e) => setlastname(e.target.value)}
-              />
-            </Box>
-          </Modal>
+          <Drawer open={openDrawer} anchor={'right'} onClose={() => setOpenDrawer(false)}>
+            {getList()}
+          </Drawer>
         </>
       )}
     </>
