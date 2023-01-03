@@ -90,50 +90,12 @@ export default function UserPage() {
   const [allUserList, setAllUserList] = useState();
   const [filterData, setFilterData] = useState();
   const [isLoading, setIsLoading] = useState(true);
+  const [isUpdateLoading, setIsUpdateLoading] = useState(true);
   const [searchString, setsearchString] = useState('');
   const [Modalopen, setModalopen] = useState(false);
   const [UpdateData, setUpdateData] = useState();
   const [firstname, setFirstname] = useState();
   const [lastname, setlastname] = useState();
-
-  const ModalhandleClose = () => {
-    if (Modalopen) {
-      setModalopen(false);
-    } else {
-      setModalopen(true);
-    }
-  };
-
-  const [openDrawer, setOpenDrawer] = useState(false);
-  const drawerChanges = (data) => {
-    if (data.type !== 'obj') {
-      data.delete('type');
-      for (var [key, value] of data.entries()) {
-        console.log(key, value);
-      }
-    } else {
-      delete data.type;
-      console.log(data);
-    }
-    console.log(typeof data);
-    // console.log('Changes FROM Drawer', data);
-  };
-  const closeDrawer = () => {
-    setOpenDrawer(false);
-  };
-  const getList = () => (
-    <div style={{ width: 350 }}>
-      {/* <div onClick={() => setOpenDrawer(false)}> */}
-      <EditUserDrawer data={UpdateData} changeFunc={drawerChanges} closeDrawer={closeDrawer} />
-      {/* </div> */}
-    </div>
-  );
-  // const { isLoading, user } = useSelector((state) => state.allUser);
-  const dispatch = useDispatch();
-
-  const setEditId = (idData) => {
-    setUpdateData(idData);
-  };
 
   const fetchUser = async () => {
     try {
@@ -150,6 +112,7 @@ export default function UserPage() {
           authorization: `Bearer ${bearerToken}`,
         },
       });
+      setOpenDrawer(false);
       setAllUserList(data.result);
       setFilterData(data.result);
       setIsLoading(false);
@@ -159,13 +122,119 @@ export default function UserPage() {
     }
   };
 
+  const updateUserData = async (id, updatedData) => {
+    try {
+      setIsUpdateLoading(true);
+      const BASE_URL = process.env.REACT_APP_API_ENDPOINT;
+      const bearerToken = Cookies.get('x-access-token')
+        ? Cookies.get('x-access-token')
+        : localStorage.getItem('x-access-token')
+        ? localStorage.getItem('x-access-token')
+        : null;
+
+      const { data } = await axios.put(`${BASE_URL}user/${id}`, updatedData, {
+        headers: {
+          authorization: `Bearer ${bearerToken}`,
+        },
+      });
+      // setAllUserList(data.result);
+      // setFilterData(data.result);
+      setIsUpdateLoading(false);
+      return data;
+    } catch (error) {
+      return error.response.data;
+    }
+  };
+  const removeUser = async (id) => {
+    try {
+      setIsUpdateLoading(true);
+      const BASE_URL = process.env.REACT_APP_API_ENDPOINT;
+      const bearerToken = Cookies.get('x-access-token')
+        ? Cookies.get('x-access-token')
+        : localStorage.getItem('x-access-token')
+        ? localStorage.getItem('x-access-token')
+        : null;
+
+      const { data } = await axios.delete(`${BASE_URL}user/${id}`, {
+        headers: {
+          authorization: `Bearer ${bearerToken}`,
+        },
+      });
+      // setAllUserList(data.result);
+      // setFilterData(data.result);
+      setIsUpdateLoading(false);
+      return data;
+    } catch (error) {
+      return error.response.data;
+    }
+  };
+
+  const doTogglerCall = async (id) => {
+    try {
+      setIsUpdateLoading(true);
+      const BASE_URL = process.env.REACT_APP_API_ENDPOINT;
+      const bearerToken = Cookies.get('x-access-token')
+        ? Cookies.get('x-access-token')
+        : localStorage.getItem('x-access-token')
+        ? localStorage.getItem('x-access-token')
+        : null;
+
+      const { data } = await axios.patch(`${BASE_URL}user/active/${id}`, bearerToken, {
+        headers: {
+          authorization: `Bearer ${bearerToken}`,
+        },
+      });
+      setIsUpdateLoading(false);
+      return data;
+    } catch (error) {
+      return error.response.data;
+    }
+  };
+
+  const ModalhandleClose = () => {
+    if (Modalopen) {
+      setModalopen(false);
+    } else {
+      setModalopen(true);
+    }
+  };
+
+  const [openDrawer, setOpenDrawer] = useState(false);
+  const drawerChanges = async (data) => {
+    if (data.type !== 'obj') {
+      data.delete('type');
+      for (var [key, value] of data.entries()) {
+        console.log(key, value);
+      }
+    } else {
+      delete data.type;
+      console.log(data);
+    }
+    console.log(data);
+    const updateResult = await updateUserData(UpdateData._id, data);
+    if (updateResult?.success === true) {
+      await fetchUser();
+    }
+    // console.log('Changes FROM Drawer', data);
+  };
+  const closeDrawer = () => {
+    setOpenDrawer(false);
+  };
+  const getList = () => (
+    <div style={{ width: 350 }}>
+      {/* <div onClick={() => setOpenDrawer(false)}> */}
+      <EditUserDrawer data={UpdateData} changeFunc={drawerChanges} closeDrawer={closeDrawer} />
+      {/* </div> */}
+    </div>
+  );
+
+  const setEditId = (idData) => {
+    setUpdateData(idData);
+  };
+
   React.useEffect(() => {
     fetchUser();
   }, []);
-
-  if (!isLoading) {
-    console.log(allUserList);
-  }
 
   const handleOpenMenu = (event) => {
     setOpen(event.currentTarget);
@@ -175,7 +244,6 @@ export default function UserPage() {
     setOpen(null);
   };
 
-  const handleUpdate = () => {};
   const handleDelete = (id) => {
     console.log(id);
     swal({
@@ -184,28 +252,43 @@ export default function UserPage() {
       icon: 'error',
       buttons: true,
       dangerMode: true,
-    }).then((willDelete) => {
+    }).then(async (willDelete) => {
+      console.log('🤩 ~ file: UserPage.js:261 ~ handleDelete ~ willDelete', willDelete);
       if (willDelete) {
-        swal('User Deleted Successfully', {
-          icon: 'success',
-        });
+        const result = await removeUser(id);
+        if (result.success === true) {
+          fetchUser();
+        } else {
+          swal('Something Went Wrong Please try after some time', {
+            icon: 'error',
+          });
+        }
       } else {
+        swal('Something Went Wrong Please try after some time', {
+          icon: 'error',
+        });
       }
     });
   };
-  const handleToggler = () => {
+
+  const handleToggler = (id) => {
     swal({
       title: 'Are you sure?',
       text: 'Are you sure you want to change the access of this user?',
       icon: 'info',
       buttons: true,
       dangerMode: true,
-    }).then((willDelete) => {
-      if (willDelete) {
-        swal('User Access Change Successfully', {
-          icon: 'success',
-        });
+    }).then(async (willDelete) => {
+      console.log('🤩 ~ file: UserPage.js:285 ~ handleToggler ~ willDelete', willDelete);
+      const result = await doTogglerCall(id);
+      console.log('🤩 ~ file: UserPage.js:288 ~ handleToggler ~ result', result);
+      fetchUser();
+      if (result?.success) {
+        fetchUser();
       } else {
+        swal('Something Went Wrong Please try after some time', {
+          icon: 'error',
+        });
       }
     });
   };
@@ -354,7 +437,7 @@ export default function UserPage() {
                               <Label
                                 color={isActive ? 'success' : 'error'}
                                 style={{ cursor: 'pointer' }}
-                                onClick={() => handleToggler()}
+                                onClick={() => handleToggler(_id)}
                               >
                                 {sentenceCase(isActive ? 'active' : 'inactive')}
                               </Label>

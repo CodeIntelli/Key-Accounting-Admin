@@ -15,6 +15,7 @@ import EbookPage from './pages/EbookPage';
 import CaseStudiesPage from './pages/caseStudiesPage';
 import InfoGraphicsPage from './pages/infoGraphicsPage';
 import AddUser from './pages/AddUser';
+import ProfilePage from './pages/ProfilePage';
 
 // ----------------------------------------------------------------------
 
@@ -35,6 +36,7 @@ export default function Router() {
         { path: 'adduser', element: <AddUser /> },
         { path: 'casestudies', element: <CaseStudiesPage /> },
         { path: 'infographics', element: <InfoGraphicsPage /> },
+        { path: 'profile', element: <ProfilePage /> },
       ],
     },
     {

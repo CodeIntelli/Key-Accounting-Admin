@@ -16,14 +16,17 @@ import {
   styled,
   Switch,
 } from '@mui/material';
+import Select from 'react-select';
 import { Country, State } from 'country-state-city';
 import Lottie from 'react-lottie';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import Select from 'react-select';
 import { Link } from 'react-router-dom';
-import Iconify from '../../../components/iconify';
+import { UploadFile } from '@mui/icons-material';
+import Cookies from 'js-cookie';
+import axios from 'axios';
 
+import Iconify from '../../../components/iconify';
 /* 
    <div style={{ margin: '10px 20px' }}>
             <Select
@@ -52,33 +55,49 @@ import Iconify from '../../../components/iconify';
 */
 
 const EditUserDrawer = ({ data, changeFunc, closeDrawer }) => {
-  const [change, setChange] = React.useState();
-  // Password
-  const [showPassword, setShowPassword] = useState(false);
-
   //   Form State
   const [firstname, setFirstname] = useState('');
   const [lastname, setlastname] = useState('');
   const [phone, setphone] = useState('');
   const [company, setcompany] = useState('');
   const [active, setActive] = useState(false);
-
-  /*  const handleDropdown = (data) => {
-    if (data.type === 'country') {
-      setcountry(data.value);
-      setcountryCode(data.code);
-    } else if (data.type === 'state') {
-      setstate(data.value);
-    }
-  }; */
+  const [role, setRole] = useState('');
+  const [isUpdateLoading, setIsUpdateLoading] = useState(false);
   const [avatarPreview, setAvatarPreview] = useState('/assets/images/avatars/avatar_18.jpg');
   const [image, setImage] = useState();
+  const UploadFile = async (id, imageData) => {
+    try {
+      setIsUpdateLoading(true);
+      const BASE_URL = process.env.REACT_APP_API_ENDPOINT;
+      const bearerToken = Cookies.get('x-access-token')
+        ? Cookies.get('x-access-token')
+        : localStorage.getItem('x-access-token')
+        ? localStorage.getItem('x-access-token')
+        : null;
+
+      const { data } = await axios.post(`${BASE_URL}user/profile/${id}`, imageData, {
+        headers: {
+          authorization: `Bearer ${bearerToken}`,
+          'Content-Type': 'multipart/form-data; boundary=<calculated when request is sent>',
+        },
+      });
+      // setAllUserList(data.result);
+      // setFilterData(data.result);
+      setIsUpdateLoading(false);
+      console.log('🤩 ~ file: UserPage.js:179 ~ updateUserData ~ data', data);
+    } catch (error) {
+      console.log('🤩 ~ file: UserPage.js:180 ~ updateUserData ~ error', error.response.data);
+    }
+  };
   /* Image Uploading */
   const handleImage = async (e) => {
     const { name, value } = e.target;
     if (name === 'image') {
       setAvatarPreview(URL.createObjectURL(e.target.files[0]));
       setImage(e.target.files[0]);
+      const storedData = new FormData();
+      storedData.append('profile', image);
+      UploadFile(data._id, image);
     }
   };
 
@@ -89,48 +108,25 @@ const EditUserDrawer = ({ data, changeFunc, closeDrawer }) => {
       setlastname(data.lastName);
       setphone(data.phoneNumber);
       setcompany(data.company);
+      setRole(data.role);
       setAvatarPreview(data?.profileImg ? data?.profileImg.url : '/assets/images/avatars/avatar_18.jpg');
       setActive(data.isActive);
     }
   }, []);
 
   const handleSubmit = async () => {
-    console.log('image edituserdrawer', image?.name);
-    // if we upload image then request as a form data otherwise normal json data
-    if (image && image?.name) {
-      const storedData = new FormData();
-      storedData.append('profile', image);
-      storedData.append('firstName', firstname);
-      storedData.append('lastName', lastname);
-      storedData.append('phoneNumber', phone);
-      storedData.append('company', company);
-      storedData.append('isActive', active);
-      storedData.append('type', 'formdata');
-      changeFunc(storedData);
-    } else {
-      const data = {
-        type: 'obj',
-        firstName: firstname,
-        lastName: lastname,
-        phoneNumber: phone,
-        isActive: active,
-        company,
-      };
-      changeFunc(data);
-    }
-    // const storedData = {
-    //   firstName: firstname,
-    //   lastName: lastname,
-    //   email,
-    //   phoneNumber: Number(phone),
-    //   password,
-    //   country,
-    //   state,
-    //   company,
-    // };
-    // dispatch(AddUser(storedData));
-    // setSuccessMsg(`User Created Successfully`);
-    // setOpen(true);
+    const storedData = {
+      type: 'obj',
+      firstName: firstname,
+      lastName: lastname,
+      phoneNumber: phone,
+      role,
+      state: data.state,
+      country: data.country,
+      isActive: active,
+      company,
+    };
+    changeFunc(storedData);
   };
   const handleSwitchChange = (e) => {
     setActive(e.target.checked);
@@ -189,6 +185,25 @@ const EditUserDrawer = ({ data, changeFunc, closeDrawer }) => {
       }),
     },
   }));
+  const userRole = [
+    { value: 'User', label: 'User' },
+    { value: 'Content Writer', label: 'Content Writer' },
+    { value: 'Developer', label: 'Developer' },
+    { value: 'CEO', label: 'CEO' },
+  ];
+  const handleDropdownChange = (event) => {
+    console.log(event);
+    setRole(event.value);
+  };
+
+  const customStyles = {
+    container: (base, state) => {
+      return {
+        ...base,
+        zIndex: state.isFocused ? '999' : '1',
+      };
+    },
+  };
 
   return (
     <div>
@@ -199,7 +214,7 @@ const EditUserDrawer = ({ data, changeFunc, closeDrawer }) => {
             justifyContent: 'center',
             flexDirection: 'column',
             alignItems: 'center',
-            margin: '10px',
+            margin: '5px',
           }}
         >
           <InputLabel htmlFor="ImageUpload">
@@ -209,9 +224,9 @@ const EditUserDrawer = ({ data, changeFunc, closeDrawer }) => {
                 alt="Avatar Preview"
                 className="img-fluid"
                 style={{
-                  width: '100px',
+                  width: '75px',
                   borderRadius: '50%',
-                  height: '100px',
+                  height: '75px',
                   border: '1px solid #dbdbdb',
                   objectFit: 'contain',
                 }}
@@ -223,14 +238,14 @@ const EditUserDrawer = ({ data, changeFunc, closeDrawer }) => {
               <span
                 style={{
                   position: 'absolute',
-                  bottom: '5px',
+                  bottom: '0px',
                   right: '5px',
                 }}
               >
                 <div
                   style={{
-                    width: '25px',
-                    height: '25px',
+                    width: '20px',
+                    height: '20px',
                     borderRadius: '50%',
                     display: 'flex',
                     justifyContent: 'center',
@@ -239,7 +254,7 @@ const EditUserDrawer = ({ data, changeFunc, closeDrawer }) => {
                     background: '#6ab04c ',
                   }}
                 >
-                  <Iconify icon="eva:plus-fill" />
+                  <Iconify style={{ fontSize: '8px', height: '16px', width: '16px' }} icon="eva:plus-fill" />
                 </div>
               </span>
             </div>
@@ -275,6 +290,17 @@ const EditUserDrawer = ({ data, changeFunc, closeDrawer }) => {
             value={lastname}
             onChange={(e) => setlastname(e.target.value)}
           />
+          <div style={{ margin: '0px 20px 10px' }}>
+            <span style={{ fontSize: '12px', marginLeft: '10px' }}>Select User Role</span>
+            <Select
+              styles={customStyles}
+              value={role ? [{ label: role }] : role}
+              placeholder="Select User Role"
+              options={userRole}
+              defaultValue={role}
+              onChange={(e) => handleDropdownChange(e)}
+            />
+          </div>
 
           <TextField
             style={{ margin: '10px 20px' }}
@@ -294,6 +320,7 @@ const EditUserDrawer = ({ data, changeFunc, closeDrawer }) => {
             value={company}
             onChange={(e) => setcompany(e.target.value)}
           />
+
           <Stack direction="row" spacing={1} style={{ margin: '0px 30px' }} alignItems="center">
             <Typography style={{ color: 'red' }}>Inactive</Typography>
             <FormControlLabel control={<IOSSwitch sx={{ m: 1 }} defaultChecked />} />
