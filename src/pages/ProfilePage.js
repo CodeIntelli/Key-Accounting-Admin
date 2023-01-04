@@ -57,7 +57,6 @@ const ProfilePage = () => {
   };
 
   const UploadFile = async (id, imageData) => {
-    console.log('🤩 ~ file: ProfilePage.js:60 ~ UploadFile ~ imageData', imageData);
     try {
       const BASE_URL = process.env.REACT_APP_API_ENDPOINT;
       const bearerToken = Cookies.get('x-access-token')
@@ -72,11 +71,13 @@ const ProfilePage = () => {
           'Content-Type': 'multipart/form-data; boundary=<calculated when request is sent>',
         },
       });
-      // setAllUserList(data.result);
-      // setFilterData(data.result);
-      console.log('🤩 ~ file: UserPage.js:179 ~ updateUserData ~ data', data);
+      if (data.success) {
+        dispatch(loadUser());
+      }
+      return data;
     } catch (error) {
       console.log('🤩 ~ file: UserPage.js:180 ~ updateUserData ~ error', error.response.data);
+      return error.response.data;
     }
   };
 
@@ -165,10 +166,12 @@ const ProfilePage = () => {
     if (name === 'image') {
       setAvatarPreview(URL.createObjectURL(e.target.files[0]));
       setImage(e.target.files[0]);
-      console.log(image);
+    }
+    if (image && image) {
+      console.log('🤩 ~ file: ProfilePage.js:172 ~ uploadImage ~ image', image);
       const storedData = new FormData();
       storedData.append('profile', image);
-      UploadFile(fetchData._id, image);
+      UploadFile(fetchData._id, storedData);
     }
   };
 
