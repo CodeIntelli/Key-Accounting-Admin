@@ -17,6 +17,8 @@ import InfoGraphicsPage from './pages/infoGraphicsPage';
 import AddUser from './pages/AddUser';
 import ProfilePage from './pages/ProfilePage';
 import CreateBlog from './pages/AddBlog';
+import CategoriesPage from './pages/CategoriesPage';
+import SubCategoriesPage from './pages/SubCategoriesPage';
 
 // ----------------------------------------------------------------------
 
@@ -39,6 +41,8 @@ export default function Router() {
         { path: 'casestudies', element: <CaseStudiesPage /> },
         { path: 'infographics', element: <InfoGraphicsPage /> },
         { path: 'profile', element: <ProfilePage /> },
+        { path: 'category', element: <CategoriesPage /> },
+        { path: 'subcategory', element: <SubCategoriesPage /> },
       ],
     },
     {
