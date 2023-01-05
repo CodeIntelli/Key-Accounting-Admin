@@ -8,11 +8,13 @@ import store from './redux/Store';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
 root.render(
-  <Provider store={store}>
-    <HelmetProvider>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-    </HelmetProvider>
-  </Provider>
+  <React.StrictMode>
+    <Provider store={store}>
+      <HelmetProvider>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </HelmetProvider>
+    </Provider>
+  </React.StrictMode>
 );
