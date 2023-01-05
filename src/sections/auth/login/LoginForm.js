@@ -16,7 +16,7 @@ export default function LoginForm() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const { isAuthenticated, user, error } = useSelector((state) => state.auth);
+  const { isAuthenticated, user, error, isLoading } = useSelector((state) => state.auth);
   const [showPassword, setShowPassword] = useState(false);
   const [email, setemailValue] = useState('');
   const [password, setpasswordValue] = useState('');
@@ -39,7 +39,9 @@ export default function LoginForm() {
   const handleClick = () => {
     console.log(email, password);
     dispatch(login({ email, password }));
-    successToast('Login Successfully');
+    if (!isLoading && isAuthenticated && user) {
+      successToast('Login Successfully');
+    }
 
     // navigate('/dashboard', { replace: true });
   };
