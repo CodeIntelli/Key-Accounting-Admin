@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useNavigate, useNavigation } from 'react-router-dom';
+import { Link, useNavigate, useNavigation } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { faker } from '@faker-js/faker';
 // @mui
@@ -57,7 +57,9 @@ export default function DashboardAppPage() {
 
           <Grid container spacing={3}>
             <Grid item xs={12} sm={6} md={3}>
-              <AppWidgetSummary title="Total Blogs" total={240} color="success" icon={'simple-icons:blogger'} />
+              <Link to={'/dashboard/subcategory'}>
+                <AppWidgetSummary title="Total Blogs" total={240} color="success" icon={'simple-icons:blogger'} />
+              </Link>
             </Grid>
 
             <Grid item xs={12} sm={6} md={3}>

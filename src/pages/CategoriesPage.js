@@ -27,7 +27,6 @@ import {
   Box,
   Modal,
   TextField,
-  Drawer,
   ListItem,
   ListItemText,
 } from '@mui/material';
@@ -42,9 +41,9 @@ import swal from 'sweetalert';
 import Iconify from '../components/iconify';
 import Scrollbar from '../components/scrollbar';
 import Label from '../components/label';
+import { LoadingButton } from '@mui/lab';
+import { errorToast, successToast } from 'src/utils/Toast';
 // sections
-import { UserListHead } from '../sections/@dashboard/user';
-import EditUserDrawer from '../sections/@dashboard/user/EditUserDrawer';
 
 // ----------------------------------------------------------------------
 
@@ -56,17 +55,6 @@ const TABLE_HEAD = [
   { id: '' },
 ];
 
-const Drawerdata = [
-  {
-    name: 'Home',
-  },
-  { name: 'Inbox' },
-  { name: 'Outbox' },
-  { name: 'Sent mail' },
-  { name: 'Draft' },
-  { name: 'Trash' },
-];
-
 // ----------------------------------------------------------------------
 
 const style = {
@@ -76,25 +64,26 @@ const style = {
   transform: 'translate(-50%, -50%)',
   width: 400,
   bgcolor: 'background.paper',
-  border: '2px solid #000',
   boxShadow: 24,
-  p: 4,
+  borderRadius: '12px',
+  p: 2,
 };
 
 export default function CategoriesPage() {
   const [open, setOpen] = useState(null);
 
-  const [allUserList, setAllUserList] = useState();
+  const [CategoryList, setCategoryList] = useState();
   const [filterData, setFilterData] = useState();
   const [isLoading, setIsLoading] = useState(true);
-  const [isUpdateLoading, setIsUpdateLoading] = useState(true);
   const [searchString, setsearchString] = useState('');
   const [Modalopen, setModalopen] = useState(false);
+  const [UpdateModalopen, setUpdateModalopen] = useState(false);
   const [UpdateData, setUpdateData] = useState();
-  const [firstname, setFirstname] = useState();
-  const [lastname, setlastname] = useState();
 
-  const fetchUser = async () => {
+  const [catTitle, setcatTitle] = useState('');
+  const [editcatTitle, seteditcatTitle] = useState('');
+
+  const fetchCategory = async () => {
     try {
       setIsLoading(true);
       const BASE_URL = process.env.REACT_APP_API_ENDPOINT;
@@ -109,20 +98,18 @@ export default function CategoriesPage() {
           authorization: `Bearer ${bearerToken}`,
         },
       });
-      console.log('🤩 ~ file: CategoriesPage.js:112 ~ fetchUser ~ data', data);
-      setOpenDrawer(false);
-      setAllUserList(data.result);
+      console.log('🤩 ~ file: CategoriesPage.js:112 ~ fetchCategory ~ data', data);
+      setCategoryList(data.result);
       setFilterData(data.result);
       setIsLoading(false);
-      console.log('🤩 ~ file: UserPage.js:113 ~ fetchUser ~ data', data);
+      console.log('🤩 ~ file: UserPage.js:113 ~ fetchCategory ~ data', data);
     } catch (error) {
       console.log(error);
     }
   };
 
-  const updateUserData = async (id, updatedData) => {
+  const addCategory = async (catData) => {
     try {
-      setIsUpdateLoading(true);
       const BASE_URL = process.env.REACT_APP_API_ENDPOINT;
       const bearerToken = Cookies.get('x-access-token')
         ? Cookies.get('x-access-token')
@@ -130,14 +117,37 @@ export default function CategoriesPage() {
         ? localStorage.getItem('x-access-token')
         : null;
 
-      const { data } = await axios.put(`${BASE_URL}user/${id}`, updatedData, {
+      const { data } = await axios.post(`${BASE_URL}category`, catData, {
         headers: {
           authorization: `Bearer ${bearerToken}`,
         },
       });
-      // setAllUserList(data.result);
-      // setFilterData(data.result);
-      setIsUpdateLoading(false);
+      console.log('🤩 ~ file: CategoriesPage.js:121 ~ addCategory ~ data', data);
+      setModalopen(false);
+      setcatTitle('');
+      return data;
+    } catch (error) {
+      return error.response.data;
+    }
+  };
+
+  const updateCategory = async (id, updatedData) => {
+    try {
+      const BASE_URL = process.env.REACT_APP_API_ENDPOINT;
+      const bearerToken = Cookies.get('x-access-token')
+        ? Cookies.get('x-access-token')
+        : localStorage.getItem('x-access-token')
+        ? localStorage.getItem('x-access-token')
+        : null;
+
+      const { data } = await axios.put(`${BASE_URL}category/${id}`, updatedData, {
+        headers: {
+          authorization: `Bearer ${bearerToken}`,
+        },
+      });
+      console.log('🤩 ~ file: CategoriesPage.js:145 ~ updateCategory ~ data', data);
+      setUpdateModalopen(false);
+      seteditcatTitle('');
       return data;
     } catch (error) {
       return error.response.data;
@@ -145,7 +155,6 @@ export default function CategoriesPage() {
   };
   const removeUser = async (id) => {
     try {
-      setIsUpdateLoading(true);
       const BASE_URL = process.env.REACT_APP_API_ENDPOINT;
       const bearerToken = Cookies.get('x-access-token')
         ? Cookies.get('x-access-token')
@@ -153,14 +162,11 @@ export default function CategoriesPage() {
         ? localStorage.getItem('x-access-token')
         : null;
 
-      const { data } = await axios.delete(`${BASE_URL}user/${id}`, {
+      const { data } = await axios.delete(`${BASE_URL}category/${id}`, {
         headers: {
           authorization: `Bearer ${bearerToken}`,
         },
       });
-      // setAllUserList(data.result);
-      // setFilterData(data.result);
-      setIsUpdateLoading(false);
       return data;
     } catch (error) {
       return error.response.data;
@@ -169,7 +175,6 @@ export default function CategoriesPage() {
 
   const doTogglerCall = async (id) => {
     try {
-      setIsUpdateLoading(true);
       const BASE_URL = process.env.REACT_APP_API_ENDPOINT;
       const bearerToken = Cookies.get('x-access-token')
         ? Cookies.get('x-access-token')
@@ -177,12 +182,11 @@ export default function CategoriesPage() {
         ? localStorage.getItem('x-access-token')
         : null;
 
-      const { data } = await axios.patch(`${BASE_URL}user/active/${id}`, bearerToken, {
+      const { data } = await axios.patch(`${BASE_URL}category/${id}`, bearerToken, {
         headers: {
           authorization: `Bearer ${bearerToken}`,
         },
       });
-      setIsUpdateLoading(false);
       return data;
     } catch (error) {
       return error.response.data;
@@ -196,42 +200,21 @@ export default function CategoriesPage() {
       setModalopen(true);
     }
   };
-
-  const [openDrawer, setOpenDrawer] = useState(false);
-  const drawerChanges = async (data) => {
-    if (data.type !== 'obj') {
-      data.delete('type');
-      for (var [key, value] of data.entries()) {
-        console.log(key, value);
-      }
+  const UpdateModalhandleClose = () => {
+    if (UpdateModalopen) {
+      setUpdateModalopen(false);
     } else {
-      delete data.type;
-      console.log(data);
+      setUpdateModalopen(true);
     }
-    console.log(data);
-    const updateResult = await updateUserData(UpdateData._id, data);
-    if (updateResult?.success === true) {
-      await fetchUser();
-    }
-    // console.log('Changes FROM Drawer', data);
   };
-  const closeDrawer = () => {
-    setOpenDrawer(false);
-  };
-  const getList = () => (
-    <div style={{ width: 350 }}>
-      {/* <div onClick={() => setOpenDrawer(false)}> */}
-      <EditUserDrawer data={UpdateData} changeFunc={drawerChanges} closeDrawer={closeDrawer} />
-      {/* </div> */}
-    </div>
-  );
 
   const setEditId = (idData) => {
+    console.log('🤩 ~ file: CategoriesPage.js:185 ~ setEditId ~ idData', idData.catTitle);
     setUpdateData(idData);
   };
 
   React.useEffect(() => {
-    fetchUser();
+    fetchCategory();
   }, []);
 
   const handleOpenMenu = (event) => {
@@ -255,16 +238,14 @@ export default function CategoriesPage() {
       if (willDelete) {
         const result = await removeUser(id);
         if (result.success === true) {
-          fetchUser();
+          setUpdateData('');
+          successToast('Category Deleted Successfully');
+          fetchCategory();
         } else {
           swal('Something Went Wrong Please try after some time', {
             icon: 'error',
           });
         }
-      } else {
-        swal('Something Went Wrong Please try after some time', {
-          icon: 'error',
-        });
       }
     });
   };
@@ -277,33 +258,56 @@ export default function CategoriesPage() {
       buttons: true,
       dangerMode: true,
     }).then(async (willDelete) => {
-      console.log('🤩 ~ file: UserPage.js:285 ~ handleToggler ~ willDelete', willDelete);
-      const result = await doTogglerCall(id);
-      console.log('🤩 ~ file: UserPage.js:288 ~ handleToggler ~ result', result);
-      fetchUser();
-      if (result?.success) {
-        fetchUser();
-      } else {
-        swal('Something Went Wrong Please try after some time', {
-          icon: 'error',
-        });
+      if (willDelete) {
+        const result = await doTogglerCall(id);
+        if (result?.success) {
+          setUpdateData('');
+          successToast('Category Status Change Successfully');
+          fetchCategory();
+        } else {
+          swal('Something Went Wrong Please try after some time', {
+            icon: 'error',
+          });
+        }
       }
     });
   };
 
   const doSearchName = (searchQuery) => {
     console.log('🚀 ~ file: Project.jsx:302 ~ doSearchName ~ e', searchQuery.length);
-    if (searchQuery.length === 0) {
-      setFilterData(allUserList);
-    }
-    if (searchQuery.length > 0) {
+    if (searchQuery != '') {
       const AllFilterArray =
-        allUserList &&
-        allUserList.filter((item) => {
+        CategoryList &&
+        CategoryList.filter((item) => {
           return item.catTitle?.toLowerCase()?.includes(searchQuery);
         });
-
       setFilterData(AllFilterArray);
+    } else {
+      setFilterData(CategoryList);
+    }
+  };
+
+  const handleSubmit = async () => {
+    const addCatResult = await addCategory({ catTitle });
+    console.log('🤩 ~ file: CategoriesPage.js:289 ~ handleSubmit ~ addCatResult', addCatResult);
+    if (addCatResult.success) {
+      successToast('Category Added Successfully');
+      setUpdateData('');
+      fetchCategory();
+    } else {
+      errorToast(addCatResult.message);
+    }
+  };
+
+  const handleUpdate = async () => {
+    const editCatResult = await updateCategory(UpdateData._id, { catTitle: editcatTitle });
+    console.log('🤩 ~ file: CategoriesPage.js:289 ~ handleSubmit ~ editCatResult', editCatResult);
+    if (editCatResult.success) {
+      successToast('Category Edited Successfully');
+      setUpdateData('');
+      fetchCategory();
+    } else {
+      errorToast(editCatResult.message);
     }
   };
 
@@ -321,11 +325,17 @@ export default function CategoriesPage() {
               <Typography variant="h4" gutterBottom>
                 Categories
               </Typography>
-              <Link to={'/dashboard/adduser'}>
-                <Button variant="contained" startIcon={<Iconify icon="eva:plus-fill" />}>
-                  New User
-                </Button>
-              </Link>
+              <Button
+                variant="contained"
+                onClick={() => {
+                  seteditcatTitle('');
+                  setcatTitle('');
+                  setModalopen(true);
+                }}
+                startIcon={<Iconify icon="eva:plus-fill" />}
+              >
+                Add Category
+              </Button>
             </Stack>
 
             <Card>
@@ -360,7 +370,10 @@ export default function CategoriesPage() {
                     <Label
                       color={'error'}
                       style={{ padding: '20px', fontSize: '14px' }}
-                      onClick={() => setsearchString('')}
+                      onClick={() => {
+                        doSearchName('');
+                        setsearchString('');
+                      }}
                     >
                       <Iconify icon={'eva:trash-2-outline'} sx={{ mr: 1 }} />
                       {sentenceCase('Clear')}
@@ -388,7 +401,9 @@ export default function CategoriesPage() {
                         <TableBody>
                           <TableRow hover>
                             <TableCell align="left">{index + 1}</TableCell>
-                            <TableCell align="left">{catTitle}</TableCell>
+                            <TableCell align="left" style={{ textTransform: 'capitalize' }}>
+                              {catTitle}
+                            </TableCell>
                             <TableCell align="left">
                               <Label
                                 color={isActive ? 'success' : 'error'}
@@ -398,7 +413,7 @@ export default function CategoriesPage() {
                                 {sentenceCase(isActive ? 'active' : 'inactive')}
                               </Label>
                             </TableCell>
-                            <TableCell align="left">{moment(createdAt).format('MMM DD YY')}</TableCell>
+                            <TableCell align="left">{moment(createdAt).format('LL')}</TableCell>
 
                             <TableCell align="right">
                               <div>
@@ -438,6 +453,8 @@ export default function CategoriesPage() {
             <MenuItem
               onClick={() => {
                 handleCloseMenu();
+                setUpdateModalopen(true);
+                seteditcatTitle(UpdateData.catTitle);
               }}
             >
               <Iconify icon={'eva:edit-fill'} sx={{ mr: 2 }} />
@@ -455,6 +472,103 @@ export default function CategoriesPage() {
               Delete
             </MenuItem>
           </Popover>
+
+          <Modal
+            open={Modalopen}
+            onClose={ModalhandleClose}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+          >
+            <Box sx={style}>
+              <div>
+                <div
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                  }}
+                >
+                  <h3>Create Category</h3>
+                  <TextField
+                    id="outlined-firstname"
+                    label="Category Title"
+                    variant="outlined"
+                    value={catTitle}
+                    onChange={(e) => setcatTitle(e.target.value)}
+                  />
+                  <div
+                    style={{
+                      marginTop: '30px',
+                      display: 'flex',
+                      justifyContent: 'flex-end',
+                      opacity: catTitle.trim().length > 0 ? 1 : 0.5,
+                    }}
+                  >
+                    <LoadingButton
+                      type="submit"
+                      variant="contained"
+                      style={{
+                        background: '#6ab04c',
+                        padding: '10px 20px',
+                        opacity: 1,
+                        cursor: catTitle.trim().length > 0 ? 'pointer' : 'not-allowed',
+                      }}
+                      onClick={() => handleSubmit()}
+                    >
+                      Add Category
+                    </LoadingButton>
+                  </div>
+                </div>
+              </div>
+            </Box>
+          </Modal>
+
+          <Modal
+            open={UpdateModalopen}
+            onClose={UpdateModalhandleClose}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+          >
+            <Box sx={style}>
+              <div>
+                <div
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                  }}
+                >
+                  <h3>Edit Category</h3>
+                  <TextField
+                    id="outlined-firstname"
+                    label="Category Title"
+                    variant="outlined"
+                    value={editcatTitle}
+                    onChange={(e) => seteditcatTitle(e.target.value)}
+                  />
+                  <div
+                    style={{
+                      marginTop: '30px',
+                      display: 'flex',
+                      justifyContent: 'flex-end',
+                    }}
+                  >
+                    <LoadingButton
+                      type="submit"
+                      variant="contained"
+                      style={{
+                        background: '#FFC501',
+                        padding: '10px 20px',
+                        opacity: 1,
+                        cursor: 'pointer',
+                      }}
+                      onClick={() => handleUpdate()}
+                    >
+                      Edit Category
+                    </LoadingButton>
+                  </div>
+                </div>
+              </div>
+            </Box>
+          </Modal>
         </>
       )}
     </>
