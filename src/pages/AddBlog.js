@@ -39,7 +39,16 @@ const style = {
   p: 4,
 };
 
-const CreateBlog = () => {
+const customStyles = {
+  container: (base, state) => {
+    return {
+      ...base,
+      zIndex: state.isFocused ? '999' : '1',
+    };
+  },
+};
+
+const CreateBlog = ({ blogData }) => {
   const [countryData, setCountryData] = useState();
   const dispatch = useDispatch();
   // const { isLoading, isAuthenticated, user, error } = useSelector((state) => state.user);
@@ -53,8 +62,12 @@ const CreateBlog = () => {
   const [metaDesc, setmetaDesc] = useState('');
   const [metaKeyword, setmetaKeyword] = useState();
   const [catId, setCatId] = useState();
+  const [CategoryIdDropdown, setCategoryIdDropdown] = useState();
+  const [CategoryValueDropdown, setCategoryValueDropdown] = useState();
+  const [catData, setcatData] = useState();
+  const [isUpdate, setisUpdate] = useState(false);
 
-  const addBlog = async (Blogdata) => {
+  const addBlog = async (id, Blogdata) => {
     try {
       const BASE_URL = process.env.REACT_APP_API_ENDPOINT;
       const bearerToken = Cookies.get('x-access-token')
@@ -63,16 +76,14 @@ const CreateBlog = () => {
         ? localStorage.getItem('x-access-token')
         : null;
 
-      const { data } = await axios.post(`${BASE_URL}blog?cat_id=63b55bd78677fde24af291c3`, Blogdata, {
+      const { data } = await axios.post(`${BASE_URL}blog?cat_id=${id}`, Blogdata, {
         headers: {
           'Content-Type': 'multipart/form-data',
           authorization: `Bearer ${bearerToken}`,
         },
       });
-      console.log('🤩 ~ file: AddBlog.js:65 ~ addBlog ~ data', data);
       return data;
     } catch (error) {
-      console.log(error);
       return error.response.data;
     }
   };
@@ -86,21 +97,34 @@ const CreateBlog = () => {
         ? localStorage.getItem('x-access-token')
         : null;
 
-      const { data } = await axios.post(`${BASE_URL}blog?cat_id=63b55bd78677fde24af291c3`, Blogdata, {
+      const { data } = await axios.get(`${BASE_URL}category/subcategory/all`, {
         headers: {
-          'Content-Type': 'multipart/form-data',
           authorization: `Bearer ${bearerToken}`,
         },
       });
-      console.log('🤩 ~ file: AddBlog.js:65 ~ addBlog ~ data', data);
+
+      let dropDownData = [];
+      data &&
+        data?.result.map((mapdata) => {
+          if (mapdata.isActive) {
+            return dropDownData.push({
+              name: '',
+              label: mapdata.subTitle,
+              value: mapdata._id,
+            });
+          }
+        });
+      setcatData(dropDownData);
       return data;
     } catch (error) {
-      console.log(error);
       return error.response.data;
     }
   };
 
-  const handleDropdown = (data) => {};
+  const handleDropdown = (data) => {
+    setCategoryIdDropdown(data.label);
+    setCategoryValueDropdown(data.value);
+  };
 
   const [avatarPreview, setAvatarPreview] = useState('/assets/images/avatars/avatar_18.jpg');
   const [image, setImage] = useState();
@@ -128,13 +152,12 @@ const CreateBlog = () => {
     storedData.append('metaKeyword', metaKeyword);
     storedData.append('blogImg', image);
 
-    const addBlogresult = await addBlog(storedData);
+    const addBlogresult = await addBlog(CategoryIdDropdown, storedData);
     if (addBlogresult.success) {
       setErrMsg('');
       setSuccessMsg(`Blog Created Successfully`);
       return setOpen(true);
     } else {
-      console.log(addBlogresult.message);
       setSuccessMsg('');
       setErrMsg(addBlogresult.message);
       return setOpen(true);
@@ -167,8 +190,46 @@ const CreateBlog = () => {
     },
   };
 
+  const setUpdateData = (updatedData) => {
+    console.log('=========================================================', updatedData);
+    const { content, metaDesc, metaKeyword, metaTitle, postDesc, postTitle, post_slug, subCategory, tags, thumbImage } =
+      updatedData;
+    setpostTitle(postTitle);
+    setpostDesc(postDesc);
+    setcontent(content);
+    setpost_slug(post_slug);
+    setAvatarPreview(thumbImage.url);
+    settags(tags.toString());
+    setmetaTitle(metaTitle);
+    setmetaDesc(metaDesc);
+    setmetaKeyword(metaKeyword);
+    setCategoryIdDropdown(subCategory.subTitle);
+    setCategoryValueDropdown(subCategory._id);
+    setisUpdate(true);
+  };
+
+  const handleEditSubmit = async () => {
+    const editedData = {
+      postTitle,
+      postDesc,
+      content,
+      post_slug,
+      tags: tags.includes(',') ? tags.split(',') : tags.toArray(),
+      cat_id: CategoryValueDropdown,
+      metaTitle,
+      metaDesc,
+      metaKeyword,
+    };
+    console.log(editedData);
+  };
+
+  // const handleToggler
+
   useEffect(() => {
     fetchCategories();
+    if (blogData) {
+      setUpdateData(blogData);
+    }
   }, []);
   return (
     <div>
@@ -265,15 +326,26 @@ const CreateBlog = () => {
                   rows={4}
                   onChange={(e) => setcontent(e.target.value)}
                 />
-                <Select
-                  menuPortalTarget={document.body}
-                  placeholder="Select Sub Categories"
-                  styles={{ padding: '50px' }}
-                  options={countryData && countryData}
-                  onChange={(e) => {
-                    handleDropdown(e);
-                  }}
-                />
+                <div styles={{ padding: '50px' }}>
+                  <Select
+                    styles={customStyles}
+                    placeholder="Select Category"
+                    value={{
+                      label: CategoryIdDropdown ? CategoryIdDropdown : 'Select Category',
+                      value: CategoryValueDropdown,
+                    }}
+                    options={catData}
+                    onChange={(e) => {
+                      handleDropdown(e);
+                    }}
+                  />
+                  <p style={{ marginLeft: '5px' }}>
+                    Not able to find your categories?
+                    <Link to={'/dashboard/subcategory'} style={{ color: 'blue', textDecoration: 'underline' }}>
+                      Add new one
+                    </Link>
+                  </p>
+                </div>
                 <TextField
                   id="outlined-firstname"
                   label="Post Slug"
@@ -313,27 +385,51 @@ const CreateBlog = () => {
                 />
               </Box>
 
-              <div
-                style={{
-                  marginTop: '30px',
-                  display: 'flex',
-                  justifyContent: 'flex-end',
-                  opacity: 1,
-                }}
-              >
-                <LoadingButton
-                  type="submit"
-                  variant="contained"
+              {isUpdate ? (
+                <div
                   style={{
-                    background: '#6ab04c',
-                    padding: '10px 20px',
+                    marginTop: '30px',
+                    display: 'flex',
+                    justifyContent: 'flex-end',
                     opacity: 1,
                   }}
-                  onClick={() => handleSubmit()}
                 >
-                  Create Post
-                </LoadingButton>
-              </div>
+                  <LoadingButton
+                    type="submit"
+                    variant="contained"
+                    style={{
+                      background: '#FFC501',
+                      padding: '10px 20px',
+                      opacity: 1,
+                    }}
+                    onClick={() => handleEditSubmit()}
+                  >
+                    Edit Post
+                  </LoadingButton>
+                </div>
+              ) : (
+                <div
+                  style={{
+                    marginTop: '30px',
+                    display: 'flex',
+                    justifyContent: 'flex-end',
+                    opacity: 1,
+                  }}
+                >
+                  <LoadingButton
+                    type="submit"
+                    variant="contained"
+                    style={{
+                      background: '#6ab04c',
+                      padding: '10px 20px',
+                      opacity: 1,
+                    }}
+                    onClick={() => handleSubmit()}
+                  >
+                    Create Post
+                  </LoadingButton>
+                </div>
+              )}
             </Grid>
           </Card>
         </Grid>

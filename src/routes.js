@@ -43,6 +43,7 @@ export default function Router() {
         { path: 'profile', element: <ProfilePage /> },
         { path: 'category', element: <CategoriesPage /> },
         { path: 'subcategory', element: <SubCategoriesPage /> },
+        { path: 'edit/:id', element: <CreateBlog /> },
       ],
     },
     {

@@ -12,6 +12,8 @@ import POSTS from '../_mock/blog';
 import Cookies from 'js-cookie';
 import axios from 'axios';
 import { AppWidgetSummary } from '../sections/@dashboard/app';
+import swal from 'sweetalert';
+import { successToast } from 'src/utils/Toast';
 
 const style = {
   position: 'absolute',
@@ -52,6 +54,98 @@ export default function BlogPage() {
       console.log(error);
     }
   };
+
+  const doTogglerCall = async (id) => {
+    try {
+      const BASE_URL = process.env.REACT_APP_API_ENDPOINT;
+      const bearerToken = Cookies.get('x-access-token')
+        ? Cookies.get('x-access-token')
+        : localStorage.getItem('x-access-token')
+        ? localStorage.getItem('x-access-token')
+        : null;
+
+      const { data } = await axios.patch(`${BASE_URL}blog/${id}`, bearerToken, {
+        headers: {
+          authorization: `Bearer ${bearerToken}`,
+        },
+      });
+      return data;
+    } catch (error) {
+      return error.response.data;
+    }
+  };
+
+  const removeUser = async (id) => {
+    try {
+      const BASE_URL = process.env.REACT_APP_API_ENDPOINT;
+      const bearerToken = Cookies.get('x-access-token')
+        ? Cookies.get('x-access-token')
+        : localStorage.getItem('x-access-token')
+        ? localStorage.getItem('x-access-token')
+        : null;
+
+      const { data } = await axios.delete(`${BASE_URL}blog/${id}`, {
+        headers: {
+          authorization: `Bearer ${bearerToken}`,
+        },
+      });
+      return data;
+    } catch (error) {
+      return error.response.data;
+    }
+  };
+
+  const blogToggler = (id) => {
+    swal({
+      title: 'Are you sure?',
+      text: 'Are you sure you want to change the access of this Blog?',
+      icon: 'info',
+      buttons: true,
+      dangerMode: true,
+    }).then(async (willDelete) => {
+      if (willDelete) {
+        const result = await doTogglerCall(id);
+        if (result?.success) {
+          successToast('Blog Status Change Successfully');
+          fetchBlogData();
+        } else {
+          swal('Something Went Wrong Please try after some time', {
+            icon: 'error',
+          });
+        }
+      }
+    });
+  };
+
+  const deleteBlog = (id) => {
+    console.log(id);
+    swal({
+      title: 'Are you sure?',
+      text: 'Once deleted, you will not be able to recover this blog!',
+      icon: 'error',
+      buttons: true,
+      dangerMode: true,
+    }).then(async (willDelete) => {
+      if (willDelete) {
+        const result = await removeUser(id);
+        if (result.success === true) {
+          successToast('Blog Deleted Successfully');
+          fetchBlogData();
+        } else {
+          swal('Something Went Wrong Please try after some time', {
+            icon: 'error',
+          });
+        }
+      }
+    });
+  };
+
+  // const updateBlog = (id, updateData) => {};
+  // console.log('🤩 ~ file: BlogPage.js:65 ~ BlogPage ~ id, updateData', id, updateData);
+
+  // const updateImage = (id, updatedImage) => {};
+  // console.log('🤩 ~ file: BlogPage.js:68 ~ BlogPage ~ id, updatedImage', id, updatedImage);
+
   useEffect(() => {
     fetchBlogData();
   }, []);
@@ -80,7 +174,16 @@ export default function BlogPage() {
           </Stack>
 
           <Grid container spacing={3}>
-            {allBlog && allBlog.map((post, index) => <BlogPostCard key={post._id} post={post} index={index} />)}
+            {allBlog &&
+              allBlog.map((post, index) => (
+                <BlogPostCard
+                  key={post._id}
+                  post={post}
+                  index={index}
+                  blogToggler={blogToggler}
+                  deleteBlog={deleteBlog}
+                />
+              ))}
           </Grid>
         </Container>
       )}

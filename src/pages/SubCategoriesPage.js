@@ -248,6 +248,9 @@ export default function SubCategoriesPage() {
   const UpdateModalhandleClose = () => {
     if (UpdateModalopen) {
       setUpdateModalopen(false);
+      seteditCategoryIdDropdown('');
+      seteditCategorydropdown('');
+      seteditSubCategory('');
     } else {
       setUpdateModalopen(true);
     }
@@ -559,13 +562,19 @@ export default function SubCategoriesPage() {
                   />
                   <div style={{ marginTop: '20px' }}>
                     <Select
-                      placeholder="Select Country"
-                      styles={{ padding: '50px' }}
+                      placeholder="Select Category"
+                      styles={{}}
                       options={catData}
                       onChange={(e) => {
                         handleDropDown(e);
                       }}
                     />
+                    <p style={{ marginLeft: '5px', fontSize: '12px' }}>
+                      Not able to find your categories?{' '}
+                      <Link to={'/dashboard/category'} style={{ color: 'blue', textDecoration: 'underline' }}>
+                        Add new one
+                      </Link>
+                    </p>
                   </div>
                   <div
                     style={{
@@ -626,6 +635,12 @@ export default function SubCategoriesPage() {
                         handleEditDropDown(e);
                       }}
                     />
+                    <p style={{ marginLeft: '5px', fontSize: '12px' }}>
+                      Not able to find your categories?{' '}
+                      <Link to={'/dashboard/category'} style={{ color: 'blue', textDecoration: 'underline' }}>
+                        Add new one
+                      </Link>
+                    </p>
                   </div>
                   <div
                     style={{
