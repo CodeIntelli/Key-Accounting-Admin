@@ -104,6 +104,7 @@ export default function BlogPage() {
       dangerMode: true,
     }).then(async (willDelete) => {
       if (willDelete) {
+        console.log('🤩 ~ file: BlogPage.js:107 ~ blogToggler ~ willDelete', willDelete);
         const result = await doTogglerCall(id);
         if (result?.success) {
           successToast('Blog Status Change Successfully');
