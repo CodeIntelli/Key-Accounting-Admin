@@ -314,7 +314,7 @@ export default function CategoriesPage() {
   return (
     <>
       <Helmet>
-        <title> User | Minimal UI </title>
+        <title> User | Key CMS Accounting </title>
       </Helmet>
       {isLoading ? (
         <> Loading</>
@@ -389,7 +389,10 @@ export default function CategoriesPage() {
                     <TableHead>
                       <TableRow>
                         {TABLE_HEAD.map((headCell) => (
-                          <TableCell key={headCell.id} align={headCell.alignRight ? 'right' : 'left'}>
+                          <TableCell
+                            key={Math.floor(Math.random() * 10000)}
+                            align={headCell.alignRight ? 'right' : 'left'}
+                          >
                             <Box>{headCell.label}</Box>
                           </TableCell>
                         ))}
@@ -398,7 +401,7 @@ export default function CategoriesPage() {
                     {filterData.map((tableData, index) => {
                       const { _id, catTitle, isActive, createdAt } = tableData;
                       return (
-                        <TableBody>
+                        <TableBody key={Math.floor(Math.random() * 10000)}>
                           <TableRow hover>
                             <TableCell align="left">{index + 1}</TableCell>
                             <TableCell align="left" style={{ textTransform: 'capitalize' }}>

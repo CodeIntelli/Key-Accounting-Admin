@@ -43,6 +43,7 @@ import Scrollbar from '../components/scrollbar';
 import Label from '../components/label';
 import { LoadingButton } from '@mui/lab';
 import { errorToast, successToast } from 'src/utils/Toast';
+import FileUpload from 'react-material-file-upload';
 // sections
 
 // ----------------------------------------------------------------------
@@ -85,10 +86,13 @@ export default function CategoriesPage() {
   const [catTitle, setcatTitle] = useState('');
   const [editcatTitle, seteditcatTitle] = useState('');
 
-  const [attachment, setAttachment] = useState('');
+  const [attachment, setAttachment] = useState();
   const [ebookTitle, setebookTitle] = useState('');
   const [ebookDesc, setebookDesc] = useState('');
   const [ebookTags, setebookTags] = useState('');
+  const [editebookTitle, seteditebookTitle] = useState('');
+  const [editebookDesc, seteditebookDesc] = useState('');
+  const [editebookTags, seteditebookTags] = useState('');
 
   const fetchEbook = async () => {
     try {
@@ -100,7 +104,7 @@ export default function CategoriesPage() {
         ? localStorage.getItem('x-access-token')
         : null;
 
-      const { data } = await axios.get(`${BASE_URL}content/upload/list?type=checklist`, {
+      const { data } = await axios.get(`${BASE_URL}content/upload/list?type=ebook`, {
         headers: {
           authorization: `Bearer ${bearerToken}`,
         },
@@ -115,7 +119,7 @@ export default function CategoriesPage() {
     }
   };
 
-  const addCategory = async (catData) => {
+  const ediUploadDocs = async (id, attachment) => {
     try {
       const BASE_URL = process.env.REACT_APP_API_ENDPOINT;
       const bearerToken = Cookies.get('x-access-token')
@@ -123,22 +127,59 @@ export default function CategoriesPage() {
         : localStorage.getItem('x-access-token')
         ? localStorage.getItem('x-access-token')
         : null;
+      console.log('=========================================================', contentData);
+      const contentFormData = new FormData();
+      contentFormData.append('attachment', attachment);
+      const { data } = await axios.post(`${BASE_URL}content/uploadContent/${id}`, contentFormData, {
+        headers: {
+          authorization: `Bearer ${bearerToken}`,
+        },
+      });
+      console.log('🤩 ~ file: CategoriesPage.js:121 ~ addCategory ~ data', data);
+      return data;
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-      const { data } = await axios.post(`${BASE_URL}category`, catData, {
+  const addContent = async (contentData) => {
+    try {
+      const BASE_URL = process.env.REACT_APP_API_ENDPOINT;
+      const bearerToken = Cookies.get('x-access-token')
+        ? Cookies.get('x-access-token')
+        : localStorage.getItem('x-access-token')
+        ? localStorage.getItem('x-access-token')
+        : null;
+      console.log('=========================================================', contentData);
+      const contentFormData = new FormData();
+      const tagsArr = contentData.ebookTags.split(',');
+      contentFormData.append('title', contentData.ebookTitle);
+      contentFormData.append('type', 'ebook');
+      tagsArr.map((tagdata, index) => {
+        return contentFormData.append(`tags[${index}]`, tagdata);
+      });
+      contentFormData.append('desc', contentData.ebookDesc);
+      contentFormData.append('attachment', contentData.attachment);
+      const { data } = await axios.post(`${BASE_URL}content/uploads`, contentFormData, {
         headers: {
           authorization: `Bearer ${bearerToken}`,
         },
       });
       console.log('🤩 ~ file: CategoriesPage.js:121 ~ addCategory ~ data', data);
       setModalopen(false);
-      setcatTitle('');
+      setebookDesc('');
+      setebookTags('');
+      setebookTitle('');
+      setAttachment('');
+      setfileSuccess(false);
+      setFiles([]);
       return data;
     } catch (error) {
       return error.response.data;
     }
   };
 
-  const updateCategory = async (id, updatedData) => {
+  const updateContent = async (id, updatedData) => {
     try {
       const BASE_URL = process.env.REACT_APP_API_ENDPOINT;
       const bearerToken = Cookies.get('x-access-token')
@@ -147,14 +188,19 @@ export default function CategoriesPage() {
         ? localStorage.getItem('x-access-token')
         : null;
 
-      const { data } = await axios.put(`${BASE_URL}category/${id}`, updatedData, {
+      const { data } = await axios.put(`${BASE_URL}content/upload/${id}`, updatedData, {
         headers: {
           authorization: `Bearer ${bearerToken}`,
         },
       });
       console.log('🤩 ~ file: CategoriesPage.js:145 ~ updateCategory ~ data', data);
       setUpdateModalopen(false);
-      seteditcatTitle('');
+      seteditebookDesc('');
+      seteditebookTags('');
+      seteditebookTitle('');
+      setAttachment('');
+      setfileSuccess(false);
+      setFiles([]);
       return data;
     } catch (error) {
       return error.response.data;
@@ -169,7 +215,7 @@ export default function CategoriesPage() {
         ? localStorage.getItem('x-access-token')
         : null;
 
-      const { data } = await axios.delete(`${BASE_URL}category/${id}`, {
+      const { data } = await axios.delete(`${BASE_URL}content/upload/${id}`, {
         headers: {
           authorization: `Bearer ${bearerToken}`,
         },
@@ -189,7 +235,7 @@ export default function CategoriesPage() {
         ? localStorage.getItem('x-access-token')
         : null;
 
-      const { data } = await axios.patch(`${BASE_URL}category/${id}`, bearerToken, {
+      const { data } = await axios.patch(`${BASE_URL}content/upload/${id}`, bearerToken, {
         headers: {
           authorization: `Bearer ${bearerToken}`,
         },
@@ -212,16 +258,23 @@ export default function CategoriesPage() {
       setUpdateModalopen(false);
     } else {
       setUpdateModalopen(true);
+      // seteditcatTitle()
     }
   };
 
   const setEditId = (idData) => {
-    console.log('🤩 ~ file: CategoriesPage.js:185 ~ setEditId ~ idData', idData.catTitle);
+    console.log('🤩 ~ file: CategoriesPage.js:185 ~ setEditId ~ idData', idData);
     setUpdateData(idData);
+    seteditebookTitle(idData.title);
+    seteditebookDesc(idData.desc);
+    seteditebookTags(idData.tags.toString());
+    seteditFiles(idData.attachment);
+    setfileSuccess(true);
   };
 
   React.useEffect(() => {
     fetchEbook();
+    // setFiles([]);
   }, []);
 
   const handleOpenMenu = (event) => {
@@ -246,7 +299,7 @@ export default function CategoriesPage() {
         const result = await removeUser(id);
         if (result.success === true) {
           setUpdateData('');
-          successToast('Category Deleted Successfully');
+          successToast('Content Deleted Successfully');
           fetchEbook();
         } else {
           swal('Something Went Wrong Please try after some time', {
@@ -260,7 +313,7 @@ export default function CategoriesPage() {
   const handleToggler = (id) => {
     swal({
       title: 'Are you sure?',
-      text: 'Are you sure you want to change the access of this user?',
+      text: 'Are you sure you want to change the access of this Content?',
       icon: 'info',
       buttons: true,
       dangerMode: true,
@@ -269,7 +322,7 @@ export default function CategoriesPage() {
         const result = await doTogglerCall(id);
         if (result?.success) {
           setUpdateData('');
-          successToast('Category Status Change Successfully');
+          successToast('Content Status Change Successfully');
           fetchEbook();
         } else {
           swal('Something Went Wrong Please try after some time', {
@@ -295,33 +348,61 @@ export default function CategoriesPage() {
   };
 
   const handleSubmit = async () => {
-    const addCatResult = await addCategory({ catTitle });
-    console.log('🤩 ~ file: CategoriesPage.js:289 ~ handleSubmit ~ addCatResult', addCatResult);
-    if (addCatResult.success) {
-      successToast('Category Added Successfully');
+    const addContentResult = await addContent({ ebookDesc, ebookTags, ebookTitle, attachment });
+    console.log('🤩 ~ file: CategoriesPage.js:289 ~ handleSubmit ~ addContentResult', addContentResult);
+    if (addContentResult.success) {
+      successToast('Content Added Successfully');
       setUpdateData('');
       fetchEbook();
     } else {
-      errorToast(addCatResult.message);
+      errorToast(addContentResult.message);
     }
   };
 
   const handleUpdate = async () => {
-    const editCatResult = await updateCategory(UpdateData._id, { catTitle: editcatTitle });
+    const editCatResult = await updateContent(UpdateData._id, {
+      title: editebookTitle,
+      desc: editebookDesc,
+      tags: editebookTags.includes(',') ? editebookTags.split(',') : editebookTags.fromArray(),
+    });
     console.log('🤩 ~ file: CategoriesPage.js:289 ~ handleSubmit ~ editCatResult', editCatResult);
     if (editCatResult.success) {
-      successToast('Category Edited Successfully');
+      successToast('Content Edited Successfully');
       setUpdateData('');
       fetchEbook();
     } else {
       errorToast(editCatResult.message);
     }
   };
+  const [files, setFiles] = useState([]);
+  const [editfiles, seteditFiles] = useState();
+  const [fileErrMessage, setFileErrMessage] = useState();
+  const [fileSuccess, setfileSuccess] = useState(false);
+  const checkfiles = (fileData) => {
+    console.log('=============================', fileData[0]?.name, fileData[0]?.type);
+    if (fileData[0]?.name.split('.').pop() == 'pdf') {
+      setFiles(fileData);
+      setAttachment(fileData[0]);
+      setfileSuccess(true);
+    } else {
+      setFileErrMessage('File Not Supported');
+      setFileSuccess(false);
+    }
+  };
+
+  function formatFileSize(bytes, decimalPoint) {
+    if (bytes == 0) return '0 Bytes';
+    var k = 1000,
+      dm = decimalPoint || 2,
+      sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],
+      i = Math.floor(Math.log(bytes) / Math.log(k));
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
+  }
 
   return (
     <>
       <Helmet>
-        <title> User | Minimal UI </title>
+        <title> User | Key CMS Accounting </title>
       </Helmet>
       {isLoading ? (
         <> Loading</>
@@ -396,7 +477,10 @@ export default function CategoriesPage() {
                     <TableHead>
                       <TableRow>
                         {TABLE_HEAD.map((headCell) => (
-                          <TableCell key={headCell.id} align={headCell.alignRight ? 'right' : 'left'}>
+                          <TableCell
+                            key={Math.floor(Math.random() * 10000)}
+                            align={headCell.alignRight ? 'right' : 'left'}
+                          >
                             <Box>{headCell.label}</Box>
                           </TableCell>
                         ))}
@@ -405,7 +489,7 @@ export default function CategoriesPage() {
                     {filterData.map((tableData, index) => {
                       const { _id, attachment, title, desc, tags, isActive, createdAt } = tableData;
                       return (
-                        <TableBody>
+                        <TableBody key={Math.floor(Math.random() * 10000)}>
                           <TableRow hover>
                             <TableCell align="left">{index + 1}</TableCell>
                             <TableCell align="left" style={{ textTransform: 'capitalize' }}>
@@ -520,8 +604,8 @@ export default function CategoriesPage() {
                       label="Ebook Title"
                       variant="outlined"
                       style={{ width: '100%' }}
-                      value={catTitle}
-                      onChange={(e) => setcatTitle(e.target.value)}
+                      value={ebookTitle}
+                      onChange={(e) => setebookTitle(e.target.value)}
                     />
                   </div>
                   <div style={{ marginTop: '20px' }}>
@@ -530,8 +614,8 @@ export default function CategoriesPage() {
                       label="Ebook Description"
                       variant="outlined"
                       style={{ width: '100%' }}
-                      value={catTitle}
-                      onChange={(e) => setcatTitle(e.target.value)}
+                      value={ebookDesc}
+                      onChange={(e) => setebookDesc(e.target.value)}
                     />
                   </div>
                   <div style={{ marginTop: '20px' }}>
@@ -540,19 +624,62 @@ export default function CategoriesPage() {
                       label="Ebook Tags"
                       variant="outlined"
                       style={{ width: '100%' }}
-                      value={catTitle}
-                      onChange={(e) => setcatTitle(e.target.value)}
+                      value={ebookTags}
+                      onChange={(e) => setebookTags(e.target.value)}
                     />
                   </div>
-
-                  <input type="file" />
-
+                  {files && files.length > 0 ? (
+                    <>
+                      <div
+                        style={{
+                          marginTop: '20px',
+                          display: 'flex',
+                          justifyContent: 'space-between',
+                          alignItems: 'center',
+                          borderRadius: '50px',
+                          background: '#EE1A25',
+                          color: '#ffffff',
+                        }}
+                      >
+                        <div style={{ width: '90%', display: 'flex', alignItems: 'center', marginLeft: '20px' }}>
+                          <Iconify icon="fluent:document-pdf-20-filled" />
+                          <p>{files[0].name.length > 10 ? files[0].name.substring(0, 10) + '...' : files[0].name}</p>
+                          <p style={{ marginLeft: '10px' }}>({formatFileSize(files[0].size)})</p>
+                        </div>
+                        <div style={{ width: '10%', display: 'flex', alignItems: 'center', marginRight: '10px' }}>
+                          <IconButton
+                            aria-label="upload picture"
+                            style={{ color: '#FFFFFF' }}
+                            component="label"
+                            onClick={() => setFiles([])}
+                          >
+                            <Iconify icon="game-icons:cancel" />
+                          </IconButton>
+                        </div>
+                      </div>
+                    </>
+                  ) : (
+                    <></>
+                  )}
+                  <div style={{ marginTop: '20px' }}>
+                    <FileUpload value={files} onChange={(e) => checkfiles(e)} />
+                  </div>
+                  {!fileSuccess ? (
+                    <div style={{ color: 'red', display: 'flex', justifyContent: 'center', fontSize: '14px' }}>
+                      {fileErrMessage}{' '}
+                    </div>
+                  ) : (
+                    ''
+                  )}
                   <div
                     style={{
                       marginTop: '30px',
                       display: 'flex',
                       justifyContent: 'flex-end',
-                      opacity: catTitle.trim().length > 0 ? 1 : 0.5,
+                      opacity:
+                        ebookTitle.trim() != '' && files.length > 0 && ebookDesc.trim() != '' && ebookTags.trim() != ''
+                          ? 1
+                          : 0.5,
                     }}
                   >
                     <LoadingButton
@@ -562,11 +689,17 @@ export default function CategoriesPage() {
                         background: '#6ab04c',
                         padding: '10px 20px',
                         opacity: 1,
-                        cursor: catTitle.trim().length > 0 ? 'pointer' : 'not-allowed',
+                        cursor:
+                          ebookTitle.trim() != '' &&
+                          files.length > 0 &&
+                          ebookDesc.trim() != '' &&
+                          ebookTags.trim() != ''
+                            ? 'pointer'
+                            : 'not-allowed',
                       }}
                       onClick={() => handleSubmit()}
                     >
-                      Add Category
+                      Upload Ebook
                     </LoadingButton>
                   </div>
                 </div>
@@ -588,33 +721,87 @@ export default function CategoriesPage() {
                     flexDirection: 'column',
                   }}
                 >
-                  <h3>Edit Category</h3>
-                  <TextField
-                    id="outlined-firstname"
-                    label="Category Title"
-                    variant="outlined"
-                    value={editcatTitle}
-                    onChange={(e) => seteditcatTitle(e.target.value)}
-                  />
+                  <h3>Upload Ebook</h3>
+                  <div style={{ marginTop: '20px' }}>
+                    <TextField
+                      id="outlined-firstname"
+                      label="Ebook Title"
+                      variant="outlined"
+                      style={{ width: '100%' }}
+                      value={editebookTitle}
+                      onChange={(e) => seteditebookTitle(e.target.value)}
+                    />
+                  </div>
+                  <div style={{ marginTop: '20px' }}>
+                    <TextField
+                      id="outlined-firstname"
+                      label="Ebook Description"
+                      variant="outlined"
+                      style={{ width: '100%' }}
+                      value={editebookDesc}
+                      onChange={(e) => seteditebookDesc(e.target.value)}
+                    />
+                  </div>
+                  <div style={{ marginTop: '20px' }}>
+                    <TextField
+                      id="outlined-firstname"
+                      label="Ebook Tags"
+                      variant="outlined"
+                      style={{ width: '100%' }}
+                      value={editebookTags}
+                      onChange={(e) => seteditebookTags(e.target.value)}
+                    />
+                  </div>
+
+                  <div
+                    style={{
+                      borderRadius: '50px',
+                    }}
+                  >
+                    <div style={{ width: '90%', display: 'flex', alignItems: 'center', marginLeft: '20px' }}>
+                      <Iconify icon="fluent:document-pdf-20-filled" />
+                      <p>
+                        {editfiles?.fileName.length > 10
+                          ? editfiles?.fileName.substring(0, 10) + '...'
+                          : editfiles?.fileName}
+                      </p>
+                      <p style={{ marginLeft: '10px' }}>({editfiles?.fileSize})</p>
+                    </div>
+                  </div>
+                  <div style={{ marginTop: '20px' }}></div>
+                  {!fileSuccess ? (
+                    <div style={{ color: 'red', display: 'flex', justifyContent: 'center', fontSize: '14px' }}>
+                      {fileErrMessage}{' '}
+                    </div>
+                  ) : (
+                    ''
+                  )}
                   <div
                     style={{
                       marginTop: '30px',
                       display: 'flex',
                       justifyContent: 'flex-end',
+                      opacity:
+                        editebookTitle.trim() != '' && editebookDesc.trim() != '' && editebookTags.trim() != ''
+                          ? 1
+                          : 0.5,
                     }}
                   >
                     <LoadingButton
                       type="submit"
                       variant="contained"
                       style={{
-                        background: '#FFC501',
+                        background: '#6ab04c',
                         padding: '10px 20px',
                         opacity: 1,
-                        cursor: 'pointer',
+                        cursor:
+                          editebookTitle.trim() != '' && editebookDesc.trim() != '' && editebookTags.trim() != ''
+                            ? 'pointer'
+                            : 'not-allowed',
                       }}
                       onClick={() => handleUpdate()}
                     >
-                      Edit Category
+                      Edit Ebook Details
                     </LoadingButton>
                   </div>
                 </div>

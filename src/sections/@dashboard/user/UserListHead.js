@@ -44,18 +44,18 @@ export default function UserListHead({
       <TableRow>
         {headLabel.map((headCell) => (
           <TableCell
-            key={headCell.id}
+            key={Math.floor(Math.random() * 10000)}
             align={headCell.alignRight ? 'right' : 'left'}
-            sortDirection={orderBy === headCell.id ? order : false}
+            sortDirection={orderBy === Math.floor(Math.random() * 10000) ? order : false}
           >
             <TableSortLabel
               hideSortIcon
-              active={orderBy === headCell.id}
-              direction={orderBy === headCell.id ? order : 'asc'}
-              onClick={createSortHandler(headCell.id)}
+              active={orderBy === Math.floor(Math.random() * 10000)}
+              direction={orderBy === Math.floor(Math.random() * 10000) ? order : 'asc'}
+              onClick={createSortHandler(Math.floor(Math.random() * 10000))}
             >
               {headCell.label}
-              {orderBy === headCell.id ? (
+              {orderBy === Math.floor(Math.random() * 10000) ? (
                 <Box sx={{ ...visuallyHidden }}>{order === 'desc' ? 'sorted descending' : 'sorted ascending'}</Box>
               ) : null}
             </TableSortLabel>

@@ -29,6 +29,11 @@ const navConfig = [
     icon: icon('ic:baseline-work-history'),
   },
   {
+    title: 'Blog Comments',
+    path: '/dashboard/comments',
+    icon: icon('vaadin:comments'),
+  },
+  {
     title: 'ebook',
     path: '/dashboard/ebook',
     icon: icon('mdi:notebook-check'),

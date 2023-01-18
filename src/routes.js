@@ -19,6 +19,7 @@ import ProfilePage from './pages/ProfilePage';
 import CreateBlog from './pages/AddBlog';
 import CategoriesPage from './pages/CategoriesPage';
 import SubCategoriesPage from './pages/SubCategoriesPage';
+import CommentPage from './pages/CommentPage';
 
 // ----------------------------------------------------------------------
 
@@ -44,6 +45,7 @@ export default function Router() {
         { path: 'category', element: <CategoriesPage /> },
         { path: 'subcategory', element: <SubCategoriesPage /> },
         { path: 'edit/:id', element: <CreateBlog /> },
+        { path: 'comments', element: <CommentPage /> },
       ],
     },
     {

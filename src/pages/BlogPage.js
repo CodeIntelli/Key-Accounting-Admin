@@ -153,7 +153,7 @@ export default function BlogPage() {
   return (
     <>
       <Helmet>
-        <title> Dashboard: Blog | Minimal UI </title>
+        <title> Dashboard: Blog | Key CMS Accounting </title>
       </Helmet>
       {isLoading ? (
         <div>
@@ -170,9 +170,9 @@ export default function BlogPage() {
             </Button>
           </Stack>
 
-          <Stack mb={5} direction="row" alignItems="center" justifyContent="space-between">
+          {/* <Stack mb={5} direction="row" alignItems="center" justifyContent="space-between">
             <BlogPostsSearch posts={POSTS} />
-          </Stack>
+      </Stack> */}
 
           <Grid container spacing={3}>
             {allBlog &&
