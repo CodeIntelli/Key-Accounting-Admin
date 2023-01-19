@@ -1,5 +1,5 @@
 /* eslint-disable */
-import { LoadingButton } from '@mui/lab';
+import { LoadingButton } from "@mui/lab";
 import {
   Box,
   Card,
@@ -11,31 +11,52 @@ import {
   Typography,
   Button,
   InputLabel,
-} from '@mui/material';
-import { Country, State } from 'country-state-city';
-import Lottie from 'react-lottie';
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import Select from 'react-select';
-import { Link } from 'react-router-dom';
-import Iconify from '../components/iconify';
+} from "@mui/material";
+import { Country, State } from "country-state-city";
+import Lottie from "react-lottie";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import Select from "react-select";
+import { Link } from "react-router-dom";
+import Iconify from "../components/iconify";
 // import { AddUser } from '../redux/Actions/userAction';
-import errAnimationData from '../lotties/error.json';
-import successAnimationData from '../lotties/success.json';
-import { AddUser } from '../redux/Actions/userAction';
-import ReactChipInput from 'react-chip-input';
-import Cookies from 'js-cookie';
-import axios from 'axios';
+import errAnimationData from "../lotties/error.json";
+import successAnimationData from "../lotties/success.json";
+import { AddUser } from "../redux/Actions/userAction";
+import ReactChipInput from "react-chip-input";
+import Cookies from "js-cookie";
+import axios from "axios";
+import "jodit";
+import "jodit/build/jodit.min.css";
+import JoditEditor from "jodit-react";
+
+const editorConfig = {
+  readonly: false,
+  toolbar: true,
+  spellcheck: true,
+  language: "en",
+  toolbarButtonSize: "medium",
+  toolbarAdaptive: false,
+  showCharsCounter: true,
+  showWordsCounter: true,
+  showXPathInStatusbar: false,
+  askBeforePasteHTML: true,
+  askBeforePasteFromWord: true,
+  //defaultActionOnPaste: "insert_clear_html",
+
+  width: 800,
+  height: 300,
+};
 
 const style = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
   width: 400,
-  bgcolor: 'background.paper',
+  bgcolor: "background.paper",
   boxShadow: 24,
-  borderRadius: '30px',
+  borderRadius: "30px",
   p: 4,
 };
 
@@ -43,7 +64,7 @@ const customStyles = {
   container: (base, state) => {
     return {
       ...base,
-      zIndex: state.isFocused ? '999' : '1',
+      zIndex: state.isFocused ? "999" : "1",
     };
   },
 };
@@ -53,13 +74,13 @@ const CreateBlog = ({ blogData }) => {
   const dispatch = useDispatch();
   // const { isLoading, isAuthenticated, user, error } = useSelector((state) => state.user);
 
-  const [postTitle, setpostTitle] = useState('');
-  const [postDesc, setpostDesc] = useState('');
-  const [content, setcontent] = useState('');
-  const [post_slug, setpost_slug] = useState('');
+  const [postTitle, setpostTitle] = useState("");
+  const [postDesc, setpostDesc] = useState("");
+  const [content, setcontent] = useState("");
+  const [post_slug, setpost_slug] = useState("");
   const [tags, settags] = useState();
-  const [metaTitle, setmetaTitle] = useState('');
-  const [metaDesc, setmetaDesc] = useState('');
+  const [metaTitle, setmetaTitle] = useState("");
+  const [metaDesc, setmetaDesc] = useState("");
   const [metaKeyword, setmetaKeyword] = useState();
   const [catId, setCatId] = useState();
   const [CategoryIdDropdown, setCategoryIdDropdown] = useState();
@@ -70,18 +91,22 @@ const CreateBlog = ({ blogData }) => {
   const addBlog = async (id, Blogdata) => {
     try {
       const BASE_URL = process.env.REACT_APP_API_ENDPOINT;
-      const bearerToken = Cookies.get('x-access-token')
-        ? Cookies.get('x-access-token')
-        : localStorage.getItem('x-access-token')
-        ? localStorage.getItem('x-access-token')
+      const bearerToken = Cookies.get("x-access-token")
+        ? Cookies.get("x-access-token")
+        : localStorage.getItem("x-access-token")
+        ? localStorage.getItem("x-access-token")
         : null;
 
-      const { data } = await axios.post(`${BASE_URL}blog?cat_id=${id}`, Blogdata, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-          authorization: `Bearer ${bearerToken}`,
-        },
-      });
+      const { data } = await axios.post(
+        `${BASE_URL}blog?cat_id=${id}`,
+        Blogdata,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            authorization: `Bearer ${bearerToken}`,
+          },
+        }
+      );
       return data;
     } catch (error) {
       return error.response.data;
@@ -91,10 +116,10 @@ const CreateBlog = ({ blogData }) => {
   const fetchCategories = async () => {
     try {
       const BASE_URL = process.env.REACT_APP_API_ENDPOINT;
-      const bearerToken = Cookies.get('x-access-token')
-        ? Cookies.get('x-access-token')
-        : localStorage.getItem('x-access-token')
-        ? localStorage.getItem('x-access-token')
+      const bearerToken = Cookies.get("x-access-token")
+        ? Cookies.get("x-access-token")
+        : localStorage.getItem("x-access-token")
+        ? localStorage.getItem("x-access-token")
         : null;
 
       const { data } = await axios.get(`${BASE_URL}category/subcategory/all`, {
@@ -108,7 +133,7 @@ const CreateBlog = ({ blogData }) => {
         data?.result.map((mapdata) => {
           if (mapdata.isActive) {
             return dropDownData.push({
-              name: '',
+              name: "",
               label: mapdata.subTitle,
               value: mapdata._id,
             });
@@ -126,12 +151,14 @@ const CreateBlog = ({ blogData }) => {
     setCategoryValueDropdown(data.value);
   };
 
-  const [avatarPreview, setAvatarPreview] = useState('/assets/images/avatars/avatar_18.jpg');
+  const [avatarPreview, setAvatarPreview] = useState(
+    "/assets/images/avatars/avatar_18.jpg"
+  );
   const [image, setImage] = useState();
   /* Image Uploading */
   const handleImage = async (e) => {
     const { name, value } = e.target;
-    if (name === 'image') {
+    if (name === "image") {
       setAvatarPreview(URL.createObjectURL(e.target.files[0]));
       setImage(e.target.files[0]);
     }
@@ -139,26 +166,26 @@ const CreateBlog = ({ blogData }) => {
 
   const handleSubmit = async () => {
     const storedData = new FormData();
-    const tagsArr = tags.split(',');
-    storedData.append('postTitle', postTitle);
-    storedData.append('postDesc', postDesc);
-    storedData.append('content', content);
-    storedData.append('post_slug', post_slug);
+    const tagsArr = tags.split(",");
+    storedData.append("postTitle", postTitle);
+    storedData.append("postDesc", postDesc);
+    storedData.append("content", content);
+    storedData.append("post_slug", post_slug);
     tagsArr.map((tagdata, index) => {
       return storedData.append(`tags[${index}]`, tagdata);
     });
-    storedData.append('metaTitle', metaTitle);
-    storedData.append('metaDesc', metaDesc);
-    storedData.append('metaKeyword', metaKeyword);
-    storedData.append('blogImg', image);
+    storedData.append("metaTitle", metaTitle);
+    storedData.append("metaDesc", metaDesc);
+    storedData.append("metaKeyword", metaKeyword);
+    storedData.append("blogImg", image);
 
-    const addBlogresult = await addBlog(CategoryIdDropdown, storedData);
+    const addBlogresult = await addBlog(CategoryValueDropdown, storedData);
     if (addBlogresult.success) {
-      setErrMsg('');
+      setErrMsg("");
       setSuccessMsg(`Blog Created Successfully`);
       return setOpen(true);
     } else {
-      setSuccessMsg('');
+      setSuccessMsg("");
       setErrMsg(addBlogresult.message);
       return setOpen(true);
     }
@@ -167,8 +194,8 @@ const CreateBlog = ({ blogData }) => {
   /* Modal States */
   const [open, setOpen] = React.useState(false);
   const handleClose = () => setOpen(false);
-  const [errMsg, setErrMsg] = React.useState('');
-  const [successMsg, setSuccessMsg] = React.useState('');
+  const [errMsg, setErrMsg] = React.useState("");
+  const [successMsg, setSuccessMsg] = React.useState("");
 
   /* 
   Lottie Configuration
@@ -178,7 +205,7 @@ const CreateBlog = ({ blogData }) => {
     autoplay: true,
     animationData: successAnimationData,
     rendererSettings: {
-      preserveAspectRatio: 'xMidYMid slice',
+      preserveAspectRatio: "xMidYMid slice",
     },
   };
   const errDefaultOptions = {
@@ -186,14 +213,27 @@ const CreateBlog = ({ blogData }) => {
     autoplay: true,
     animationData: errAnimationData,
     rendererSettings: {
-      preserveAspectRatio: 'xMidYMid slice',
+      preserveAspectRatio: "xMidYMid slice",
     },
   };
 
   const setUpdateData = (updatedData) => {
-    console.log('=========================================================', updatedData);
-    const { content, metaDesc, metaKeyword, metaTitle, postDesc, postTitle, post_slug, subCategory, tags, thumbImage } =
-      updatedData;
+    console.log(
+      "=========================================================",
+      updatedData
+    );
+    const {
+      content,
+      metaDesc,
+      metaKeyword,
+      metaTitle,
+      postDesc,
+      postTitle,
+      post_slug,
+      subCategory,
+      tags,
+      thumbImage,
+    } = updatedData;
     setpostTitle(postTitle);
     setpostDesc(postDesc);
     setcontent(content);
@@ -214,7 +254,7 @@ const CreateBlog = ({ blogData }) => {
       postDesc,
       content,
       post_slug,
-      tags: tags.includes(',') ? tags.split(',') : tags.toArray(),
+      tags: tags.includes(",") ? tags.split(",") : tags.toArray(),
       cat_id: CategoryValueDropdown,
       metaTitle,
       metaDesc,
@@ -242,42 +282,50 @@ const CreateBlog = ({ blogData }) => {
           <Card sx={{ py: 2, px: 3 }}>
             <h1>Add Blog</h1>
             <Grid item xs={12} md={12}>
-              <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: '40px' }}>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  marginBottom: "40px",
+                }}
+              >
                 <InputLabel htmlFor="ImageUpload">
-                  <div style={{ position: 'relative' }}>
+                  <div style={{ position: "relative" }}>
                     <img
                       src={avatarPreview}
                       alt="Avatar Preview"
                       className="img-fluid"
                       style={{
-                        width: '100px',
-                        borderRadius: '50%',
-                        height: '100px',
-                        border: '1px solid #dbdbdb',
-                        objectFit: 'contain',
+                        width: "100px",
+                        borderRadius: "50%",
+                        height: "100px",
+                        border: "1px solid #dbdbdb",
+                        objectFit: "contain",
                       }}
                       onError={({ currentTarget }) => {
                         currentTarget.onerror = null; // prevents looping
-                        currentTarget.src = '/assets/images/avatars/avatar_18.jpg';
+                        currentTarget.src =
+                          "/assets/images/avatars/avatar_18.jpg";
                       }}
                     />
                     <span
                       style={{
-                        position: 'absolute',
-                        bottom: '5px',
-                        right: '5px',
+                        position: "absolute",
+                        bottom: "5px",
+                        right: "5px",
                       }}
                     >
                       <div
                         style={{
-                          width: '25px',
-                          height: '25px',
-                          borderRadius: '50%',
-                          display: 'flex',
-                          justifyContent: 'center',
-                          color: 'white',
-                          alignItems: 'center',
-                          background: '#6ab04c ',
+                          width: "25px",
+                          height: "25px",
+                          borderRadius: "50%",
+                          display: "flex",
+                          justifyContent: "center",
+                          color: "white",
+                          alignItems: "center",
+                          background: "#6ab04c ",
                         }}
                       >
                         <Iconify icon="eva:plus-fill" />
@@ -289,14 +337,14 @@ const CreateBlog = ({ blogData }) => {
                   type="file"
                   name="image"
                   accept="image/*"
-                  style={{ display: 'none' }}
+                  style={{ display: "none" }}
                   id="ImageUpload"
                   onChange={(e) => handleImage(e)}
                 />
               </div>
               <Box
                 sx={{
-                  display: 'grid',
+                  display: "grid",
                   columnGap: 2,
                   rowGap: 3,
                 }}
@@ -317,7 +365,12 @@ const CreateBlog = ({ blogData }) => {
                   rows={4}
                   onChange={(e) => setpostDesc(e.target.value)}
                 />
-                <TextField
+                <JoditEditor
+                  value={content}
+                  config={editorConfig}
+                  onChange={(value) => setcontent(value)}
+                />
+                {/* <TextField
                   id="outlined-content"
                   label="Content"
                   variant="outlined"
@@ -325,13 +378,15 @@ const CreateBlog = ({ blogData }) => {
                   multiline
                   rows={4}
                   onChange={(e) => setcontent(e.target.value)}
-                />
-                <div styles={{ padding: '50px' }}>
+                /> */}
+                <div styles={{ padding: "50px" }}>
                   <Select
                     styles={customStyles}
                     placeholder="Select Category"
                     value={{
-                      label: CategoryIdDropdown ? CategoryIdDropdown : 'Select Category',
+                      label: CategoryIdDropdown
+                        ? CategoryIdDropdown
+                        : "Select Category",
                       value: CategoryValueDropdown,
                     }}
                     options={catData}
@@ -339,9 +394,12 @@ const CreateBlog = ({ blogData }) => {
                       handleDropdown(e);
                     }}
                   />
-                  <p style={{ marginLeft: '5px' }}>
+                  <p style={{ marginLeft: "5px" }}>
                     Not able to find your categories?
-                    <Link to={'/dashboard/subcategory'} style={{ color: 'blue', textDecoration: 'underline' }}>
+                    <Link
+                      to={"/dashboard/subcategory"}
+                      style={{ color: "blue", textDecoration: "underline" }}
+                    >
                       Add new one
                     </Link>
                   </p>
@@ -388,9 +446,9 @@ const CreateBlog = ({ blogData }) => {
               {isUpdate ? (
                 <div
                   style={{
-                    marginTop: '30px',
-                    display: 'flex',
-                    justifyContent: 'flex-end',
+                    marginTop: "30px",
+                    display: "flex",
+                    justifyContent: "flex-end",
                     opacity: 1,
                   }}
                 >
@@ -398,8 +456,8 @@ const CreateBlog = ({ blogData }) => {
                     type="submit"
                     variant="contained"
                     style={{
-                      background: '#FFC501',
-                      padding: '10px 20px',
+                      background: "#FFC501",
+                      padding: "10px 20px",
                       opacity: 1,
                     }}
                     onClick={() => handleEditSubmit()}
@@ -410,9 +468,9 @@ const CreateBlog = ({ blogData }) => {
               ) : (
                 <div
                   style={{
-                    marginTop: '30px',
-                    display: 'flex',
-                    justifyContent: 'flex-end',
+                    marginTop: "30px",
+                    display: "flex",
+                    justifyContent: "flex-end",
                     opacity: 1,
                   }}
                 >
@@ -420,8 +478,8 @@ const CreateBlog = ({ blogData }) => {
                     type="submit"
                     variant="contained"
                     style={{
-                      background: '#6ab04c',
-                      padding: '10px 20px',
+                      background: "#6ab04c",
+                      padding: "10px 20px",
                       opacity: 1,
                     }}
                     onClick={() => handleSubmit()}
@@ -442,26 +500,35 @@ const CreateBlog = ({ blogData }) => {
       >
         <Box sx={style}>
           <div>
-            <Lottie options={errMsg.length > 0 ? errDefaultOptions : successDefaultOptions} height={200} width={200} />
+            <Lottie
+              options={
+                errMsg.length > 0 ? errDefaultOptions : successDefaultOptions
+              }
+              height={200}
+              width={200}
+            />
             <div
               style={{
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                textAlign: 'center',
-                flexDirection: 'column',
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                textAlign: "center",
+                flexDirection: "column",
               }}
             >
               <Typography id="modal-modal-title" variant="h6" component="h2">
-                {successMsg && successMsg.includes('#') ? (
+                {successMsg && successMsg.includes("#") ? (
                   <div>
-                    {successMsg.split('#')[0]} <span style={{ opacity: 0.6 }}>#{successMsg.split('#')[1]}</span>
+                    {successMsg.split("#")[0]}{" "}
+                    <span style={{ opacity: 0.6 }}>
+                      #{successMsg.split("#")[1]}
+                    </span>
                   </div>
                 ) : (
                   successMsg
                 )}
 
-                {errMsg ? errMsg : ''}
+                {errMsg ? errMsg : ""}
               </Typography>
             </div>
           </div>
