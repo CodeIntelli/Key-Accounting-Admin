@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { useEffect } from 'react';
 import { Link, useNavigate, useNavigation } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
@@ -12,6 +13,7 @@ import Iconify from '../components/iconify/Iconify';
 // sections
 import { AppWidgetSummary } from '../sections/@dashboard/app';
 import { clearErrors, loadUser } from '../redux/Actions/userAction';
+import LoadingAnimation from 'src/components/LoadingAnimation';
 // import { loadUser } from '../redux/Actions/authAction';
 // import { clearMessage } from '../redux/Reducers/messageSlice';
 
@@ -47,7 +49,7 @@ export default function DashboardAppPage() {
       </Helmet>
       {isLoading ? (
         <>
-          <h1>Loading</h1>
+          <LoadingAnimation />
         </>
       ) : (
         <Container maxWidth="xl">

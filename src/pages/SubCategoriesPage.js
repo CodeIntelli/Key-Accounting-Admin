@@ -44,6 +44,7 @@ import Iconify from '../components/iconify';
 import Scrollbar from '../components/scrollbar';
 import Label from '../components/label';
 import { errorToast, successToast } from 'src/utils/Toast';
+import LoadingAnimation from 'src/components/LoadingAnimation';
 // sections
 
 // ----------------------------------------------------------------------
@@ -379,7 +380,9 @@ export default function SubCategoriesPage() {
         <title> User | Key CMS Accounting </title>
       </Helmet>
       {isLoading ? (
-        <> Loading</>
+        <>
+          <LoadingAnimation />
+        </>
       ) : (
         <>
           <Container>

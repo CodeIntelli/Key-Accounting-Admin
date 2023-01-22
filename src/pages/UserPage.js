@@ -43,6 +43,7 @@ import Iconify from '../components/iconify';
 import Scrollbar from '../components/scrollbar';
 import Label from '../components/label';
 // sections
+import LoadingAnimation from '../components/LoadingAnimation';
 import { UserListHead } from '../sections/@dashboard/user';
 import EditUserDrawer from '../sections/@dashboard/user/EditUserDrawer';
 
@@ -322,7 +323,9 @@ export default function UserPage() {
         <title> User | Key CMS Accounting </title>
       </Helmet>
       {isLoading ? (
-        <> Loading</>
+        <>
+          <LoadingAnimation />
+        </>
       ) : (
         <>
           <Container>

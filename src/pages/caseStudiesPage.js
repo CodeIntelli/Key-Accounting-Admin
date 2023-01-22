@@ -44,6 +44,7 @@ import Label from '../components/label';
 import { LoadingButton } from '@mui/lab';
 import { errorToast, successToast } from 'src/utils/Toast';
 import FileUpload from 'react-material-file-upload';
+import LoadingAnimation from 'src/components/LoadingAnimation';
 // sections
 
 // ----------------------------------------------------------------------
@@ -405,7 +406,9 @@ export default function CategoriesPage() {
         <title> casestudies | Key CMS Accounting </title>
       </Helmet>
       {isLoading ? (
-        <> Loading</>
+        <>
+          <LoadingAnimation />
+        </>
       ) : (
         <>
           <Container>
@@ -493,7 +496,16 @@ export default function CategoriesPage() {
                           <TableRow hover>
                             <TableCell align="left">{index + 1}</TableCell>
                             <TableCell align="left" style={{ textTransform: 'capitalize' }}>
-                              <a href={attachment.url} download>
+                              <a
+                                href={
+                                  attachment.url
+                                    ? attachment.url.split('/upload/')[0] +
+                                      '/upload/fl_attachment/' +
+                                      attachment.url.split('/upload/')[1]
+                                    : ''
+                                }
+                                download={attachment?.fileName}
+                              >
                                 <div style={{ display: 'flex', alignItems: 'center' }}>
                                   <Label color={'info'} style={{ cursor: 'pointer' }} title={attachment.fileName}>
                                     <Iconify icon="material-symbols:sim-card-download-rounded" />

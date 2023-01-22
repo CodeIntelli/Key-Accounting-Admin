@@ -14,6 +14,7 @@ import axios from 'axios';
 import { AppWidgetSummary } from '../sections/@dashboard/app';
 import swal from 'sweetalert';
 import { successToast } from 'src/utils/Toast';
+import LoadingAnimation from 'src/components/LoadingAnimation';
 
 const style = {
   position: 'absolute',
@@ -157,7 +158,7 @@ export default function BlogPage() {
       </Helmet>
       {isLoading ? (
         <div>
-          <h1>Loading</h1>
+          <LoadingAnimation />
         </div>
       ) : (
         <Container>

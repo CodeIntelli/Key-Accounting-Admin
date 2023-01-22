@@ -43,6 +43,7 @@ import Scrollbar from '../components/scrollbar';
 import Label from '../components/label';
 import { LoadingButton } from '@mui/lab';
 import { errorToast, successToast } from 'src/utils/Toast';
+import LoadingAnimation from 'src/components/LoadingAnimation';
 // sections
 
 // ----------------------------------------------------------------------
@@ -317,7 +318,9 @@ export default function CategoriesPage() {
         <title> User | Key CMS Accounting </title>
       </Helmet>
       {isLoading ? (
-        <> Loading</>
+        <>
+          <LoadingAnimation />
+        </>
       ) : (
         <>
           <Container>

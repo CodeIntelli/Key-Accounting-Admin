@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { LoadingButton } from '@mui/lab';
 import { Card, Grid, InputLabel, TextField, Box, Modal } from '@mui/material';
 import axios from 'axios';
@@ -6,6 +7,7 @@ import moment from 'moment';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import LoadingAnimation from 'src/components/LoadingAnimation';
 import Iconify from '../components/iconify';
 import { clearErrors, loadUser } from '../redux/Actions/userAction';
 import { errorToast, successToast } from '../utils/Toast';
@@ -177,218 +179,226 @@ const ProfilePage = () => {
 
   return (
     <>
-      <Grid container spacing={3}>
-        <Grid item xs={12} md={12}>
-          <Card sx={{ py: 2, px: 3 }}>
-            <h1>User Profile</h1>
+      {isLoading ? (
+        <>
+          <LoadingAnimation />
+        </>
+      ) : (
+        <>
+          <Grid container spacing={3}>
             <Grid item xs={12} md={12}>
-              <Card>
-                <Box
-                  sx={{
-                    display: 'grid',
-                    columnGap: 2,
-                    rowGap: 3,
-                    gridTemplateColumns: { xs: 'repeat(1, 1fr)', sm: 'repeat(2, 1fr)', lg: '1fr 2fr' },
-                  }}
-                >
-                  <div
-                    style={{
-                      display: 'flex',
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      marginBottom: '40px',
-                      width: '100%',
-                    }}
-                  >
-                    <InputLabel htmlFor="ImageUpload">
-                      <div style={{ position: 'relative' }}>
-                        <img
-                          src={avatarPreview}
-                          alt="Avatar Preview"
-                          className="img-fluid"
-                          style={{
-                            width: '200px',
-                            borderRadius: '50%',
-                            height: '200px',
-                            border: '1px solid #dbdbdb',
-                            objectFit: 'contain',
-                          }}
-                          onError={({ currentTarget }) => {
-                            currentTarget.onerror = null; // prevents looping
-                            currentTarget.src = '/assets/images/avatars/avatar_18.jpg';
-                          }}
+              <Card sx={{ py: 2, px: 3 }}>
+                <h1>User Profile</h1>
+                <Grid item xs={12} md={12}>
+                  <Card>
+                    <Box
+                      sx={{
+                        display: 'grid',
+                        columnGap: 2,
+                        rowGap: 3,
+                        gridTemplateColumns: { xs: 'repeat(1, 1fr)', sm: 'repeat(2, 1fr)', lg: '1fr 2fr' },
+                      }}
+                    >
+                      <div
+                        style={{
+                          display: 'flex',
+                          justifyContent: 'center',
+                          alignItems: 'center',
+                          marginBottom: '40px',
+                          width: '100%',
+                        }}
+                      >
+                        <InputLabel htmlFor="ImageUpload">
+                          <div style={{ position: 'relative' }}>
+                            <img
+                              src={avatarPreview}
+                              alt="Avatar Preview"
+                              className="img-fluid"
+                              style={{
+                                width: '200px',
+                                borderRadius: '50%',
+                                height: '200px',
+                                border: '1px solid #dbdbdb',
+                                objectFit: 'contain',
+                              }}
+                              onError={({ currentTarget }) => {
+                                currentTarget.onerror = null; // prevents looping
+                                currentTarget.src = '/assets/images/avatars/avatar_18.jpg';
+                              }}
+                            />
+                          </div>
+                        </InputLabel>
+                        <input
+                          type="file"
+                          name="image"
+                          accept="image/*"
+                          style={{ display: 'none' }}
+                          id="ImageUpload"
+                          onChange={(e) => uploadImage(e)}
                         />
                       </div>
-                    </InputLabel>
-                    <input
-                      type="file"
-                      name="image"
-                      accept="image/*"
-                      style={{ display: 'none' }}
-                      id="ImageUpload"
-                      onChange={(e) => uploadImage(e)}
-                    />
+                      <div style={{ display: 'flex', flexDirection: 'column', margin: '10px 30px' }}>
+                        {!isLoading &&
+                          user &&
+                          responseData.map((result) => {
+                            return (
+                              <div
+                                style={{
+                                  display: 'flex',
+                                  flexDirection: 'row',
+                                  justifyContent: 'space-between',
+                                  alignItems: 'center',
+                                  width: '100%',
+                                }}
+                              >
+                                <h3>{result.title}</h3>
+                                <p style={contentDesign}>{result.content}</p>
+                              </div>
+                            );
+                          })}
+                      </div>
+                    </Box>
+                  </Card>
+                  <div
+                    style={{
+                      marginTop: '30px',
+                      display: 'flex',
+                      justifyContent: 'flex-end',
+                      alignItems: 'center',
+                      opacity: 1,
+                    }}
+                  >
+                    <LoadingButton
+                      type="submit"
+                      variant="contained"
+                      style={{
+                        background: '#db3a34',
+                        padding: '10px 20px',
+                        opacity: 1,
+                        marginRight: '20px',
+                        cursor: 'pointer',
+                      }}
+                      onClick={() => setPasswordModel(true)}
+                    >
+                      <span
+                        style={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          marginRight: '10px',
+                        }}
+                      >
+                        <Iconify icon="mdi:password-reset" style={{ marginRight: '10px' }} />
+                        Change Password
+                      </span>
+                    </LoadingButton>
+                    <LoadingButton
+                      type="submit"
+                      variant="contained"
+                      style={{
+                        background: '#084c61',
+                        display: 'none',
+                        padding: '10px 20px',
+                        opacity: 1,
+                        marginRight: '20px',
+                        cursor: 'pointer',
+                      }}
+                      onClick={() => setEditModel(true)}
+                    >
+                      <span
+                        style={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          marginRight: '10px',
+                        }}
+                      >
+                        <Iconify icon="material-symbols:edit" style={{ marginRight: '10px' }} />
+                        Edit Profile
+                      </span>
+                    </LoadingButton>
                   </div>
-                  <div style={{ display: 'flex', flexDirection: 'column', margin: '10px 30px' }}>
-                    {!isLoading &&
-                      user &&
-                      responseData.map((result) => {
-                        return (
-                          <div
-                            style={{
-                              display: 'flex',
-                              flexDirection: 'row',
-                              justifyContent: 'space-between',
-                              alignItems: 'center',
-                              width: '100%',
-                            }}
-                          >
-                            <h3>{result.title}</h3>
-                            <p style={contentDesign}>{result.content}</p>
-                          </div>
-                        );
-                      })}
-                  </div>
-                </Box>
+                </Grid>
               </Card>
-              <div
-                style={{
-                  marginTop: '30px',
-                  display: 'flex',
-                  justifyContent: 'flex-end',
-                  alignItems: 'center',
-                  opacity: 1,
-                }}
-              >
-                <LoadingButton
-                  type="submit"
-                  variant="contained"
-                  style={{
-                    background: '#db3a34',
-                    padding: '10px 20px',
-                    opacity: 1,
-                    marginRight: '20px',
-                    cursor: 'pointer',
-                  }}
-                  onClick={() => setPasswordModel(true)}
-                >
-                  <span
-                    style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      marginRight: '10px',
-                    }}
-                  >
-                    <Iconify icon="mdi:password-reset" style={{ marginRight: '10px' }} />
-                    Change Password
-                  </span>
-                </LoadingButton>
-                <LoadingButton
-                  type="submit"
-                  variant="contained"
-                  style={{
-                    background: '#084c61',
-                    display: 'none',
-                    padding: '10px 20px',
-                    opacity: 1,
-                    marginRight: '20px',
-                    cursor: 'pointer',
-                  }}
-                  onClick={() => setEditModel(true)}
-                >
-                  <span
-                    style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      marginRight: '10px',
-                    }}
-                  >
-                    <Iconify icon="material-symbols:edit" style={{ marginRight: '10px' }} />
-                    Edit Profile
-                  </span>
-                </LoadingButton>
-              </div>
             </Grid>
-          </Card>
-        </Grid>
-        <Modal
-          open={passwordModel}
-          onClose={() => setPasswordModel(false)}
-          aria-labelledby="modal-modal-title"
-          aria-describedby="modal-modal-description"
-        >
-          <Box sx={style}>
-            <h3>Change Password</h3>
-            <div style={{ margin: '10px', display: 'flex', justifyContent: 'center' }}>
-              <TextField
-                type="password"
-                id="outlined-email"
-                label="Old Password"
-                variant="outlined"
-                style={{ width: '90%' }}
-                value={oldPassword}
-                onChange={(e) => setOldPassword(e.target.value)}
-              />
-            </div>
-            <div style={{ margin: '10px', display: 'flex', justifyContent: 'center' }}>
-              <TextField
-                type="password"
-                id="outlined-email"
-                label="New Password"
-                variant="outlined"
-                style={{ width: '90%' }}
-                value={newPassword}
-                onChange={(e) => setnewPassword(e.target.value)}
-              />
-            </div>
-            <div style={{ margin: '10px', display: 'flex', justifyContent: 'center' }}>
-              <TextField
-                type="password"
-                id="outlined-email"
-                label="Confirm Password"
-                variant="outlined"
-                style={{ width: '90%' }}
-                value={confirmPassword}
-                onChange={(e) => setconfirmPassword(e.target.value)}
-              />
-            </div>
-            <div style={{ margin: '10px', display: 'flex', justifyContent: 'center', marginLeft: '25px' }}>
-              <LoadingButton
-                type="submit"
-                variant="contained"
-                style={{
-                  background: '#db3a34',
-                  padding: '10px 20px',
-                  marginRight: '20px',
-                  width: '90%',
-                }}
-                onClick={() => handlePasswordChange()}
-              >
-                <span
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    marginRight: '10px',
-                  }}
-                >
-                  <Iconify icon="mdi:password-reset" style={{ marginRight: '10px' }} />
-                  Change Password
-                </span>
-              </LoadingButton>
-            </div>
-          </Box>
-        </Modal>
-        <Modal
-          open={editModel}
-          onClose={() => setEditModel(false)}
-          aria-labelledby="modal-modal-title"
-          aria-describedby="modal-modal-description"
-        >
-          <Box sx={style}>
-            <h1>Edit Profile</h1>
-          </Box>
-        </Modal>
-      </Grid>
+            <Modal
+              open={passwordModel}
+              onClose={() => setPasswordModel(false)}
+              aria-labelledby="modal-modal-title"
+              aria-describedby="modal-modal-description"
+            >
+              <Box sx={style}>
+                <h3>Change Password</h3>
+                <div style={{ margin: '10px', display: 'flex', justifyContent: 'center' }}>
+                  <TextField
+                    type="password"
+                    id="outlined-email"
+                    label="Old Password"
+                    variant="outlined"
+                    style={{ width: '90%' }}
+                    value={oldPassword}
+                    onChange={(e) => setOldPassword(e.target.value)}
+                  />
+                </div>
+                <div style={{ margin: '10px', display: 'flex', justifyContent: 'center' }}>
+                  <TextField
+                    type="password"
+                    id="outlined-email"
+                    label="New Password"
+                    variant="outlined"
+                    style={{ width: '90%' }}
+                    value={newPassword}
+                    onChange={(e) => setnewPassword(e.target.value)}
+                  />
+                </div>
+                <div style={{ margin: '10px', display: 'flex', justifyContent: 'center' }}>
+                  <TextField
+                    type="password"
+                    id="outlined-email"
+                    label="Confirm Password"
+                    variant="outlined"
+                    style={{ width: '90%' }}
+                    value={confirmPassword}
+                    onChange={(e) => setconfirmPassword(e.target.value)}
+                  />
+                </div>
+                <div style={{ margin: '10px', display: 'flex', justifyContent: 'center', marginLeft: '25px' }}>
+                  <LoadingButton
+                    type="submit"
+                    variant="contained"
+                    style={{
+                      background: '#db3a34',
+                      padding: '10px 20px',
+                      marginRight: '20px',
+                      width: '90%',
+                    }}
+                    onClick={() => handlePasswordChange()}
+                  >
+                    <span
+                      style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        marginRight: '10px',
+                      }}
+                    >
+                      <Iconify icon="mdi:password-reset" style={{ marginRight: '10px' }} />
+                      Change Password
+                    </span>
+                  </LoadingButton>
+                </div>
+              </Box>
+            </Modal>
+            <Modal
+              open={editModel}
+              onClose={() => setEditModel(false)}
+              aria-labelledby="modal-modal-title"
+              aria-describedby="modal-modal-description"
+            >
+              <Box sx={style}>
+                <h1>Edit Profile</h1>
+              </Box>
+            </Modal>
+          </Grid>
+        </>
+      )}
     </>
   );
 };
