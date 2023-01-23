@@ -450,10 +450,13 @@ const HomePageContent = () => {
                                 name="email"
                                 label={`Card Title ${index + 1}`}
                                 style={{ width: '100%', marginTop: '24px' }}
-                                value={cardData.title}
+                                defaultValue={cardData.title}
                                 onChange={(e) => {
                                   console.log(cardData);
-                                  bsetimgData[index].title(e.target.value);
+                                  let value = e.target.value;
+                                  let dta = [...bimgData];
+                                  dta[index].title = value;
+                                  bsetimgData(dta);
                                 }}
                               />
                               <TextField
