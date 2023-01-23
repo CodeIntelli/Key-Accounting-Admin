@@ -930,12 +930,7 @@ const HomePageContent = () => {
                         />
                       </Box>
                       <h3>Image Section </h3>
-                      {/* 
-                        Slider Section
-Section 3
-Latest Resource
-FAQ
-                        */}
+
                       {gimgData.map((cardData, index) => {
                         return (
                           <>
@@ -985,10 +980,11 @@ FAQ
                                 style={{ width: '100%', marginTop: '24px' }}
                                 value={cardData.title}
                                 onChange={(e) => {
-                                  let value = e.target.title;
+                                  let value = e.target.value;
                                   let dta = [...gcardData];
-                                  dta[index].url = value;
+                                  dta[index].title = value;
                                   gsetcardData(dta);
+
                                   // gsetcardData[index].title(e.target.value);
                                 }}
                               />
@@ -998,7 +994,7 @@ FAQ
                                 style={{ width: '100%', marginTop: '24px' }}
                                 value={cardData.author}
                                 onChange={(e) => {
-                                  let value = e.target.title;
+                                  let value = e.target.value;
                                   let dta = [...gcardData];
                                   dta[index].author = value;
                                   gsetcardData(dta);
@@ -1011,7 +1007,7 @@ FAQ
                                 style={{ width: '100%', marginTop: '24px' }}
                                 value={cardData.profession}
                                 onChange={(e) => {
-                                  let value = e.target.title;
+                                  let value = e.target.value;
                                   let dta = [...gcardData];
                                   dta[index].profession = value;
                                   gsetcardData(dta);
@@ -1024,7 +1020,7 @@ FAQ
                                 style={{ width: '100%', marginTop: '24px' }}
                                 value={cardData.img}
                                 onChange={(e) => {
-                                  let value = e.target.title;
+                                  let value = e.target.value;
                                   let dta = [...gcardData];
                                   dta[index].img = value;
                                   gsetcardData(dta);
@@ -1234,7 +1230,7 @@ FAQ
                               style={{ width: '100%', marginTop: '24px' }}
                               value={cardData.title}
                               onChange={(e) => {
-                                let value = e.target.title;
+                                let value = e.target.value;
                                 let dta = [...iData];
                                 dta[index].title = value;
                                 isetData(dta);
@@ -1247,7 +1243,7 @@ FAQ
                               style={{ width: '100%', marginTop: '24px' }}
                               value={cardData.img}
                               onChange={(e) => {
-                                let value = e.target.title;
+                                let value = e.target.value;
                                 let dta = [...iData];
                                 dta[index].img = value;
                                 isetData(dta);
@@ -1318,7 +1314,7 @@ FAQ
                                 style={{ width: '100%', marginTop: '24px' }}
                                 value={cardData.title}
                                 onChange={(e) => {
-                                  let value = e.target.title;
+                                  let value = e.target.value;
                                   let dta = [...jcardData];
                                   dta[index].title = value;
                                   jsetcardData(dta);
@@ -1331,7 +1327,7 @@ FAQ
                                 style={{ width: '100%', marginTop: '24px' }}
                                 value={cardData.categories[0]}
                                 onChange={(e) => {
-                                  let value = e.target.title;
+                                  let value = e.target.value;
                                   let dta = [...jcardData];
                                   dta[index].categories[0] = value;
                                   jsetcardData(dta);
@@ -1344,7 +1340,7 @@ FAQ
                                 style={{ width: '100%' }}
                                 value={cardData.categories[1]}
                                 onChange={(e) => {
-                                  let value = e.target.title;
+                                  let value = e.target.value;
                                   let dta = [...jcardData];
                                   dta[index].categories[1] = value;
                                   jsetcardData(dta);
@@ -1357,7 +1353,7 @@ FAQ
                                 style={{ width: '100%' }}
                                 value={cardData.desc}
                                 onChange={(e) => {
-                                  let value = e.target.title;
+                                  let value = e.target.value;
                                   let dta = [...jcardData];
                                   dta[index].desc = value;
                                   jsetcardData(dta);
@@ -1371,7 +1367,7 @@ FAQ
                                 style={{ width: '100%' }}
                                 value={cardData.btnTxt}
                                 onChange={(e) => {
-                                  let value = e.target.title;
+                                  let value = e.target.value;
                                   let dta = [...jcardData];
                                   dta[index].btnTxt = value;
                                   jsetcardData(dta);
@@ -1384,7 +1380,7 @@ FAQ
                                 style={{ width: '100%' }}
                                 value={cardData.mainBtn}
                                 onChange={(e) => {
-                                  let value = e.target.title;
+                                  let value = e.target.value;
                                   let dta = [...jcardData];
                                   dta[index].mainBtn = value;
                                   jsetcardData(dta);
@@ -1397,7 +1393,7 @@ FAQ
                                 style={{ width: '100%' }}
                                 value={cardData.btnUrl}
                                 onChange={(e) => {
-                                  let value = e.target.title;
+                                  let value = e.target.value;
                                   let dta = [...jcardData];
                                   dta[index].btnUrl = value;
                                   jsetcardData(dta);
@@ -1410,7 +1406,7 @@ FAQ
                                 style={{ width: '100%' }}
                                 value={cardData.isDownloadShown}
                                 onChange={(e) => {
-                                  let value = e.target.title;
+                                  let value = e.target.value;
                                   let dta = [...jcardData];
                                   dta[index].isDownloadShown = value;
                                   jsetcardData(dta);
@@ -1426,7 +1422,7 @@ FAQ
                               multiline
                               rows={4}
                               onChange={(e) => {
-                                let value = e.target.title;
+                                let value = e.target.value;
                                 let dta = [...jcardData];
                                 dta[index].desc = value;
                                 jsetcardData(dta);
@@ -1500,7 +1496,7 @@ FAQ
                               style={{ width: '100%', marginTop: '24px' }}
                               value={cardData.que}
                               onChange={(e) => {
-                                let value = e.target.title;
+                                let value = e.target.value;
                                 let dta = [...kcardData];
                                 dta[index].que = value;
                                 ksetcardData(dta);
@@ -1513,7 +1509,7 @@ FAQ
                               style={{ width: '100%', marginTop: '24px' }}
                               value={cardData.ans}
                               onChange={(e) => {
-                                let value = e.target.title;
+                                let value = e.target.value;
                                 let dta = [...kcardData];
                                 dta[index].ans = value;
                                 ksetcardData(dta);
