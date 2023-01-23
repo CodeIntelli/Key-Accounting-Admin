@@ -452,7 +452,6 @@ const HomePageContent = () => {
                                 style={{ width: '100%', marginTop: '24px' }}
                                 defaultValue={cardData.title}
                                 onChange={(e) => {
-                                  console.log(cardData);
                                   let value = e.target.value;
                                   let dta = [...bimgData];
                                   dta[index].title = value;
@@ -463,18 +462,24 @@ const HomePageContent = () => {
                                 name="email"
                                 label={`Card Image ${index + 1}`}
                                 style={{ width: '100%', marginTop: '24px' }}
-                                value={cardData.img}
+                                defaultValue={cardData.img}
                                 onChange={(e) => {
-                                  bsetimgData[index].img(e.target.value);
+                                  let value = e.target.value;
+                                  let dta = [...bimgData];
+                                  dta[index].img = value;
+                                  bsetimgData(dta);
                                 }}
                               />
                               <TextField
                                 name="email"
                                 label={`Card Subtitle ${index + 1}`}
                                 style={{ width: '100%' }}
-                                value={cardData.subTitle}
+                                defaultValue={cardData.subTitle}
                                 onChange={(e) => {
-                                  bsetimgData[index].subTitle(e.target.value);
+                                  let value = e.target.value;
+                                  let dta = [...bimgData];
+                                  dta[index].subTitle = value;
+                                  bsetimgData(dta);
                                 }}
                               />
                             </Box>
@@ -548,28 +553,39 @@ const HomePageContent = () => {
                                 name="email"
                                 label={`Card Title ${index + 1}`}
                                 style={{ width: '100%', marginTop: '24px' }}
-                                value={cardData.title}
+                                defaultValue={cardData.title}
                                 onChange={(e) => {
-                                  csetimgData[index].title(e.target.value);
+                                  let value = e.target.value;
+                                  let dta = [...cimgData];
+                                  dta[index].title = value;
+                                  csetimgData(dta);
                                 }}
                               />
                               <TextField
                                 name="email"
                                 label={`Card Image ${index + 1}`}
                                 style={{ width: '100%', marginTop: '24px' }}
-                                value={cardData.img}
+                                defaultValue={cardData.img}
                                 onChange={(e) => {
                                   console.log(cardData, cimgData);
-                                  csetimgData[index].img(e.target.value);
+                                  let value = e.target.value;
+                                  let dta = [...cimgData];
+                                  dta[index].subTitle = value;
+                                  csetimgData(dta);
+                                  // csetimgData[index].img(e.target.value);
                                 }}
                               />
                               <TextField
                                 name="email"
                                 label={`Card Subtitle ${index + 1}`}
                                 style={{ width: '100%' }}
-                                value={cardData.subTitle}
+                                defaultValue={cardData.subTitle}
                                 onChange={(e) => {
-                                  csetimgData[index].subTitle(e.target.value);
+                                  let value = e.target.value;
+                                  let dta = [...cimgData];
+                                  dta[index].subTitle = value;
+                                  csetimgData(dta);
+                                  // csetimgData[index].subTitle(e.target.value);
                                 }}
                               />
                             </Box>
@@ -687,7 +703,11 @@ const HomePageContent = () => {
                                 style={{ width: '100%', marginTop: '24px' }}
                                 value={cardData.title}
                                 onChange={(e) => {
-                                  esetdata[index].title(e.target.value);
+                                  let value = e.target.value;
+                                  let dta = [...edata];
+                                  dta[index].title = value;
+                                  esetdata(dta);
+                                  // esetdata[index].title(e.target.value);
                                 }}
                               />
                               <TextField
@@ -696,7 +716,11 @@ const HomePageContent = () => {
                                 style={{ width: '100%', marginTop: '24px' }}
                                 value={cardData.subTitle}
                                 onChange={(e) => {
-                                  esetdata[index].subTitle(e.target.value);
+                                  let value = e.target.value;
+                                  let dta = [...edata];
+                                  dta[index].subTitle = value;
+                                  esetdata(dta);
+                                  // esetdata[index].subTitle(e.target.value);
                                 }}
                               />
                               <TextField
@@ -705,7 +729,11 @@ const HomePageContent = () => {
                                 style={{ width: '100%' }}
                                 value={cardData.img}
                                 onChange={(e) => {
-                                  esetdata[index].img(e.target.value);
+                                  let value = e.target.value;
+                                  let dta = [...edata];
+                                  dta[index].img = value;
+                                  esetdata(dta);
+                                  // esetdata[index].img(e.target.value);
                                 }}
                               />
                               <TextField
@@ -714,7 +742,11 @@ const HomePageContent = () => {
                                 style={{ width: '100%' }}
                                 value={cardData.btnTxt}
                                 onChange={(e) => {
-                                  esetdata[index].btnTxt(e.target.value);
+                                  let value = e.target.value;
+                                  let dta = [...edata];
+                                  dta[index].btnTxt = value;
+                                  esetdata(dta);
+                                  // esetdata[index].btnTxt(e.target.value);
                                 }}
                               />
                             </Box>
@@ -831,7 +863,11 @@ const HomePageContent = () => {
                                 style={{ width: '100%', marginTop: '24px' }}
                                 value={cardData.icon}
                                 onChange={(e) => {
-                                  fsetdata[index].icon(e.target.value);
+                                  // fsetdata[index].icon(e.target.value);
+                                  let value = e.target.value;
+                                  let dta = [...fdata];
+                                  dta[index].icon = value;
+                                  fsetdata(dta);
                                 }}
                               />
                               <TextField
@@ -840,7 +876,11 @@ const HomePageContent = () => {
                                 style={{ width: '100%', marginTop: '24px' }}
                                 value={cardData.txt}
                                 onChange={(e) => {
-                                  fsetdata[index].txt(e.target.value);
+                                  let value = e.target.value;
+                                  let dta = [...fdata];
+                                  dta[index].txt = value;
+                                  fsetdata(dta);
+                                  // fsetdata[index].txt(e.target.value);
                                 }}
                               />
                             </Box>
@@ -890,6 +930,12 @@ const HomePageContent = () => {
                         />
                       </Box>
                       <h3>Image Section </h3>
+                      {/* 
+                        Slider Section
+Section 3
+Latest Resource
+FAQ
+                        */}
                       {gimgData.map((cardData, index) => {
                         return (
                           <>
@@ -908,7 +954,11 @@ const HomePageContent = () => {
                                 style={{ width: '100%', marginTop: '24px' }}
                                 value={cardData.url}
                                 onChange={(e) => {
-                                  gsetimgData[index].url(e.target.value);
+                                  let value = e.target.value;
+                                  let dta = [...gimgData];
+                                  dta[index].url = value;
+                                  gsetimgData(dta);
+                                  // gsetimgData[index].url(e.target.value);
                                 }}
                               />
                             </Box>
@@ -935,7 +985,11 @@ const HomePageContent = () => {
                                 style={{ width: '100%', marginTop: '24px' }}
                                 value={cardData.title}
                                 onChange={(e) => {
-                                  gsetcardData[index].title(e.target.value);
+                                  let value = e.target.title;
+                                  let dta = [...gcardData];
+                                  dta[index].url = value;
+                                  gsetcardData(dta);
+                                  // gsetcardData[index].title(e.target.value);
                                 }}
                               />
                               <TextField
@@ -944,7 +998,11 @@ const HomePageContent = () => {
                                 style={{ width: '100%', marginTop: '24px' }}
                                 value={cardData.author}
                                 onChange={(e) => {
-                                  gsetcardData[index].author(e.target.value);
+                                  let value = e.target.title;
+                                  let dta = [...gcardData];
+                                  dta[index].author = value;
+                                  gsetcardData(dta);
+                                  // gsetcardData[index].author(e.target.value);
                                 }}
                               />
                               <TextField
@@ -953,7 +1011,11 @@ const HomePageContent = () => {
                                 style={{ width: '100%', marginTop: '24px' }}
                                 value={cardData.profession}
                                 onChange={(e) => {
-                                  gsetcardData[index].profession(e.target.value);
+                                  let value = e.target.title;
+                                  let dta = [...gcardData];
+                                  dta[index].profession = value;
+                                  gsetcardData(dta);
+                                  // gsetcardData[index].profession(e.target.value);
                                 }}
                               />
                               <TextField
@@ -962,7 +1024,11 @@ const HomePageContent = () => {
                                 style={{ width: '100%', marginTop: '24px' }}
                                 value={cardData.img}
                                 onChange={(e) => {
-                                  gsetcardData[index].img(e.target.value);
+                                  let value = e.target.title;
+                                  let dta = [...gcardData];
+                                  dta[index].img = value;
+                                  gsetcardData(dta);
+                                  // gsetcardData[index].img(e.target.value);
                                 }}
                               />
                             </Box>
@@ -1168,7 +1234,11 @@ const HomePageContent = () => {
                               style={{ width: '100%', marginTop: '24px' }}
                               value={cardData.title}
                               onChange={(e) => {
-                                isetData[index].title(e.target.value);
+                                let value = e.target.title;
+                                let dta = [...iData];
+                                dta[index].title = value;
+                                isetData(dta);
+                                // isetData[index].title(e.target.value);
                               }}
                             />
                             <TextField
@@ -1177,7 +1247,11 @@ const HomePageContent = () => {
                               style={{ width: '100%', marginTop: '24px' }}
                               value={cardData.img}
                               onChange={(e) => {
-                                isetData[index].img(e.target.value);
+                                let value = e.target.title;
+                                let dta = [...iData];
+                                dta[index].img = value;
+                                isetData(dta);
+                                // isetData[index].img(e.target.value);
                               }}
                             />
                           </Box>
@@ -1244,7 +1318,11 @@ const HomePageContent = () => {
                                 style={{ width: '100%', marginTop: '24px' }}
                                 value={cardData.title}
                                 onChange={(e) => {
-                                  jsetcardData[index].title(e.target.value);
+                                  let value = e.target.title;
+                                  let dta = [...jcardData];
+                                  dta[index].title = value;
+                                  jsetcardData(dta);
+                                  // jsetcardData[index].title(e.target.value);
                                 }}
                               />
                               <TextField
@@ -1253,7 +1331,11 @@ const HomePageContent = () => {
                                 style={{ width: '100%', marginTop: '24px' }}
                                 value={cardData.categories[0]}
                                 onChange={(e) => {
-                                  jsetcardData[index].categories[0](e.target.value);
+                                  let value = e.target.title;
+                                  let dta = [...jcardData];
+                                  dta[index].categories[0] = value;
+                                  jsetcardData(dta);
+                                  // jsetcardData[index].categories[0](e.target.value);
                                 }}
                               />
                               <TextField
@@ -1262,7 +1344,11 @@ const HomePageContent = () => {
                                 style={{ width: '100%' }}
                                 value={cardData.categories[1]}
                                 onChange={(e) => {
-                                  jsetcardData[index].categories[1](e.target.value);
+                                  let value = e.target.title;
+                                  let dta = [...jcardData];
+                                  dta[index].categories[1] = value;
+                                  jsetcardData(dta);
+                                  // jsetcardData[index].categories[1](e.target.value);
                                 }}
                               />
                               <TextField
@@ -1271,7 +1357,11 @@ const HomePageContent = () => {
                                 style={{ width: '100%' }}
                                 value={cardData.desc}
                                 onChange={(e) => {
-                                  jsetcardData[index].desc(e.target.value);
+                                  let value = e.target.title;
+                                  let dta = [...jcardData];
+                                  dta[index].desc = value;
+                                  jsetcardData(dta);
+                                  // jsetcardData[index].desc(e.target.value);
                                 }}
                               />
 
@@ -1281,7 +1371,11 @@ const HomePageContent = () => {
                                 style={{ width: '100%' }}
                                 value={cardData.btnTxt}
                                 onChange={(e) => {
-                                  jsetcardData[index].btnTxt(e.target.value);
+                                  let value = e.target.title;
+                                  let dta = [...jcardData];
+                                  dta[index].btnTxt = value;
+                                  jsetcardData(dta);
+                                  // jsetcardData[index].btnTxt(e.target.value);
                                 }}
                               />
                               <TextField
@@ -1290,7 +1384,11 @@ const HomePageContent = () => {
                                 style={{ width: '100%' }}
                                 value={cardData.mainBtn}
                                 onChange={(e) => {
-                                  jsetcardData[index].mainBtn(e.target.value);
+                                  let value = e.target.title;
+                                  let dta = [...jcardData];
+                                  dta[index].mainBtn = value;
+                                  jsetcardData(dta);
+                                  // jsetcardData[index].mainBtn(e.target.value);
                                 }}
                               />
                               <TextField
@@ -1299,7 +1397,11 @@ const HomePageContent = () => {
                                 style={{ width: '100%' }}
                                 value={cardData.btnUrl}
                                 onChange={(e) => {
-                                  jsetcardData[index].btnUrl(e.target.value);
+                                  let value = e.target.title;
+                                  let dta = [...jcardData];
+                                  dta[index].btnUrl = value;
+                                  jsetcardData(dta);
+                                  // jsetcardData[index].btnUrl(e.target.value);
                                 }}
                               />
                               <TextField
@@ -1308,7 +1410,11 @@ const HomePageContent = () => {
                                 style={{ width: '100%' }}
                                 value={cardData.isDownloadShown}
                                 onChange={(e) => {
-                                  jsetcardData[index].isDownloadShown(e.target.value);
+                                  let value = e.target.title;
+                                  let dta = [...jcardData];
+                                  dta[index].isDownloadShown = value;
+                                  jsetcardData(dta);
+                                  // jsetcardData[index].isDownloadShown(e.target.value);
                                 }}
                               />
                             </Box>
@@ -1320,7 +1426,11 @@ const HomePageContent = () => {
                               multiline
                               rows={4}
                               onChange={(e) => {
-                                jsetcardData[index].desc(e.target.value);
+                                let value = e.target.title;
+                                let dta = [...jcardData];
+                                dta[index].desc = value;
+                                jsetcardData(dta);
+                                // jsetcardData[index].desc(e.target.value);
                               }}
                             />
                           </>
@@ -1390,8 +1500,11 @@ const HomePageContent = () => {
                               style={{ width: '100%', marginTop: '24px' }}
                               value={cardData.que}
                               onChange={(e) => {
-                                console.log(index);
-                                ksetcardData[index]?.que(e.target.value);
+                                let value = e.target.title;
+                                let dta = [...kcardData];
+                                dta[index].que = value;
+                                ksetcardData(dta);
+                                // ksetcardData[index]?.que(e.target.value);
                               }}
                             />
                             <TextField
@@ -1400,8 +1513,11 @@ const HomePageContent = () => {
                               style={{ width: '100%', marginTop: '24px' }}
                               value={cardData.ans}
                               onChange={(e) => {
-                                console.log(index);
-                                ksetcardData[index]?.ans(e.target.value);
+                                let value = e.target.title;
+                                let dta = [...kcardData];
+                                dta[index].ans = value;
+                                ksetcardData(dta);
+                                // ksetcardData[index]?.ans(e.target.value);
                               }}
                             />
                           </>
