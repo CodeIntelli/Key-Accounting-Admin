@@ -31,8 +31,6 @@ const ServicePageContent = () => {
   const [csubtitle, csetsubtitle] = useState('');
   const [ctitle, csettitle] = useState('');
   const [cdata, csetdata] = useState('');
-  const [cdesc, csetdesc] = useState('');
-  const [cimg, csetimg] = useState('');
   /* section3 */
   const [dsubtitle, dsetsubtitle] = useState('');
   const [dtitle, dsettitle] = useState('');
@@ -41,11 +39,8 @@ const ServicePageContent = () => {
   const [esubtitle, esetsubtitle] = useState('');
   const [etitle, esettitle] = useState('');
   const [eData, esetData] = useState('');
-  /* faqSection */
-  const [fsubtitle, fsetsubtitle] = useState('');
-  const [ftitle, fsettitle] = useState('');
-  const [fData, fsetData] = useState('');
-  const [fmainBtn, fsetmainBtn] = useState('');
+  const [emainBtn, esetmainBtn] = useState('');
+  const [emainImg, esetmainImg] = useState('');
 
   const [addRecordLoader, setaddLoader] = useState(false);
   const [id, setid] = useState();
@@ -53,11 +48,11 @@ const ServicePageContent = () => {
 
   const setStateData = (data) => {
     /*  */
-    asettitle(data.herosection.title);
-    asetdesc(data.herosection.desc);
-    asetbtnTxt(data.herosection.btnTxt);
-    asetbtnUrl(data.herosection.btnUrl);
-    asetmainImg(data.herosection.mainImg);
+    asettitle(data.heroSection.title);
+    asetdesc(data.heroSection.desc);
+    asetbtnTxt(data.heroSection.btnTxt);
+    asetbtnUrl(data.heroSection.btnUrl);
+    asetmainImg(data.heroSection.mainImg);
     /*  */
     bsetsubtitle(data.section1.subtitle);
     bsettitle(data.section1.title);
@@ -65,7 +60,7 @@ const ServicePageContent = () => {
     bsetmainImg(data.section1.mainImg);
     bsetdata(data.section1.data);
     bsetbtnTxt(data.section1.btnTxt);
-    bsetbtnRoutes(data.section1.btnRoutes);
+    bsetbtnRoutes(data.section1.routes);
     /*  */
     // csetdesc(data.section2.desc);
     // csetimg(data.section2.img);
@@ -77,11 +72,11 @@ const ServicePageContent = () => {
     dsettitle(data.section3.title);
     dsetData(data.section3.data);
     /*  */
-    esetsubtitle(data.faqSection.subtitle);
+    esetsubtitle(data.faqSection.subTitle);
     esettitle(data.faqSection.title);
     esetData(data.faqSection.texts);
-    esetData(data.faqSection.mainBtn);
-    esetData(data.faqSection.mainImg);
+    esetmainBtn(data.faqSection.mainBtn);
+    esetmainImg(data.faqSection.mainImg);
   };
 
   const fetchContent = async () => {
@@ -99,7 +94,6 @@ const ServicePageContent = () => {
           authorization: `Bearer ${bearerToken}`,
         },
       });
-      console.log('🤩 ~ file: IndustriesPage.js:19 ~ fetchContent ~ data', data);
       setHomeContent(data.result.english.content);
       setStateData(data.result.english.content);
       setid(data.result._id);
@@ -133,13 +127,17 @@ const ServicePageContent = () => {
 
   const handleSubmit = async () => {
     setaddLoader(true);
+
+    /* 
+    atitle, adesc, abtnTxt, abtnUrl, amainImg, bsubtitle, btitle, bdesc, bmainImg, bdata, bbtnTxt, bbtnRoutes, csubtitle, ctitle, cdata, dsubtitle, dtitle, dData, esubtitle, etitle, eData, emainBtn, emainImg,     
+    */
     const setFormData = {
       english: {
-        pageTitle: 'ServicePage',
+        pageTitle: 'IndustriesPage',
         content: {
           heroSection: {
             title: atitle,
-            subTitle: adesc,
+            desc: adesc,
             btnTxt: abtnTxt,
             btnUrl: abtnUrl,
             mainImg: amainImg,
@@ -149,31 +147,31 @@ const ServicePageContent = () => {
             title: btitle,
             desc: bdesc,
             mainImg: bmainImg,
+            data: bdata,
+            btnTxt: bbtnTxt,
+            routes: bbtnRoutes,
           },
           section2: {
-            desc: cdesc,
-            img: cimg,
+            subtitle: csubtitle,
+            title: ctitle,
+            data: cdata,
           },
           section3: {
             subtitle: dsubtitle,
             title: dtitle,
             data: dData,
           },
-          section4: {
-            subtitle: esubtitle,
+          faqSection: {
+            subTitle: esubtitle,
             title: etitle,
-            data: eData,
-          },
-          Faq: {
-            subTitle: fsubtitle,
-            title: ftitle,
-            mainBtn: fmainBtn,
-            texts: fData,
+            mainBtn: emainBtn,
+            mainImg: emainImg,
+            texts: eData,
           },
         },
       },
     };
-    console.log(setFormData);
+    console.log('===========================================', setFormData);
     const updateResult = await changeContent(id, setFormData);
     setTimeout(() => {
       setaddLoader(false);
@@ -315,7 +313,61 @@ const ServicePageContent = () => {
                             bsetmainImg(e.target.value);
                           }}
                         />
+
+                        <TextField
+                          name="email"
+                          label="Main image"
+                          style={{ width: '100%', marginTop: '24px' }}
+                          value={bbtnTxt}
+                          onChange={(e) => {
+                            bsetbtnTxt(e.target.value);
+                          }}
+                        />
+                        <TextField
+                          name="email"
+                          label="Main image"
+                          style={{ width: '100%', marginTop: '24px' }}
+                          value={bbtnRoutes}
+                          onChange={(e) => {
+                            bsetbtnRoutes(e.target.value);
+                          }}
+                        />
                       </Box>
+                      <h3>Card Data</h3>
+                      {bdata?.map((cardData, index) => {
+                        return (
+                          <>
+                            {index === 0 ? '' : <Divider style={{ marginTop: '18px' }} />}
+                            <TextField
+                              name="email"
+                              label="Title"
+                              style={{ width: '100%', marginTop: '24px' }}
+                              value={cardData.title}
+                              onChange={(e) => {
+                                let value = e.target.value;
+                                let dta = [...bdata];
+                                dta[index].title = value;
+                                bsetdata(dta);
+                                // csetdata(e.target.value);
+                              }}
+                            />
+
+                            <TextField
+                              name="email"
+                              label="Image"
+                              style={{ width: '100%', marginTop: '24px' }}
+                              value={cardData.img}
+                              onChange={(e) => {
+                                let value = e.target.value;
+                                let dta = [...bdata];
+                                dta[index].img = value;
+                                bsetdata(dta);
+                                // csetdata(e.target.value);
+                              }}
+                            />
+                          </>
+                        );
+                      })}
                     </div>
                   </Grid>
                 </Card>
@@ -340,23 +392,83 @@ const ServicePageContent = () => {
                       >
                         <TextField
                           name="email"
-                          label="Description"
+                          label="Sub Title"
                           style={{ width: '100%', marginTop: '24px' }}
-                          value={cdesc}
+                          value={csubtitle}
                           onChange={(e) => {
-                            csetdesc(e.target.value);
+                            csetsubtitle(e.target.value);
                           }}
                         />
                         <TextField
                           name="email"
-                          label="Image"
+                          label="Title"
                           style={{ width: '100%', marginTop: '24px' }}
-                          value={cimg}
+                          value={ctitle}
                           onChange={(e) => {
-                            csetimg(e.target.value);
+                            csettitle(e.target.value);
                           }}
                         />
                       </Box>
+                      <h3>Card Data</h3>
+                      {cdata?.map((cardData, index) => {
+                        return (
+                          <>
+                            {index === 0 ? '' : <Divider style={{ marginTop: '18px' }} />}
+                            <TextField
+                              name="email"
+                              label="Title"
+                              style={{ width: '100%', marginTop: '24px' }}
+                              value={cardData.title}
+                              onChange={(e) => {
+                                let value = e.target.value;
+                                let dta = [...cdata];
+                                dta[index].title = value;
+                                csetdata(dta);
+                                // csetdata(e.target.value);
+                              }}
+                            />
+                            <TextField
+                              name="email"
+                              label="Description"
+                              style={{ width: '100%', marginTop: '24px' }}
+                              value={cardData.desc}
+                              onChange={(e) => {
+                                let value = e.target.value;
+                                let dta = [...cdata];
+                                dta[index].desc = value;
+                                csetdata(dta);
+                                // csetdata(e.target.value);
+                              }}
+                            />
+                            <TextField
+                              name="email"
+                              label="Image"
+                              style={{ width: '100%', marginTop: '24px' }}
+                              value={cardData.img}
+                              onChange={(e) => {
+                                let value = e.target.value;
+                                let dta = [...cdata];
+                                dta[index].img = value;
+                                csetdata(dta);
+                                // csetdata(e.target.value);
+                              }}
+                            />
+                            <TextField
+                              name="email"
+                              label="Button Text"
+                              style={{ width: '100%', marginTop: '24px' }}
+                              value={cardData.btnTxt}
+                              onChange={(e) => {
+                                let value = e.target.value;
+                                let dta = [...cdata];
+                                dta[index].btnTxt = value;
+                                csetdata(dta);
+                                // csetdata(e.target.value);
+                              }}
+                            />
+                          </>
+                        );
+                      })}
                     </div>
                   </Grid>
                 </Card>
@@ -389,7 +501,6 @@ const ServicePageContent = () => {
                           dsetsubtitle(e.target.value);
                         }}
                       />
-                      {/* Map Data #1 */}
                       {dData.map((cardData, index) => {
                         return (
                           <>
@@ -417,13 +528,13 @@ const ServicePageContent = () => {
                               />
                               <TextField
                                 name="email"
-                                label={`Card Description ${index + 1}`}
+                                label={`Card Image ${index + 1}`}
                                 style={{ width: '100%', marginTop: '24px' }}
-                                value={cardData.desc}
+                                value={cardData.img}
                                 onChange={(e) => {
                                   let value = e.target.value;
                                   let dta = [...dData];
-                                  dta[index].desc = value;
+                                  dta[index].img = value;
                                   dsetData(dta);
                                   // esetdata[index].subTitle(e.target.value);
                                 }}
@@ -464,131 +575,53 @@ const ServicePageContent = () => {
                           esetsubtitle(e.target.value);
                         }}
                       />
-                      {/* Map Data #1 */}
+                      <TextField
+                        name="email"
+                        label="Sub title"
+                        style={{ width: '100%', marginTop: '24px' }}
+                        value={emainImg}
+                        onChange={(e) => {
+                          esetmainImg(e.target.value);
+                        }}
+                      />
+                      <TextField
+                        name="email"
+                        label="Sub title"
+                        style={{ width: '100%', marginTop: '24px' }}
+                        value={emainBtn}
+                        onChange={(e) => {
+                          esetmainBtn(e.target.value);
+                        }}
+                      />
                       {eData.map((cardData, index) => {
                         return (
                           <>
                             <Divider style={{ marginTop: '20px' }} />
-                            <Box
-                              sx={{
-                                display: 'grid',
-                                columnGap: 2,
-                                rowGap: 3,
-                                gridTemplateColumns: { xs: 'repeat(1, 1fr)', sm: 'repeat(2, 1fr)' },
-                              }}
-                            >
-                              <TextField
-                                name="email"
-                                label={`Card Title ${index + 1}`}
-                                style={{ width: '100%', marginTop: '24px' }}
-                                value={cardData.title}
-                                onChange={(e) => {
-                                  let value = e.target.value;
-                                  let dta = [...eData];
-                                  dta[index].title = value;
-                                  esetData(dta);
-                                  // esetdata[index].title(e.target.value);
-                                }}
-                              />
-                              <TextField
-                                name="email"
-                                label={`Card Image ${index + 1}`}
-                                style={{ width: '100%', marginTop: '24px' }}
-                                value={cardData.img}
-                                onChange={(e) => {
-                                  let value = e.target.value;
-                                  let dta = [...eData];
-                                  dta[index].img = value;
-                                  esetData(dta);
-                                  // esetdata[index].subTitle(e.target.value);
-                                }}
-                              />
-                            </Box>
-                          </>
-                        );
-                      })}
-                    </div>
-                  </Grid>
-                </Card>
-              </Grid>
-            </Grid>
-          </div>
 
-          {/* FAQs */}
-          <div style={{ marginTop: '50px' }}>
-            <Grid container spacing={3}>
-              <Grid item xs={12} md={12}>
-                <Card sx={{ py: 2, px: 3 }}>
-                  <h2>Frequently Asked Questions</h2>
-                  <Grid item xs={12} md={12}>
-                    <div style={{ padding: '0px 40px' }}>
-                      <Box
-                        sx={{
-                          display: 'grid',
-                          columnGap: 2,
-                          rowGap: 3,
-                          gridTemplateColumns: { xs: 'repeat(1, 1fr)', sm: 'repeat(2, 1fr)' },
-                        }}
-                      >
-                        <TextField
-                          name="email"
-                          label="Title"
-                          style={{ width: '100%', marginTop: '24px' }}
-                          value={ftitle}
-                          onChange={(e) => {
-                            fsettitle(e.target.value);
-                          }}
-                        />
-                        <TextField
-                          name="email"
-                          label="Sub Title"
-                          style={{ width: '100%', marginTop: '24px' }}
-                          value={fsubtitle}
-                          onChange={(e) => {
-                            fsetsubtitle(e.target.value);
-                          }}
-                        />
-                      </Box>
-                      <TextField
-                        name="email"
-                        label="Button Title"
-                        style={{ width: '100%', marginTop: '24px' }}
-                        value={fmainBtn}
-                        onChange={(e) => {
-                          fsetmainBtn(e.target.value);
-                        }}
-                      />
-                      {/* kcardData */}
-                      <h3>Card Section </h3>
-                      {fData.map((cardData, index) => {
-                        // console.log(cardData, index);
-                        return (
-                          <>
-                            <Divider style={{ marginTop: '20px' }} />
                             <TextField
                               name="email"
-                              label={`Question ${index + 1}`}
+                              label={` Question ${index + 1}`}
                               style={{ width: '100%', marginTop: '24px' }}
                               value={cardData.que}
                               onChange={(e) => {
                                 let value = e.target.value;
-                                let dta = [...fData];
+                                let dta = [...eData];
                                 dta[index].que = value;
-                                fsetData(dta);
-                                // ksetcardData[index]?.que(e.target.value);
+                                esetData(dta);
+                                // esetdata[index].title(e.target.value);
                               }}
                             />
                             <TextField
                               name="email"
-                              label={`Answer`}
+                              label={`Answer ${index + 1}`}
                               style={{ width: '100%', marginTop: '24px' }}
                               value={cardData.ans}
                               onChange={(e) => {
                                 let value = e.target.value;
-                                let dta = [...fData];
+                                let dta = [...eData];
                                 dta[index].ans = value;
-                                fsetData(dta);
-                                // ksetcardData[index]?.ans(e.target.value);
+                                esetData(dta);
+                                // esetdata[index].subTitle(e.target.value);
                               }}
                             />
                           </>
