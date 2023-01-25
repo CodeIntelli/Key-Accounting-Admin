@@ -94,40 +94,23 @@ const PartnerPageContent = () => {
     setaddLoader(true);
     const setFormData = {
       english: {
-        pageTitle: 'ServicePage',
+        pageTitle: 'PartnerPage',
         content: {
           heroSection: {
             title: atitle,
-            subTitle: adesc,
-            btnTxt: abtnTxt,
-            btnUrl: abtnUrl,
+            desc: adesc,
             mainImg: amainImg,
           },
           section1: {
             subtitle: bsubtitle,
             title: btitle,
             desc: bdesc,
-            mainImg: bmainImg,
+            desc2: bdesc2,
           },
           section2: {
-            desc: cdesc,
-            img: cimg,
-          },
-          section3: {
-            subtitle: dsubtitle,
-            title: dtitle,
-            data: dData,
-          },
-          section4: {
-            subtitle: esubtitle,
-            title: etitle,
-            data: eData,
-          },
-          Faq: {
-            subTitle: fsubtitle,
-            title: ftitle,
-            mainBtn: fmainBtn,
-            texts: fData,
+            subtitle: csubtitle,
+            title: ctitle,
+            data: cdata,
           },
         },
       },
@@ -188,117 +171,117 @@ const PartnerPageContent = () => {
             </Grid>
           </Grid>
 
-          <div style={{marginTop:'50px'}}>
-          <Grid container spacing={3}>
-            <Grid item xs={12} md={12}>
-              <Card sx={{ py: 2, px: 3 }}>
-                <h2>Section 1</h2>
-                <Grid item xs={12} md={12}>
-                  <div style={{ padding: '0px 40px', display: 'flex', flexDirection: 'column' }}>
-                    <TextField
-                      name="sub_title"
-                      label="Sub Title"
-                      value={bsubtitle}
-                      style={{ margin: '10px' }}
-                      onChange={(e) => {
-                        bsetsubtitle(e.target.value);
-                      }}
-                    />
-                    <TextField
-                      name="title"
-                      label="Title"
-                      value={btitle}
-                      style={{ margin: '10px' }}
-                      onChange={(e) => {
-                        bsettitle(e.target.value);
-                      }}
-                    />
-                    <TextField
-                      name="title"
-                      label="Sub Title"
-                      value={bdesc}
-                      style={{ margin: '10px' }}
-                      onChange={(e) => {
-                        bsetdesc(e.target.value);
-                      }}
-                    />
-                   <TextField
-                      name="title"
-                      label="Sub Title"
-                      value={bdesc2}
-                      style={{ margin: '10px' }}
-                      onChange={(e) => {
-                        bsetdesc2(e.target.value);
-                      }}
-                    />
-                  </div>
-                </Grid>
-              </Card>
+          <div style={{ marginTop: '50px' }}>
+            <Grid container spacing={3}>
+              <Grid item xs={12} md={12}>
+                <Card sx={{ py: 2, px: 3 }}>
+                  <h2>Section 1</h2>
+                  <Grid item xs={12} md={12}>
+                    <div style={{ padding: '0px 40px', display: 'flex', flexDirection: 'column' }}>
+                      <TextField
+                        name="sub_title"
+                        label="Sub Title"
+                        value={bsubtitle}
+                        style={{ margin: '10px' }}
+                        onChange={(e) => {
+                          bsetsubtitle(e.target.value);
+                        }}
+                      />
+                      <TextField
+                        name="title"
+                        label="Title"
+                        value={btitle}
+                        style={{ margin: '10px' }}
+                        onChange={(e) => {
+                          bsettitle(e.target.value);
+                        }}
+                      />
+                      <TextField
+                        name="title"
+                        label="Sub Title"
+                        value={bdesc}
+                        style={{ margin: '10px' }}
+                        onChange={(e) => {
+                          bsetdesc(e.target.value);
+                        }}
+                      />
+                      <TextField
+                        name="title"
+                        label="Sub Title"
+                        value={bdesc2}
+                        style={{ margin: '10px' }}
+                        onChange={(e) => {
+                          bsetdesc2(e.target.value);
+                        }}
+                      />
+                    </div>
+                  </Grid>
+                </Card>
+              </Grid>
             </Grid>
-          </Grid>
-        </div>
-         <div style={{marginTop:'50px'}}>
-          <Grid container spacing={3}>
-            <Grid item xs={12} md={12}>
-              <Card sx={{ py: 2, px: 3 }}>
-                <h2>Section 2</h2>
-                <Grid item xs={12} md={12}>
-                  <div style={{ padding: '0px 40px', display: 'flex', flexDirection: 'column' }}>
-                  <TextField
-                      name="sub_title"
-                      label="Sub Title"
-                      value={csubtitle}
-                      style={{ margin: '10px' }}
-                      onChange={(e) => {
-                        csetsubtitle(e.target.value);
-                      }}
-                    />
-                    <TextField
-                      name="title"
-                      label="Title"
-                      value={ctitle}
-                      style={{ margin: '10px' }}
-                      onChange={(e) => {
-                        csettitle(e.target.value);
-                      }}
-                    />
-                    {cdata.map((cardData, index) => {
-                      return (
-                        <>
-                          {index === 0 ? '' : <Divider style={{ marginTop: '18px' }} />}
-                          <TextField
-                            name="email"
-                            label="Title"
-                            style={{ width: '100%', marginTop: '24px' }}
-                            value={cardData.title}
-                            onChange={(e) => {
-                              const value = e.target.value;
-                              const dta = [...bdata];
-                              dta[index].title = value;
-                              bsetdata(dta);
-                            }}
-                          />
-                          <TextField
-                            name="email"
-                            label="Image"
-                            style={{ width: '100%', marginTop: '24px' }}
-                            value={cardData.img}
-                            onChange={(e) => {
-                              const value = e.target.value;
-                              const dta = [...bdata];
-                              dta[index].img = value;
-                              bsetdata(dta);
-                            }}
-                          />
-                        </>
-                      );
-                    })}
-                  </div>
-                </Grid>
-              </Card>
+          </div>
+          <div style={{ marginTop: '50px' }}>
+            <Grid container spacing={3}>
+              <Grid item xs={12} md={12}>
+                <Card sx={{ py: 2, px: 3 }}>
+                  <h2>Section 2</h2>
+                  <Grid item xs={12} md={12}>
+                    <div style={{ padding: '0px 40px', display: 'flex', flexDirection: 'column' }}>
+                      <TextField
+                        name="sub_title"
+                        label="Sub Title"
+                        value={csubtitle}
+                        style={{ margin: '10px' }}
+                        onChange={(e) => {
+                          csetsubtitle(e.target.value);
+                        }}
+                      />
+                      <TextField
+                        name="title"
+                        label="Title"
+                        value={ctitle}
+                        style={{ margin: '10px' }}
+                        onChange={(e) => {
+                          csettitle(e.target.value);
+                        }}
+                      />
+                      {cdata.map((cardData, index) => {
+                        return (
+                          <>
+                            {index === 0 ? '' : <Divider style={{ marginTop: '18px' }} />}
+                            <TextField
+                              name="email"
+                              label="Title"
+                              style={{ width: '100%', marginTop: '24px' }}
+                              value={cardData.title}
+                              onChange={(e) => {
+                                const value = e.target.value;
+                                const dta = [...cdata];
+                                dta[index].title = value;
+                                csetdata(dta);
+                              }}
+                            />
+                            <TextField
+                              name="email"
+                              label="Image"
+                              style={{ width: '100%', marginTop: '24px' }}
+                              value={cardData.img}
+                              onChange={(e) => {
+                                const value = e.target.value;
+                                const dta = [...cdata];
+                                dta[index].img = value;
+                                csetdata(dta);
+                              }}
+                            />
+                          </>
+                        );
+                      })}
+                    </div>
+                  </Grid>
+                </Card>
+              </Grid>
             </Grid>
-          </Grid>
-        </div>
+          </div>
           <div
             style={{
               marginTop: '30px',

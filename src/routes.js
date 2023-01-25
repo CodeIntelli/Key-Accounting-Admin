@@ -35,6 +35,7 @@ import PartnerPageContent from './pages/ContentPage/PartnerPageContent';
 import CarrierApplyPageContent from './pages/ContentPage/CarrierApplyPageContent';
 import CarrierPageContent from './pages/ContentPage/CarrierPageContent';
 import OurStoryPageContent from './pages/ContentPage/OurStoryPageContent';
+import EbookPageContent from './pages/ContentPage/EbookPageContent';
 
 // ----------------------------------------------------------------------
 
@@ -63,6 +64,7 @@ export default function Router() {
         { path: 'pages/carrierapply', element: <CarrierApplyPageContent /> },
         { path: 'pages/carrier', element: <CarrierPageContent /> },
         { path: 'pages/ourstory', element: <OurStoryPageContent /> },
+        { path: 'pages/ebook', element: <EbookPageContent /> },
         { path: 'pages', element: <ContentAppPage /> },
         { path: 'blog', element: <BlogPage /> },
         { path: 'activity', element: <ActivityAppPage /> },

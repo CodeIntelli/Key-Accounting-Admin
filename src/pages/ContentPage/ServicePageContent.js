@@ -47,6 +47,7 @@ const ServicePageContent = () => {
 
   const setStateData = (data) => {
     /*  */
+    debugger;
     asettitle(data.herosection.title);
     asetdesc(data.herosection.desc);
     asetbtnTxt(data.herosection.btnTxt);
@@ -60,6 +61,7 @@ const ServicePageContent = () => {
     /*  */
     csetdesc(data.section2.desc);
     csetimg(data.section2.img);
+
     /*  */
     dsetsubtitle(data.section3.subtitle);
     dsettitle(data.section3.title);
@@ -381,8 +383,8 @@ const ServicePageContent = () => {
                           dsetsubtitle(e.target.value);
                         }}
                       />
-                      {/* Map Data #1 */}
-                      {dData.map((cardData, index) => {
+                      {dData?.map((cardData, index) => {
+                        debugger;
                         return (
                           <>
                             <Divider style={{ marginTop: '20px' }} />

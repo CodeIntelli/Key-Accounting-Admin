@@ -23,17 +23,14 @@ const CaseStudiesPageContent = () => {
   /* section1 */
   const [bdata, bsetdata] = useState('');
 
-
   const setStateData = (data) => {
-
     debugger;
-    asettitle(data.herosection.title);
-    asetdesc(data.herosection.desc);
-    asetbtnTxt(data.herosection.btnTxt);
-    asetbtnUrl(data.herosection.btnUrl);
-    asetmainImg(data.herosection.mainImg);
-    console.log(data?.section1?.data,'section1');
-    bsetdata(data?.section1?.data); 
+    asettitle(data.heroSection.title);
+    asetdesc(data.heroSection.desc);
+    asetbtnTxt(data.heroSection.btnTxt);
+    asetbtnUrl(data.heroSection.btnUrl);
+    asetmainImg(data.heroSection.mainImg);
+    bsetdata(data?.section1?.data);
   };
 
   const fetchContent = async () => {
@@ -77,7 +74,6 @@ const CaseStudiesPageContent = () => {
         },
       });
       return data;
-      console.log('🤩 ~ file: HomePageContent.js:19 ~ fetchContent ~ data', data);
     } catch (error) {
       console.log(error);
       setIsLoading(false);
@@ -89,40 +85,17 @@ const CaseStudiesPageContent = () => {
     setaddLoader(true);
     const setFormData = {
       english: {
-        pageTitle: 'ServicePage',
+        pageTitle: 'CaseStudiesPage',
         content: {
           heroSection: {
             title: atitle,
-            subTitle: adesc,
+            desc: adesc,
             btnTxt: abtnTxt,
             btnUrl: abtnUrl,
             mainImg: amainImg,
           },
           section1: {
-            subtitle: bsubtitle,
-            title: btitle,
-            desc: bdesc,
-            mainImg: bmainImg,
-          },
-          section2: {
-            desc: cdesc,
-            img: cimg,
-          },
-          section3: {
-            subtitle: dsubtitle,
-            title: dtitle,
-            data: dData,
-          },
-          section4: {
-            subtitle: esubtitle,
-            title: etitle,
-            data: eData,
-          },
-          Faq: {
-            subTitle: fsubtitle,
-            title: ftitle,
-            mainBtn: fmainBtn,
-            texts: fData,
+            data: bdata,
           },
         },
       },
@@ -161,7 +134,7 @@ const CaseStudiesPageContent = () => {
                     />
                     <TextField
                       name="title"
-                      label="Desc"
+                      label="Description"
                       value={adesc}
                       style={{ margin: '10px' }}
                       onChange={(e) => {
@@ -201,123 +174,112 @@ const CaseStudiesPageContent = () => {
             </Grid>
           </Grid>
 
-          <div style={{marginTop:'50px'}}>
-          <Grid container spacing={3}>
-            <Grid item xs={12} md={12}>
-              <Card sx={{ py: 2, px: 3 }}>
-                <h2>Section 1</h2>
-                <Grid item xs={12} md={12}>
-                  <div style={{ padding: '0px 40px', display: 'flex', flexDirection: 'column' }}>
-                    {bdata.map((cardData, index) => {
-                    console.log(cardData);
-                      return (
-                        <>
-                          {index === 0 ? '' : <Divider style={{ marginTop: '18px' }} />}
-                          <TextField
-                            name="email"
-                            label="Title"
-                            style={{ width: '100%', marginTop: '24px' }}
-                            value={cardData.title}
-                            onChange={(e) => {
-                              const value = e.target.value;
-                              const dta = [...bdata];
-                              dta[index].title = value;
-                              bsetdata(dta);
-                            }}
-                          />
-                          <TextField
-                            name="email"
-                            label="Categories 1"
-                            style={{ width: '100%', marginTop: '24px' }}
-                            value={cardData.cat[0]}
-                            onChange={(e) => {
-                              const value = e.target.value;
-                              const dta = [...bdata];
-                              dta[index].cat[0] = value;
-                              bsetdata(dta);
-                            }}
-                          />
-                          <TextField
-                            name="email"
-                            label="Categories 2"
-                            style={{ width: '100%', marginTop: '24px' }}
-                            value={cardData.cat[1]}
-                            onChange={(e) => {
-                              const value = e.target.value;
-                              const dta = [...bdata];
-                              dta[index].cat[1] = value;
-                              bsetdata(dta);
-                            }}
-                          />
-                          <TextField
-                            name="email"
-                            label="Title"
-                            style={{ width: '100%', marginTop: '24px' }}
-                            value={cardData.title}
-                            onChange={(e) => {
-                              const value = e.target.value;
-                              const dta = [...bdata];
-                              dta[index].title = value;
-                              bsetdata(dta);
-                            }}
-                          />
-                          <TextField
-                            name="email"
-                            label="Title"
-                            style={{ width: '100%', marginTop: '24px' }}
-                            value={cardData.desc}
-                            onChange={(e) => {
-                              const value = e.target.value;
-                              const dta = [...bdata];
-                              dta[index].desc = value;
-                              bsetdata(dta);
-                            }}
-                          />
-                         <TextField
-                            name="email"
-                            label="Title"
-                            style={{ width: '100%', marginTop: '24px' }}
-                            value={cardData.btnTxt}
-                            onChange={(e) => {
-                              const value = e.target.value;
-                              const dta = [...bdata];
-                              dta[index].btnTxt = value;
-                              bsetdata(dta);
-                            }}
-                          />
-                          <TextField
-                            name="email"
-                            label="Title"
-                            style={{ width: '100%', marginTop: '24px' }}
-                            value={cardData.btnUrl}
-                            onChange={(e) => {
-                              const value = e.target.value;
-                              const dta = [...bdata];
-                              dta[index].btnUrl = value;
-                              bsetdata(dta);
-                            }}
-                          />
-                          <TextField
-                            name="email"
-                            label="Image"
-                            style={{ width: '100%', marginTop: '24px' }}
-                            value={cardData.img}
-                            onChange={(e) => {
-                              const value = e.target.value;
-                              const dta = [...bdata];
-                              dta[index].img = value;
-                              bsetdata(dta);
-                            }}
-                          />
-                        </>
-                      );
-                    })}
-                  </div>
-                </Grid>
-              </Card>
+          <div style={{ marginTop: '50px' }}>
+            <Grid container spacing={3}>
+              <Grid item xs={12} md={12}>
+                <Card sx={{ py: 2, px: 3 }}>
+                  <h2>Section 1</h2>
+                  <Grid item xs={12} md={12}>
+                    <div style={{ padding: '0px 40px', display: 'flex', flexDirection: 'column' }}>
+                      {bdata.map((cardData, index) => {
+                        console.log(cardData);
+                        return (
+                          <>
+                            {index === 0 ? '' : <Divider style={{ marginTop: '18px' }} />}
+                            <TextField
+                              name="email"
+                              label="Title"
+                              style={{ width: '100%', marginTop: '24px' }}
+                              value={cardData.title}
+                              onChange={(e) => {
+                                const value = e.target.value;
+                                const dta = [...bdata];
+                                dta[index].title = value;
+                                bsetdata(dta);
+                              }}
+                            />
+                            <TextField
+                              name="email"
+                              label="Categories 1"
+                              style={{ width: '100%', marginTop: '24px' }}
+                              value={cardData.cat[0]}
+                              onChange={(e) => {
+                                const value = e.target.value;
+                                const dta = [...bdata];
+                                dta[index].cat[0] = value;
+                                bsetdata(dta);
+                              }}
+                            />
+                            <TextField
+                              name="email"
+                              label="Categories 2"
+                              style={{ width: '100%', marginTop: '24px' }}
+                              value={cardData.cat[1]}
+                              onChange={(e) => {
+                                const value = e.target.value;
+                                const dta = [...bdata];
+                                dta[index].cat[1] = value;
+                                bsetdata(dta);
+                              }}
+                            />
+
+                            <TextField
+                              name="email"
+                              label="Description"
+                              style={{ width: '100%', marginTop: '24px' }}
+                              value={cardData.desc}
+                              onChange={(e) => {
+                                const value = e.target.value;
+                                const dta = [...bdata];
+                                dta[index].desc = value;
+                                bsetdata(dta);
+                              }}
+                            />
+                            <TextField
+                              name="email"
+                              label="Button Value"
+                              style={{ width: '100%', marginTop: '24px' }}
+                              value={cardData.btnTxt}
+                              onChange={(e) => {
+                                const value = e.target.value;
+                                const dta = [...bdata];
+                                dta[index].btnTxt = value;
+                                bsetdata(dta);
+                              }}
+                            />
+                            <TextField
+                              name="email"
+                              label="Button Routes"
+                              style={{ width: '100%', marginTop: '24px' }}
+                              value={cardData.btnUrl}
+                              onChange={(e) => {
+                                const value = e.target.value;
+                                const dta = [...bdata];
+                                dta[index].btnUrl = value;
+                                bsetdata(dta);
+                              }}
+                            />
+                            <TextField
+                              name="email"
+                              label="Image"
+                              style={{ width: '100%', marginTop: '24px' }}
+                              value={cardData.img}
+                              onChange={(e) => {
+                                const value = e.target.value;
+                                const dta = [...bdata];
+                                dta[index].img = value;
+                                bsetdata(dta);
+                              }}
+                            />
+                          </>
+                        );
+                      })}
+                    </div>
+                  </Grid>
+                </Card>
+              </Grid>
             </Grid>
-          </Grid>
-        </div> 
+          </div>
           <div
             style={{
               marginTop: '30px',

@@ -18,74 +18,52 @@ export default function ActivityPage() {
 
   const PageData = [
     {
-      title: 'Navbar',
-      url: 'navbar',
-      icon: icon('logos:ant-design'),
-      icon1: icon('flat-color-icons:edit-image', 50, 50),
-    },
-    {
-      title: 'Footer',
-      url: 'footer',
-      icon: icon('logos:ant-design'),
-      icon1: icon('flat-color-icons:edit-image', 50, 50),
-    },
-    {
       title: 'Home Page',
       url: 'home',
-      icon: icon('logos:ant-design'),
-      icon1: icon('flat-color-icons:edit-image', 50, 50),
     },
     {
       title: 'Service Page',
       url: 'service',
-      icon: icon('logos:ant-design'),
-      icon1: icon('flat-color-icons:edit-image', 50, 50),
     },
     {
       title: 'Contact Page',
       url: 'contact',
-      icon: icon('logos:ant-design'),
-      icon1: icon('flat-color-icons:edit-image', 50, 50),
     },
     {
       title: 'Industries Page',
       url: 'industries',
-      icon: icon('logos:ant-design'),
-      icon1: icon('flat-color-icons:edit-image', 50, 50),
     },
     {
-      title: 'Case Studies Page',
+      title: 'Casestudies Page',
       url: 'casestudy',
-      icon: icon('logos:ant-design'),
-      icon1: icon('flat-color-icons:edit-image', 50, 50),
     },
     {
-      title: 'Info Graphics Page',
+      title: 'Infographics Page',
       url: 'infographics',
-      icon: icon('logos:ant-design'),
-      icon1: icon('flat-color-icons:edit-image', 50, 50),
     },
     {
       title: 'Checklist Page',
       url: 'checklist',
-      icon: icon('logos:ant-design'),
-      icon1: icon('flat-color-icons:edit-image', 50, 50),
+    },
+    {
+      title: 'Ebook',
+      url: 'ebook',
+    },
+    {
+      title: 'Our Story',
+      url: 'ourstory',
     },
     {
       title: 'FAQs Page',
       url: 'faq',
-      icon: icon('logos:ant-design'),
-      icon1: icon('flat-color-icons:edit-image', 50, 50),
-    },
-    {
-      title: 'Blog Page',
-      url: 'blog',
-      icon: icon('logos:ant-design'),
-      icon1: icon('flat-color-icons:edit-image', 50, 50),
     },
     {
       title: 'Become A Partner Page',
       url: 'partner',
+    },
+    {
+      title: 'Blog Page',
+      url: 'blog',
       icon: icon('logos:ant-design'),
       icon1: icon('flat-color-icons:edit-image', 50, 50),
     },
@@ -102,8 +80,14 @@ export default function ActivityPage() {
       icon1: icon('flat-color-icons:edit-image', 50, 50),
     },
     {
-      title: 'Our Story',
-      url: 'ourstory',
+      title: 'Navbar',
+      url: 'navbar',
+      icon: icon('logos:ant-design'),
+      icon1: icon('flat-color-icons:edit-image', 50, 50),
+    },
+    {
+      title: 'Footer',
+      url: 'footer',
       icon: icon('logos:ant-design'),
       icon1: icon('flat-color-icons:edit-image', 50, 50),
     },
@@ -123,7 +107,7 @@ export default function ActivityPage() {
           {PageData.map((pageContent, index) => {
             return (
               <Grid key={index} item xs={12} sm={6} md={3}>
-                <Link to={pageContent.url}>
+                <Link to={pageContent?.url}>
                   <Card>
                     <Stack spacing={2} sx={{ p: 3 }}>
                       <div
@@ -136,7 +120,7 @@ export default function ActivityPage() {
                           left: '-10px',
                         }}
                       >
-                        <p>{pageContent.icon1}</p>
+                        <p>{pageContent?.icon1}</p>
                       </div>
                       <div
                         style={{
@@ -148,7 +132,7 @@ export default function ActivityPage() {
                           right: '-25%',
                         }}
                       >
-                        <p>{pageContent.icon}</p>
+                        <p>{pageContent?.icon}</p>
                       </div>
                       <div
                         style={{

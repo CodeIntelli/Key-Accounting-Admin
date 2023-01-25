@@ -7,7 +7,7 @@ import Cookies from 'js-cookie';
 import React, { useState, useEffect } from 'react';
 import LoadingAnimation from 'src/components/LoadingAnimation';
 
-const InfographicPageContent = () => {
+const EbookPageContent = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [homeContent, setHomeContent] = useState();
   const [addRecordLoader, setaddLoader] = useState(false);
@@ -43,7 +43,7 @@ const InfographicPageContent = () => {
         ? localStorage.getItem('x-access-token')
         : null;
 
-      const { data } = await axios.get(`${BASE_URL}content?page=infographics`, {
+      const { data } = await axios.get(`${BASE_URL}content?page=ebook`, {
         headers: {
           authorization: `Bearer ${bearerToken}`,
         },
@@ -85,7 +85,7 @@ const InfographicPageContent = () => {
     setaddLoader(true);
     const setFormData = {
       english: {
-        pageTitle: 'infographicsPage',
+        pageTitle: 'ebookPage',
         content: {
           heroSection: {
             title: atitle,
@@ -313,4 +313,4 @@ const InfographicPageContent = () => {
   );
 };
 
-export default InfographicPageContent;
+export default EbookPageContent;
