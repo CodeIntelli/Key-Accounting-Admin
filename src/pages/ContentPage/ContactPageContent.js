@@ -182,6 +182,7 @@ const ContactPageContent = () => {
             </Grid>
           </Grid>
 
+        <div style={{marginTop:'50px'}}>
           <Grid container spacing={3}>
             <Grid item xs={12} md={12}>
               <Card sx={{ py: 2, px: 3 }}>
@@ -236,7 +237,75 @@ const ContactPageContent = () => {
               </Card>
             </Grid>
           </Grid>
+        </div>
 
+        <div style={{marginTop:'50px'}}>
+          <Grid container spacing={3}>
+            <Grid item xs={12} md={12}>
+              <Card sx={{ py: 2, px: 3 }}>
+                <h2>Section 2</h2>
+                <Grid item xs={12} md={12}>
+                  <div style={{ padding: '0px 40px', display: 'flex', flexDirection: 'column' }}>
+                    {cdata.map((cardData, index) => {
+                      return (
+                        <>
+                          {index === 0 ? '' : <Divider style={{ marginTop: '18px' }} />}
+                          <TextField
+                            name="email"
+                            label="Title"
+                            style={{ width: '100%', marginTop: '24px' }}
+                            value={cardData.title}
+                            onChange={(e) => {
+                              const value = e.target.value;
+                              const dta = [...bdata];
+                              dta[index].title = value;
+                              bsetdata(dta);
+                            }}
+                          />
+                          <TextField
+                            name="email"
+                            label="Image"
+                            style={{ width: '100%', marginTop: '24px' }}
+                            value={cardData.img}
+                            onChange={(e) => {
+                              const value = e.target.value;
+                              const dta = [...bdata];
+                              dta[index].img = value;
+                              bsetdata(dta);
+                            }}
+                          />
+                        </>
+                      );
+                    })}
+                  </div>
+                </Grid>
+              </Card>
+            </Grid>
+          </Grid>
+        </div>
+
+                <div style={{marginTop:'50px'}}>
+          <Grid container spacing={3}>
+            <Grid item xs={12} md={12}>
+              <Card sx={{ py: 2, px: 3 }}>
+                <h2>Section 3</h2>
+                <Grid item xs={12} md={12}>
+                  <div style={{ padding: '0px 40px', display: 'flex', flexDirection: 'column' }}>
+                  <TextField
+                      name="title"
+                      label="Image"
+                      value={dimg}
+                      style={{ margin: '10px' }}
+                      onChange={(e) => {
+                        dsetimg(e.target.value);
+                      }}
+                    />
+                  </div>
+                </Grid>
+              </Card>
+            </Grid>
+          </Grid>
+        </div>
           {/* 
           <div style={{ marginTop: '50px' }}>
             <Grid container spacing={3}>
