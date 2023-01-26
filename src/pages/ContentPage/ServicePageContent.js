@@ -48,11 +48,11 @@ const ServicePageContent = () => {
   const setStateData = (data) => {
     /*  */
     debugger;
-    asettitle(data.herosection.title);
-    asetdesc(data.herosection.desc);
-    asetbtnTxt(data.herosection.btnTxt);
-    asetbtnUrl(data.herosection.btnUrl);
-    asetmainImg(data.herosection.mainImg);
+    asettitle(data.heroSection.title);
+    asetdesc(data.heroSection.subTitle);
+    asetbtnTxt(data.heroSection.btnTxt);
+    asetbtnUrl(data.heroSection.btnUrl);
+    asetmainImg(data.heroSection.mainImg);
     /*  */
     bsetsubtitle(data.section1.subtitle);
     bsettitle(data.section1.title);
@@ -71,10 +71,10 @@ const ServicePageContent = () => {
     esettitle(data.section4.title);
     esetData(data.section4.data);
     /*  */
-    fsetsubtitle(data.faqSection.subTitle);
-    fsettitle(data.faqSection.title);
-    fsetmainBtn(data.faqSection.mainBtn);
-    fsetData(data.faqSection.texts);
+    fsetsubtitle(data.Faq.subtitle);
+    fsettitle(data.Faq.title);
+    fsetmainBtn(data.Faq.mainBtn);
+    fsetData(data.Faq.texts);
   };
 
   const fetchContent = async () => {

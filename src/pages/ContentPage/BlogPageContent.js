@@ -22,6 +22,7 @@ const BlogPageContent = () => {
   const [amainImg, asetmainImg] = useState('');
   /* section1 */
   const [bcat, bsetcat] = useState('');
+  const [bcat2, bsetcat2] = useState('');
   const [btitle, bsettitle] = useState('');
   const [bdate, bsetdate] = useState('');
   const [bauthor, bsetauthor] = useState('');
@@ -36,15 +37,14 @@ const BlogPageContent = () => {
   const [esubtitle, esetsubtitle] = useState('');
   const [eblogData2, esetblogData2] = useState('');
 
-
   const setStateData = (data) => {
     asettitle(data.heroSection.title);
     asetdesc(data.heroSection.desc);
     asetbtnTxt(data.heroSection.btnTxt);
     asetbtnUrl(data.heroSection.btnUrl);
     asetmainImg(data.heroSection.mainImg);
-
-    bsetcat(data.blogData1.cat);
+    bsetcat(data.blogData1.cat[0]);
+    bsetcat2(data.blogData1.cat[1]);
     bsettitle(data.blogData1.title);
     bsetdate(data.blogData1.date);
     bsetauthor(data.blogData1.author);
@@ -54,9 +54,9 @@ const BlogPageContent = () => {
     csetblogdata2(data.blogData2);
 
     dsetblogdata3(data.blogData3);
-    
+
     esettitle(data.releventData.titleData.title);
-    esetsubtitle(data.releventData.titleData.subtitle);
+    esetsubtitle(data.releventData.titleData.subTitle);
     esetblogData2(data.releventData.blogData2);
   };
 
@@ -139,9 +139,7 @@ const BlogPageContent = () => {
   return (
     <div>
       {isLoading ? (
-        <>
-          <LoadingAnimation />
-        </>
+        <LoadingAnimation />
       ) : (
         <>
           <Grid container spacing={3}>
@@ -201,81 +199,81 @@ const BlogPageContent = () => {
             </Grid>
           </Grid>
 
-          <div style={{marginTop:'50px'}}>
-          <Grid container spacing={3}>
-            <Grid item xs={12} md={12}>
-              <Card sx={{ py: 2, px: 3 }}>
-                <h2>Blog Data 1</h2>
-                <Grid item xs={12} md={12}>
-                  <div style={{ padding: '0px 40px', display: 'flex', flexDirection: 'column' }}>
-                    <TextField
-                      name="email"
-                      label="Cat One"
-                      value={bcat[0]}
-                      style={{ margin: '10px' }}
-                      onChange={(e) => {
-                        bsetcat[0](e.target.value);
-                      }}
-                    />
-                    <TextField
-                      name="email"
-                      label="Cat Two"
-                      value={bcat[1]}
-                      style={{ margin: '10px' }}
-                      onChange={(e) => {
-                        bsetcat[1](e.target.value);
-                      }}
-                    />
-                    <TextField
-                      name="title"
-                      label="Title"
-                      value={btitle}
-                      style={{ margin: '10px' }}
-                      onChange={(e) => {
-                        bsettitle(e.target.value);
-                      }}
-                    />
-                    <TextField
-                      name="title"
-                      label="Date"
-                      value={bdate}
-                      style={{ margin: '10px' }}
-                      onChange={(e) => {
-                        bsetdate(e.target.value);
-                      }}
-                    />
-                    <TextField
-                      name="title"
-                      label="Author"
-                      value={bauthor}
-                      style={{ margin: '10px' }}
-                      onChange={(e) => {
-                        bsetauthor(e.target.value);
-                      }}
-                    />
-                    <TextField
-                      name="title"
-                      label="Read"
-                      value={bread}
-                      style={{ margin: '10px' }}
-                      onChange={(e) => {
-                        bsetread(e.target.value);
-                      }}
-                    />
-                    <TextField
-                      name="title"
-                      label="Img"
-                      value={bimg}
-                      style={{ margin: '10px' }}
-                      onChange={(e) => {
-                        bsetimg(e.target.value);
-                      }}
-                    />
-                  </div>
-                </Grid>
-              </Card>
+          <div style={{ marginTop: '50px' }}>
+            <Grid container spacing={3}>
+              <Grid item xs={12} md={12}>
+                <Card sx={{ py: 2, px: 3 }}>
+                  <h2>Blog Data 1</h2>
+                  <Grid item xs={12} md={12}>
+                    <div style={{ padding: '0px 40px', display: 'flex', flexDirection: 'column' }}>
+                      <TextField
+                        name="email"
+                        label="Cat One"
+                        value={bcat}
+                        style={{ margin: '10px' }}
+                        onChange={(e) => {
+                          bsetcat(e.target.value);
+                        }}
+                      />
+                      <TextField
+                        name="email"
+                        label="Cat Two"
+                        value={bcat2}
+                        style={{ margin: '10px' }}
+                        onChange={(e) => {
+                          bsetcat2(e.target.value);
+                        }}
+                      />
+                      <TextField
+                        name="title"
+                        label="Title"
+                        value={btitle}
+                        style={{ margin: '10px' }}
+                        onChange={(e) => {
+                          bsettitle(e.target.value);
+                        }}
+                      />
+                      <TextField
+                        name="title"
+                        label="Date"
+                        value={bdate}
+                        style={{ margin: '10px' }}
+                        onChange={(e) => {
+                          bsetdate(e.target.value);
+                        }}
+                      />
+                      <TextField
+                        name="title"
+                        label="Author"
+                        value={bauthor}
+                        style={{ margin: '10px' }}
+                        onChange={(e) => {
+                          bsetauthor(e.target.value);
+                        }}
+                      />
+                      <TextField
+                        name="title"
+                        label="Read"
+                        value={bread}
+                        style={{ margin: '10px' }}
+                        onChange={(e) => {
+                          bsetread(e.target.value);
+                        }}
+                      />
+                      <TextField
+                        name="title"
+                        label="Img"
+                        value={bimg}
+                        style={{ margin: '10px' }}
+                        onChange={(e) => {
+                          bsetimg(e.target.value);
+                        }}
+                      />
+                    </div>
+                  </Grid>
+                </Card>
+              </Grid>
             </Grid>
-          </Grid>
           </div>
           <div style={{ marginTop: '50px' }}>
             <Grid container spacing={3}>
@@ -286,7 +284,7 @@ const BlogPageContent = () => {
                     <div style={{ padding: '0px 40px', display: 'flex', flexDirection: 'column' }}>
                       {cblogdata2.map((cardData, index) => {
                         return (
-                          <>
+                          <div>
                             {index === 0 ? '' : <Divider style={{ marginTop: '18px' }} />}
                             <TextField
                               name="email"
@@ -326,7 +324,7 @@ const BlogPageContent = () => {
                             />
                             <TextField
                               name="email"
-                              label="Title"
+                              label="Date"
                               style={{ width: '100%', marginTop: '24px' }}
                               value={cardData.date}
                               onChange={(e) => {
@@ -338,7 +336,7 @@ const BlogPageContent = () => {
                             />
                             <TextField
                               name="email"
-                              label="Title"
+                              label="Author"
                               style={{ width: '100%', marginTop: '24px' }}
                               value={cardData.author}
                               onChange={(e) => {
@@ -350,7 +348,7 @@ const BlogPageContent = () => {
                             />
                             <TextField
                               name="email"
-                              label="Title"
+                              label="Read"
                               style={{ width: '100%', marginTop: '24px' }}
                               value={cardData.read}
                               onChange={(e) => {
@@ -362,7 +360,7 @@ const BlogPageContent = () => {
                             />
                             <TextField
                               name="email"
-                              label="Title"
+                              label="Image"
                               style={{ width: '100%', marginTop: '24px' }}
                               value={cardData.img}
                               onChange={(e) => {
@@ -372,7 +370,7 @@ const BlogPageContent = () => {
                                 csetblogdata2(dta);
                               }}
                             />
-                          </>
+                          </div>
                         );
                       })}
                     </div>
@@ -380,7 +378,7 @@ const BlogPageContent = () => {
                 </Card>
               </Grid>
             </Grid>
-          </div> 
+          </div>
 
           <div style={{ marginTop: '50px' }}>
             <Grid container spacing={3}>
@@ -431,7 +429,7 @@ const BlogPageContent = () => {
                             />
                             <TextField
                               name="email"
-                              label="Title"
+                              label="Date"
                               style={{ width: '100%', marginTop: '24px' }}
                               value={cardData.date}
                               onChange={(e) => {
@@ -443,7 +441,7 @@ const BlogPageContent = () => {
                             />
                             <TextField
                               name="email"
-                              label="Title"
+                              label="Author"
                               style={{ width: '100%', marginTop: '24px' }}
                               value={cardData.author}
                               onChange={(e) => {
@@ -455,7 +453,7 @@ const BlogPageContent = () => {
                             />
                             <TextField
                               name="email"
-                              label="Title"
+                              label="Read"
                               style={{ width: '100%', marginTop: '24px' }}
                               value={cardData.read}
                               onChange={(e) => {
@@ -467,7 +465,7 @@ const BlogPageContent = () => {
                             />
                             <TextField
                               name="email"
-                              label="Title"
+                              label="Image"
                               style={{ width: '100%', marginTop: '24px' }}
                               value={cardData.img}
                               onChange={(e) => {
@@ -485,7 +483,7 @@ const BlogPageContent = () => {
                 </Card>
               </Grid>
             </Grid>
-          </div> 
+          </div>
 
           <div style={{ marginTop: '50px' }}>
             <Grid container spacing={3}>
@@ -494,27 +492,27 @@ const BlogPageContent = () => {
                   <h2>Relevent Data</h2>
                   <Grid item xs={12} md={12}>
                     <div style={{ padding: '0px 40px', display: 'flex', flexDirection: 'column' }}>
-                    <TextField
-                      name="email"
-                      label="Title"
-                      value={etitle}
-                      style={{ margin: '10px' }}
-                      onChange={(e) => {
-                        esettitle(e.target.value);
-                      }}
-                    />
-                    <TextField
-                      name="email"
-                      label="Sub Title"
-                      value={esubtitle}
-                      style={{ margin: '10px' }}
-                      onChange={(e) => {
-                        esetsubtitle(e.target.value);
-                      }}
-                    />                      
+                      <TextField
+                        name="email"
+                        label="Title"
+                        value={etitle}
+                        style={{ margin: '10px' }}
+                        onChange={(e) => {
+                          esettitle(e.target.value);
+                        }}
+                      />
+                      <TextField
+                        name="email"
+                        label="Sub Title"
+                        value={esubtitle}
+                        style={{ margin: '10px' }}
+                        onChange={(e) => {
+                          esetsubtitle(e.target.value);
+                        }}
+                      />
                       {eblogData2.map((cardData, index) => {
                         return (
-                          <>
+                          <div>
                             {index === 0 ? '' : <Divider style={{ marginTop: '18px' }} />}
                             <TextField
                               name="email"
@@ -554,7 +552,7 @@ const BlogPageContent = () => {
                             />
                             <TextField
                               name="email"
-                              label="Title"
+                              label="Date"
                               style={{ width: '100%', marginTop: '24px' }}
                               value={cardData.date}
                               onChange={(e) => {
@@ -566,7 +564,7 @@ const BlogPageContent = () => {
                             />
                             <TextField
                               name="email"
-                              label="Title"
+                              label="Author"
                               style={{ width: '100%', marginTop: '24px' }}
                               value={cardData.author}
                               onChange={(e) => {
@@ -578,7 +576,7 @@ const BlogPageContent = () => {
                             />
                             <TextField
                               name="email"
-                              label="Title"
+                              label="Read"
                               style={{ width: '100%', marginTop: '24px' }}
                               value={cardData.read}
                               onChange={(e) => {
@@ -590,7 +588,7 @@ const BlogPageContent = () => {
                             />
                             <TextField
                               name="email"
-                              label="Title"
+                              label="Image"
                               style={{ width: '100%', marginTop: '24px' }}
                               value={cardData.img}
                               onChange={(e) => {
@@ -600,7 +598,7 @@ const BlogPageContent = () => {
                                 esetblogData2(dta);
                               }}
                             />
-                          </>
+                          </div>
                         );
                       })}
                     </div>
@@ -608,8 +606,7 @@ const BlogPageContent = () => {
                 </Card>
               </Grid>
             </Grid>
-          </div> 
-
+          </div>
 
           <div
             style={{

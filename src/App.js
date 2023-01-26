@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 // routes
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -12,19 +14,26 @@ import ThemeProvider from './theme';
 import ScrollToTop from './components/scroll-to-top';
 import { StyledChart } from './components/chart';
 import store from './redux/Store';
+import { errorToast } from './utils/Toast';
 
 // ----------------------------------------------------------------------
 
 export default function App() {
-  const { isAuthenticated, user } = useSelector((state) => state.auth);
+  const { isAuthenticated, user, isLoading, error } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
   const redirect = location.pathname ? location.pathname.split('=')[1] : '/dashboard/app';
   React.useEffect(() => {
-    store.dispatch(loadUser());
-    navigate(redirect, { replace: true });
-  }, [redirect]);
+    if (error && error) {
+      errorToast(error);
+      return navigate('/login', { replace: true });
+    }
+    if (!isLoading) {
+      store.dispatch(loadUser());
+      navigate(redirect, { replace: true });
+    }
+  }, [error, redirect]);
   return (
     <ThemeProvider>
       <ScrollToTop />
