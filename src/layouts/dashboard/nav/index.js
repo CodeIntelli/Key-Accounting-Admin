@@ -53,7 +53,7 @@ export default function Nav({ openNav, onCloseNav }) {
         '& .simplebar-content': { height: 1, display: 'flex', flexDirection: 'column' },
       }}
     >
-      <Box sx={{ px: 2.5, py: 3, display: 'inline-flex' }}>
+      <Box sx={{ px: 1, py: 1, display: 'inline-flex' }}>
         <div
           style={{
             width: '100%',
@@ -66,7 +66,7 @@ export default function Nav({ openNav, onCloseNav }) {
             src={Logo}
             alt="key-cms"
             style={{
-              maxWidth: '150px',
+              maxWidth: '130px',
             }}
           />
         </div>

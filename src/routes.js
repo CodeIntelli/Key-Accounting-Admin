@@ -36,6 +36,7 @@ import CarrierApplyPageContent from './pages/ContentPage/CarrierApplyPageContent
 import CarrierPageContent from './pages/ContentPage/CarrierPageContent';
 import OurStoryPageContent from './pages/ContentPage/OurStoryPageContent';
 import EbookPageContent from './pages/ContentPage/EbookPageContent';
+import ContactPage from './pages/ContactPage';
 
 // ----------------------------------------------------------------------
 
@@ -79,6 +80,7 @@ export default function Router() {
         { path: 'subcategory', element: <SubCategoriesPage /> },
         { path: 'edit/:id', element: <CreateBlog /> },
         { path: 'comments', element: <CommentPage /> },
+        { path: 'feedback', element: <ContactPage /> },
       ],
     },
     {

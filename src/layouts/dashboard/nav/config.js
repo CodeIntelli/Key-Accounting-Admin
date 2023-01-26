@@ -12,7 +12,6 @@ const navConfig = [
     path: '/dashboard/app',
     icon: icon('carbon:dashboard'),
   },
-
   {
     title: 'blog',
     path: '/dashboard/blog',
@@ -22,6 +21,11 @@ const navConfig = [
     title: 'pages',
     path: '/dashboard/pages',
     icon: icon('ooui:special-pages-ltr'),
+  },
+  {
+    title: 'Feedbacks',
+    path: '/dashboard/feedback',
+    icon: icon('fluent:person-feedback-20-filled'),
   },
   {
     title: 'activity',
