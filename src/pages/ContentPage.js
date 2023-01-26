@@ -62,20 +62,16 @@ export default function ActivityPage() {
       url: 'partner',
     },
     {
-      title: 'Blog Page',
-      url: 'blog',
-      icon: icon('logos:ant-design'),
-      icon1: icon('flat-color-icons:edit-image', 50, 50),
-    },
-    {
       title: 'Carrier Apply Page',
       url: 'carrierapply',
-      icon: icon('logos:ant-design'),
-      icon1: icon('flat-color-icons:edit-image', 50, 50),
     },
     {
       title: 'Carrier',
       url: 'carrier',
+    },
+    {
+      title: 'Blog Page',
+      url: 'blog',
       icon: icon('logos:ant-design'),
       icon1: icon('flat-color-icons:edit-image', 50, 50),
     },
