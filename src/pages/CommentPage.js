@@ -52,9 +52,9 @@ import LoadingAnimation from 'src/components/LoadingAnimation';
 const TABLE_HEAD = [
   { id: 'id', label: 'Sr No', alignRight: false },
   { id: 'name', label: 'Name', alignRight: false },
+  { id: 'email', label: 'email', alignRight: false },
   { id: 'phone_number', label: 'Phone', alignRight: false },
   { id: 'website', label: 'Website', alignRight: false },
-  { id: 'email', label: 'email', alignRight: false },
   { id: 'isActive', label: 'Status', alignRight: false },
   { id: 'createdAt', label: 'Created At', alignRight: false },
   { id: '' },
@@ -363,9 +363,7 @@ export default function CommentPage() {
                             <TableCell align="left" style={{ textTransform: 'capitalize' }}>
                               {name}
                             </TableCell>
-                            <TableCell align="left" style={{ textTransform: 'capitalize' }}>
-                              {email}
-                            </TableCell>
+                            <TableCell align="left">{email}</TableCell>
                             <TableCell align="left" style={{ textTransform: 'capitalize' }}>
                               {phone_number}
                             </TableCell>
