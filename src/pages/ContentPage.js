@@ -72,20 +72,14 @@ export default function ActivityPage() {
     {
       title: 'Blog Page',
       url: 'blog',
-      icon: icon('logos:ant-design'),
-      icon1: icon('flat-color-icons:edit-image', 50, 50),
     },
     {
       title: 'Navbar',
       url: 'navbar',
-      icon: icon('logos:ant-design'),
-      icon1: icon('flat-color-icons:edit-image', 50, 50),
     },
     {
       title: 'Footer',
       url: 'footer',
-      icon: icon('logos:ant-design'),
-      icon1: icon('flat-color-icons:edit-image', 50, 50),
     },
   ];
   return (

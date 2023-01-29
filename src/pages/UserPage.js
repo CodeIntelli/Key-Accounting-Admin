@@ -86,7 +86,7 @@ const style = {
 };
 
 export default function UserPage() {
-  const [open, setOpen] = useState(null);
+  // const [open, setOpen] = useState(null);
 
   const [allUserList, setAllUserList] = useState();
   const [filterData, setFilterData] = useState();
@@ -97,6 +97,19 @@ export default function UserPage() {
   const [UpdateData, setUpdateData] = useState();
   const [firstname, setFirstname] = useState();
   const [lastname, setlastname] = useState();
+
+  const [anchorEl, setAnchorEl] = React.useState(null);
+
+  const handleOpenMenu = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const open = Boolean(anchorEl);
+  const id = open ? 'simple-popover' : undefined;
 
   const fetchUser = async () => {
     try {
@@ -237,13 +250,13 @@ export default function UserPage() {
     fetchUser();
   }, []);
 
-  const handleOpenMenu = (event) => {
-    setOpen(event.currentTarget);
-  };
+  // const handleOpenMenu = (event) => {
+  //   setOpen(event.currentTarget);
+  // };
 
-  const handleCloseMenu = () => {
-    setOpen(null);
-  };
+  // const handleCloseMenu = () => {
+  //   setOpen(null);
+  // };
 
   const handleDelete = (id) => {
     console.log(id);
@@ -389,7 +402,7 @@ export default function UserPage() {
                       <TableRow>
                         {TABLE_HEAD.map((headCell) => (
                           <TableCell
-                            key={Math.floor(Math.random() * 10000)}
+                            key={Math.floor(Math.random() * 10000) * Date.now()}
                             align={headCell.alignRight ? 'right' : 'left'}
                           >
                             <Box>{headCell.label}</Box>
@@ -413,7 +426,7 @@ export default function UserPage() {
                         profileImg,
                       } = tableData;
                       return (
-                        <TableBody key={Math.floor(Math.random() * 10000)}>
+                        <TableBody key={Math.floor(Math.random() * 10000) * Date.now()}>
                           <TableRow hover>
                             <TableCell component="th" scope="row" padding="none">
                               <Stack direction="row" alignItems="center" spacing={2}>
@@ -468,9 +481,9 @@ export default function UserPage() {
           </Container>
 
           <Popover
-            open={Boolean(open)}
-            anchorEl={open}
-            onClose={handleCloseMenu}
+            open={open}
+            anchorEl={anchorEl}
+            onClose={handleClose}
             anchorOrigin={{ vertical: 'top', horizontal: 'left' }}
             transformOrigin={{ vertical: 'top', horizontal: 'right' }}
             PaperProps={{

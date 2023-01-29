@@ -105,7 +105,7 @@ export default function CategoriesPage() {
         ? localStorage.getItem('x-access-token')
         : null;
 
-      const { data } = await axios.get(`${BASE_URL}content/upload/list?type=checklist`, {
+      const { data } = await axios.get(`${BASE_URL}content/admin/upload/list?type=checklist`, {
         headers: {
           authorization: `Bearer ${bearerToken}`,
         },

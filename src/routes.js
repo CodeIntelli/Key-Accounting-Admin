@@ -37,6 +37,7 @@ import CarrierPageContent from './pages/ContentPage/CarrierPageContent';
 import OurStoryPageContent from './pages/ContentPage/OurStoryPageContent';
 import EbookPageContent from './pages/ContentPage/EbookPageContent';
 import ContactPage from './pages/ContactPage';
+import NavbarPageContent from './pages/ContentPage/NavbarPageContent';
 
 // ----------------------------------------------------------------------
 
@@ -50,7 +51,7 @@ export default function Router() {
         { path: 'app', element: <DashboardAppPage /> },
         { path: 'user', element: <UserPage /> },
         { path: 'pages', element: <ContentAppPage /> },
-        { path: 'pages/navbar', element: <NavbarContent /> },
+        // { path: 'pages/navbar', element: <NavbarContent /> },
         { path: 'pages/footer', element: <FooterPageContent /> },
         { path: 'pages/home', element: <HomePageContent /> },
         { path: 'pages/service', element: <ServicePageContent /> },
@@ -66,6 +67,7 @@ export default function Router() {
         { path: 'pages/carrier', element: <CarrierPageContent /> },
         { path: 'pages/ourstory', element: <OurStoryPageContent /> },
         { path: 'pages/ebook', element: <EbookPageContent /> },
+        { path: 'pages/navbar', element: <NavbarPageContent /> },
         { path: 'pages', element: <ContentAppPage /> },
         { path: 'blog', element: <BlogPage /> },
         { path: 'activity', element: <ActivityAppPage /> },

@@ -73,6 +73,12 @@ export default function DashboardAppPage() {
             </Grid>
 
             <Grid item xs={12} sm={6} md={3}>
+              <Link to={'/dashboard/subcategory'}>
+                <AppWidgetSummary title="Carrier" total={240} color="warning" icon={'mdi:resume'} />
+              </Link>
+            </Grid>
+
+            <Grid item xs={12} sm={6} md={3}>
               <AppWidgetSummary title="Total Ebook" total={240} icon={'mdi:notebook-check'} />
             </Grid>
             <Grid item xs={12} sm={6} md={3}>

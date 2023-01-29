@@ -7,53 +7,41 @@ import Cookies from 'js-cookie';
 import React, { useState, useEffect } from 'react';
 import LoadingAnimation from 'src/components/LoadingAnimation';
 
-const FooterPageContent = () => {
+const NavbarPageContent = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [homeContent, setHomeContent] = useState();
   const [addRecordLoader, setaddLoader] = useState(false);
   const [id, setid] = useState();
   // Context States
 
-  const [atitle, setatitle] = useState('');
-  const [asubtitle, setasubtitle] = useState('');
-  const [afacebooklink, setafacebooklink] = useState('');
-  const [ainstalink, setainstalink] = useState('');
-  const [alinkdinlink, setalinkdinlink] = useState('');
+  const [home, sethome] = useState('');
+  const [homeurl, sethomeUrl] = useState('');
+  const [service, setservice] = useState('');
+  const [serviceurl, setserviceUrl] = useState('');
+  const [contact, setcontact] = useState('');
+  const [contacturl, setcontactUrl] = useState('');
 
-  const [btitle, setbtitle] = useState('');
-  const [bdata, setbdata] = useState('');
-  const [ctitle, setctitle] = useState('');
-  const [cdata, setcdata] = useState('');
-  const [dtitle, setdtitle] = useState('');
-  const [ddata, setddata] = useState('');
-  const [etitle, setetitle] = useState('');
-  const [edata, setedata] = useState('');
+  const [about, setabout] = useState('');
+  const [resources, setresources] = useState('');
+  const [industries, setindustries] = useState('');
 
-  const [ftitle, setftitle] = useState('');
-  const [faddress1, setfaddress1] = useState('');
-  const [faddress2, setfaddress2] = useState('');
-  const [fmail, setfmail] = useState('');
-  const [fcontactnumber, setfcontactnumber] = useState('');
+  const [aboutdata, setaboutdata] = useState('');
+  const [resourcesdata, setresourcesdata] = useState('');
+  const [industriesdata, setindustriesdata] = useState('');
 
   const setStateData = (data) => {
-    setatitle(data.mainTitle.title);
-    setasubtitle(data.mainTitle.subtitle);
-    setafacebooklink(data.mainTitle.facebooklink);
-    setainstalink(data.mainTitle.instalink);
-    setalinkdinlink(data.mainTitle.linkdinlink);
-    setbtitle(data.companySection.title);
-    setbdata(data.companySection.data);
-    setctitle(data.servicesSection.title);
-    setcdata(data.servicesSection.data);
-    setdtitle(data.industriesSection.title);
-    setddata(data.industriesSection.data);
-    setetitle(data.resourcesSection.title);
-    setedata(data.resourcesSection.data);
-    setftitle(data.contactSection.title);
-    setfaddress1(data.contactSection.address1);
-    setfaddress2(data.contactSection.address2);
-    setfmail(data.contactSection.mail);
-    setfcontactnumber(data.contactSection.contactNo);
+    sethome(data.home);
+    sethomeUrl(data.homeUrl);
+    setservice(data.service);
+    setserviceUrl(data.serviceUrl);
+    setcontact(data.contact);
+    setcontactUrl(data.contactUrl);
+    setabout(data.about);
+    setresources(data.resources);
+    setindustries(data.industries);
+    setaboutdata(data.aboutData);
+    setresourcesdata(data.ResourcesData);
+    setindustriesdata(data.IndustriesData);
   };
 
   const fetchContent = async () => {
@@ -66,7 +54,7 @@ const FooterPageContent = () => {
         ? localStorage.getItem('x-access-token')
         : null;
 
-      const { data } = await axios.get(`${BASE_URL}content?page=footer`, {
+      const { data } = await axios.get(`${BASE_URL}content?page=navbar`, {
         headers: {
           authorization: `Bearer ${bearerToken}`,
         },
@@ -107,37 +95,21 @@ const FooterPageContent = () => {
   const handleSubmit = async () => {
     setaddLoader(true);
     const setFormData = {
-      pageTitle: 'footer',
-      content: {
-        mainTitle: {
-          title: atitle,
-          subtitle: asubtitle,
-          facebooklink: afacebooklink,
-          instalink: ainstalink,
-          linkdinlink: alinkdinlink,
-        },
-        companySection: {
-          title: btitle,
-          data: bdata,
-        },
-        servicesSection: {
-          title: ctitle,
-          data: cdata,
-        },
-        industriesSection: {
-          title: dtitle,
-          data: ddata,
-        },
-        resourcesSection: {
-          title: etitle,
-          data: edata,
-        },
-        contactSection: {
-          title: ftitle,
-          address1: faddress1,
-          address2: faddress2,
-          mail: fmail,
-          contactNo: fcontactnumber,
+      english: {
+        pageTitle: 'navbar',
+        content: {
+          home,
+          homeUrl: homeurl,
+          about,
+          service,
+          serviceUrl: serviceurl,
+          industries,
+          resources,
+          aboutData: aboutdata,
+          IndustriesData: resourcesdata,
+          ResourcesData: industriesdata,
+          contactUrl: contacturl,
+          contact: contact,
         },
       },
     };
@@ -159,7 +131,7 @@ const FooterPageContent = () => {
           <Grid container spacing={3}>
             <Grid item xs={12} md={12}>
               <Card sx={{ py: 2, px: 3 }}>
-                <h2>Main Title</h2>
+                <h2>Single Url</h2>
                 <Grid item xs={12} md={12}>
                   <div style={{ padding: '0px 40px', display: 'flex', flexDirection: 'column' }}>
                     <Box
@@ -172,47 +144,56 @@ const FooterPageContent = () => {
                     >
                       <TextField
                         name="email"
-                        label="Title"
-                        value={atitle}
+                        label="Home Title"
+                        value={home}
                         style={{ margin: '10px' }}
                         onChange={(e) => {
-                          setatitle(e.target.value);
+                          sethome(e.target.value);
                         }}
                       />
                       <TextField
                         name="email"
-                        label="Subtitle"
-                        value={asubtitle}
+                        label="Home Routes"
+                        value={homeurl}
                         style={{ margin: '10px' }}
                         onChange={(e) => {
-                          setasubtitle(e.target.value);
+                          sethomeUrl(e.target.value);
                         }}
                       />
                       <TextField
                         name="email"
-                        label="Facebook Link"
-                        value={afacebooklink}
+                        label="Service Title"
+                        value={service}
                         style={{ margin: '10px' }}
                         onChange={(e) => {
-                          setafacebooklink(e.target.value);
+                          setservice(e.target.value);
                         }}
                       />
                       <TextField
                         name="email"
-                        label="Instagram Link"
-                        value={ainstalink}
+                        label="Service Routes"
+                        value={serviceurl}
                         style={{ margin: '10px' }}
                         onChange={(e) => {
-                          setainstalink(e.target.value);
+                          setserviceUrl(e.target.value);
                         }}
                       />
                       <TextField
                         name="email"
-                        label="Linkedin Link"
-                        value={alinkdinlink}
+                        label="Contact Title"
+                        value={contact}
                         style={{ margin: '10px' }}
                         onChange={(e) => {
-                          setalinkdinlink(e.target.value);
+                          setcontact(e.target.value);
+                        }}
+                      />
+                      <TextField
+                        name="email"
+                        label="Contact Routes"
+                        value={contacturl}
+                        style={{ margin: '10px' }}
+                        onChange={(e) => {
+                          setcontactUrl(e.target.value);
                         }}
                       />
                     </Box>
@@ -226,21 +207,21 @@ const FooterPageContent = () => {
             <Grid container spacing={3}>
               <Grid item xs={12} md={12}>
                 <Card sx={{ py: 2, px: 3 }}>
-                  <h2>Company Section</h2>
+                  <h2>About Navbar</h2>
                   <Grid item xs={12} md={12}>
                     <div style={{ padding: '0px 40px', display: 'flex', flexDirection: 'column' }}>
                       <TextField
                         name="sub_title"
                         label="Title"
-                        value={btitle}
+                        value={about}
                         style={{ margin: '10px' }}
                         onChange={(e) => {
-                          setbtitle(e.target.value);
+                          setabout(e.target.value);
                         }}
                       />
 
-                      <h3>Company Data</h3>
-                      {bdata.map((cardData, index) => {
+                      <h3>About Dropdown Data</h3>
+                      {aboutdata.map((cardData, index) => {
                         return (
                           <>
                             {index === 0 ? '' : <Divider style={{ marginTop: '18px' }} />}
@@ -259,9 +240,9 @@ const FooterPageContent = () => {
                                 value={cardData.title}
                                 onChange={(e) => {
                                   const value = e.target.value;
-                                  const dta = [...bdata];
+                                  const dta = [...aboutdata];
                                   dta[index].title = value;
-                                  setbdata(dta);
+                                  setaboutdata(dta);
                                 }}
                               />
                               <TextField
@@ -271,9 +252,9 @@ const FooterPageContent = () => {
                                 value={cardData.url}
                                 onChange={(e) => {
                                   const value = e.target.value;
-                                  const dta = [...bdata];
+                                  const dta = [...aboutdata];
                                   dta[index].url = value;
-                                  setbdata(dta);
+                                  setaboutdata(dta);
                                 }}
                               />
                             </Box>
@@ -291,21 +272,21 @@ const FooterPageContent = () => {
             <Grid container spacing={3}>
               <Grid item xs={12} md={12}>
                 <Card sx={{ py: 2, px: 3 }}>
-                  <h2>Service Section</h2>
+                  <h2>Industries Navbar</h2>
                   <Grid item xs={12} md={12}>
                     <div style={{ padding: '0px 40px', display: 'flex', flexDirection: 'column' }}>
                       <TextField
                         name="sub_title"
                         label="Title"
-                        value={ctitle}
+                        value={industries}
                         style={{ margin: '10px' }}
                         onChange={(e) => {
-                          setctitle(e.target.value);
+                          setindustries(e.target.value);
                         }}
                       />
 
-                      <h3>Service Data</h3>
-                      {cdata.map((cardData, index) => {
+                      <h3>Industries Dropdown Data</h3>
+                      {industriesdata.map((cardData, index) => {
                         return (
                           <>
                             {index === 0 ? '' : <Divider style={{ marginTop: '18px' }} />}
@@ -324,9 +305,9 @@ const FooterPageContent = () => {
                                 value={cardData.title}
                                 onChange={(e) => {
                                   const value = e.target.value;
-                                  const dta = [...cdata];
+                                  const dta = [...industriesdata];
                                   dta[index].title = value;
-                                  setcdata(dta);
+                                  setaboutdata(dta);
                                 }}
                               />
                               <TextField
@@ -336,9 +317,9 @@ const FooterPageContent = () => {
                                 value={cardData.url}
                                 onChange={(e) => {
                                   const value = e.target.value;
-                                  const dta = [...cdata];
+                                  const dta = [...industriesdata];
                                   dta[index].url = value;
-                                  setcdata(dta);
+                                  setaboutdata(dta);
                                 }}
                               />
                             </Box>
@@ -356,24 +337,25 @@ const FooterPageContent = () => {
             <Grid container spacing={3}>
               <Grid item xs={12} md={12}>
                 <Card sx={{ py: 2, px: 3 }}>
-                  <h2>Industries Section</h2>
+                  <h2>Resources Navbar</h2>
                   <Grid item xs={12} md={12}>
                     <div style={{ padding: '0px 40px', display: 'flex', flexDirection: 'column' }}>
                       <TextField
                         name="sub_title"
                         label="Title"
-                        value={dtitle}
+                        value={resources}
                         style={{ margin: '10px' }}
                         onChange={(e) => {
-                          setdtitle(e.target.value);
+                          setresources(e.target.value);
                         }}
                       />
 
-                      <h3>Industries Data</h3>
-                      {ddata.map((cardData, index) => {
+                      <h3>Resources Dropdown Data</h3>
+                      {resourcesdata.map((cardData, index) => {
                         return (
                           <>
                             {index === 0 ? '' : <Divider style={{ marginTop: '18px' }} />}
+
                             <Box
                               sx={{
                                 display: 'grid',
@@ -389,9 +371,9 @@ const FooterPageContent = () => {
                                 value={cardData.title}
                                 onChange={(e) => {
                                   const value = e.target.value;
-                                  const dta = [...ddata];
+                                  const dta = [...resourcesdata];
                                   dta[index].title = value;
-                                  setddata(dta);
+                                  setaboutdata(dta);
                                 }}
                               />
                               <TextField
@@ -401,139 +383,15 @@ const FooterPageContent = () => {
                                 value={cardData.url}
                                 onChange={(e) => {
                                   const value = e.target.value;
-                                  const dta = [...ddata];
+                                  const dta = [...resourcesdata];
                                   dta[index].url = value;
-                                  setddata(dta);
+                                  setaboutdata(dta);
                                 }}
                               />
                             </Box>
                           </>
                         );
                       })}
-                    </div>
-                  </Grid>
-                </Card>
-              </Grid>
-            </Grid>
-          </div>
-
-          <div style={{ marginTop: '50px' }}>
-            <Grid container spacing={3}>
-              <Grid item xs={12} md={12}>
-                <Card sx={{ py: 2, px: 3 }}>
-                  <h2>Resources Section</h2>
-                  <Grid item xs={12} md={12}>
-                    <div style={{ padding: '0px 40px', display: 'flex', flexDirection: 'column' }}>
-                      <TextField
-                        name="sub_title"
-                        label="Title"
-                        value={etitle}
-                        style={{ margin: '10px' }}
-                        onChange={(e) => {
-                          setetitle(e.target.value);
-                        }}
-                      />
-
-                      <h3>Resources Data</h3>
-                      {edata.map((cardData, index) => {
-                        return (
-                          <>
-                            {index === 0 ? '' : <Divider style={{ marginTop: '18px' }} />}
-                            <Box
-                              sx={{
-                                display: 'grid',
-                                columnGap: 2,
-                                rowGap: 3,
-                                gridTemplateColumns: { xs: 'repeat(1, 1fr)', sm: 'repeat(2, 1fr)' },
-                              }}
-                            >
-                              <TextField
-                                name="email"
-                                label="Title"
-                                style={{ width: '100%', marginTop: '24px' }}
-                                value={cardData.title}
-                                onChange={(e) => {
-                                  const value = e.target.value;
-                                  const dta = [...edata];
-                                  dta[index].title = value;
-                                  setedata(dta);
-                                }}
-                              />
-                              <TextField
-                                name="email"
-                                label="Routes"
-                                style={{ width: '100%', marginTop: '24px' }}
-                                value={cardData.url}
-                                onChange={(e) => {
-                                  const value = e.target.value;
-                                  const dta = [...edata];
-                                  dta[index].url = value;
-                                  setedata(dta);
-                                }}
-                              />
-                            </Box>
-                          </>
-                        );
-                      })}
-                    </div>
-                  </Grid>
-                </Card>
-              </Grid>
-            </Grid>
-          </div>
-
-          <div style={{ marginTop: '50px' }}>
-            <Grid container spacing={3}>
-              <Grid item xs={12} md={12}>
-                <Card sx={{ py: 2, px: 3 }}>
-                  <h2>Contact Section</h2>
-                  <Grid item xs={12} md={12}>
-                    <div style={{ padding: '0px 40px', display: 'flex', flexDirection: 'column' }}>
-                      <TextField
-                        name="sub_title"
-                        label="Title"
-                        value={ftitle}
-                        style={{ margin: '10px' }}
-                        onChange={(e) => {
-                          setftitle(e.target.value);
-                        }}
-                      />
-                      <TextField
-                        name="sub_title"
-                        label="Address One"
-                        value={faddress1}
-                        style={{ margin: '10px' }}
-                        onChange={(e) => {
-                          setfaddress1(e.target.value);
-                        }}
-                      />
-                      <TextField
-                        name="sub_title"
-                        label="Address Two"
-                        value={faddress2}
-                        style={{ margin: '10px' }}
-                        onChange={(e) => {
-                          setfaddress2(e.target.value);
-                        }}
-                      />
-                      <TextField
-                        name="sub_title"
-                        label="Title"
-                        value={fmail}
-                        style={{ margin: '10px' }}
-                        onChange={(e) => {
-                          setfmail(e.target.value);
-                        }}
-                      />
-                      <TextField
-                        name="sub_title"
-                        label="Title"
-                        value={fcontactnumber}
-                        style={{ margin: '10px' }}
-                        onChange={(e) => {
-                          setfcontactnumber(e.target.value);
-                        }}
-                      />
                     </div>
                   </Grid>
                 </Card>
@@ -574,4 +432,4 @@ const FooterPageContent = () => {
   );
 };
 
-export default FooterPageContent;
+export default NavbarPageContent;
