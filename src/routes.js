@@ -38,6 +38,7 @@ import OurStoryPageContent from './pages/ContentPage/OurStoryPageContent';
 import EbookPageContent from './pages/ContentPage/EbookPageContent';
 import ContactPage from './pages/ContactPage';
 import NavbarPageContent from './pages/ContentPage/NavbarPageContent';
+import CarrierPage from './pages/CarrierPage';
 
 // ----------------------------------------------------------------------
 
@@ -83,6 +84,7 @@ export default function Router() {
         { path: 'edit/:id', element: <CreateBlog /> },
         { path: 'comments', element: <CommentPage /> },
         { path: 'feedback', element: <ContactPage /> },
+        { path: 'carrier', element: <CarrierPage /> },
       ],
     },
     {

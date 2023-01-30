@@ -48,9 +48,7 @@ export default function DashboardAppPage() {
         <title> Dashboard | React App </title>
       </Helmet>
       {isLoading ? (
-        <>
-          <LoadingAnimation />
-        </>
+        <LoadingAnimation />
       ) : (
         <Container maxWidth="xl">
           <Typography variant="h4" sx={{ mb: 5 }}>
@@ -73,7 +71,7 @@ export default function DashboardAppPage() {
             </Grid>
 
             <Grid item xs={12} sm={6} md={3}>
-              <Link to={'/dashboard/subcategory'}>
+              <Link to={'/dashboard/carrier'}>
                 <AppWidgetSummary title="Carrier" total={240} color="warning" icon={'mdi:resume'} />
               </Link>
             </Grid>
