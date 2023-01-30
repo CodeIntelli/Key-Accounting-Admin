@@ -29,6 +29,7 @@ import {
   TextField,
   ListItem,
   ListItemText,
+  CircularProgress,
 } from '@mui/material';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
@@ -36,14 +37,11 @@ import Cookies from 'js-cookie';
 import { useDispatch } from 'react-redux';
 import moment from 'moment';
 import swal from 'sweetalert';
-// components
-
 import Iconify from '../components/iconify';
 import Scrollbar from '../components/scrollbar';
 import Label from '../components/label';
 import { LoadingButton } from '@mui/lab';
 import { errorToast, successToast } from 'src/utils/Toast';
-import FileUpload from 'react-material-file-upload';
 import LoadingAnimation from 'src/components/LoadingAnimation';
 // sections
 
@@ -77,24 +75,11 @@ const style = {
 export default function CommentPage() {
   const [open, setOpen] = useState(null);
 
-  const [EbookList, setEbookList] = useState();
   const [filterData, setFilterData] = useState();
   const [isLoading, setIsLoading] = useState(true);
   const [searchString, setsearchString] = useState('');
-  const [Modalopen, setModalopen] = useState(false);
   const [UpdateModalopen, setUpdateModalopen] = useState(false);
   const [UpdateData, setUpdateData] = useState();
-
-  const [catTitle, setcatTitle] = useState('');
-  const [editcatTitle, seteditcatTitle] = useState('');
-
-  const [attachment, setAttachment] = useState();
-  const [ebookTitle, setebookTitle] = useState('');
-  const [ebookDesc, setebookDesc] = useState('');
-  const [ebookTags, setebookTags] = useState('');
-  const [editebookTitle, seteditebookTitle] = useState('');
-  const [editebookDesc, seteditebookDesc] = useState('');
-  const [editebookTags, seteditebookTags] = useState('');
 
   const fetchEbook = async () => {
     try {
@@ -112,7 +97,6 @@ export default function CommentPage() {
         },
       });
       console.log('🤩 ~ file: CategoriesPage.js:112 ~ fetchEbook ~ data', data);
-      setEbookList(data.result);
       setFilterData(data.result);
       setIsLoading(false);
       console.log('🤩 ~ file: UserPage.js:113 ~ fetchEbook ~ data', data);
@@ -121,65 +105,154 @@ export default function CommentPage() {
     }
   };
 
-  const removeUser = async (id) => {
-    try {
-      const BASE_URL = process.env.REACT_APP_API_ENDPOINT;
-      const bearerToken = Cookies.get('x-access-token')
-        ? Cookies.get('x-access-token')
-        : localStorage.getItem('x-access-token')
-        ? localStorage.getItem('x-access-token')
-        : null;
-
-      const { data } = await axios.delete(`${BASE_URL}content/upload/${id}`, {
-        headers: {
-          authorization: `Bearer ${bearerToken}`,
-        },
-      });
-      return data;
-    } catch (error) {
-      return error.response.data;
-    }
-  };
-
-  const doTogglerCall = async (id) => {
-    try {
-      const BASE_URL = process.env.REACT_APP_API_ENDPOINT;
-      const bearerToken = Cookies.get('x-access-token')
-        ? Cookies.get('x-access-token')
-        : localStorage.getItem('x-access-token')
-        ? localStorage.getItem('x-access-token')
-        : null;
-
-      const { data } = await axios.patch(`${BASE_URL}content/upload/${id}`, bearerToken, {
-        headers: {
-          authorization: `Bearer ${bearerToken}`,
-        },
-      });
-      return data;
-    } catch (error) {
-      return error.response.data;
-    }
-  };
-
-  const ModalhandleClose = () => {
-    if (Modalopen) {
-      setModalopen(false);
-    } else {
-      setModalopen(true);
-    }
-  };
   const UpdateModalhandleClose = () => {
     if (UpdateModalopen) {
       setUpdateModalopen(false);
+      setUpdateData('');
     } else {
       setUpdateModalopen(true);
       // seteditcatTitle()
     }
   };
 
+  const [activeLoader, setactiveLoader] = useState(false);
+
+  const doActiveComment = async (id) => {
+    try {
+      setactiveLoader(true);
+      const BASE_URL = process.env.REACT_APP_API_ENDPOINT;
+      const bearerToken = Cookies.get('x-access-token')
+        ? Cookies.get('x-access-token')
+        : localStorage.getItem('x-access-token')
+        ? localStorage.getItem('x-access-token')
+        : null;
+
+      const { data } = await axios.put(
+        `${BASE_URL}comment/reply/${id}`,
+        {
+          isVisible: true,
+          status: 'Accept',
+        },
+        {
+          headers: {
+            authorization: `Bearer ${bearerToken}`,
+          },
+        }
+      );
+      console.log('🤩 ~ file: CategoriesPage.js:112 ~ fetchEbook ~ data', data);
+      setFilterData(data.result);
+      setactiveLoader(false);
+      setUpdateModalopen(false);
+      successToast('Comment Active Successfully');
+      fetchEbook();
+    } catch (error) {
+      setactiveLoader(false);
+      errorToast('Something Went Wrong');
+      console.log(error);
+    }
+  };
+
+  const deleteComment = async (id) => {
+    try {
+      setactiveLoader(true);
+      const BASE_URL = process.env.REACT_APP_API_ENDPOINT;
+      const bearerToken = Cookies.get('x-access-token')
+        ? Cookies.get('x-access-token')
+        : localStorage.getItem('x-access-token')
+        ? localStorage.getItem('x-access-token')
+        : null;
+
+      const { data } = await axios.delete(`${BASE_URL}comment/remove/${id}`, {
+        headers: {
+          authorization: `Bearer ${bearerToken}`,
+        },
+      });
+      console.log('🤩 ~ file: CategoriesPage.js:112 ~ fetchEbook ~ data', data);
+      setFilterData(data.result);
+      setactiveLoader(false);
+      setUpdateModalopen(false);
+      // successToast('Comment Deleted Successfully');
+      fetchEbook();
+      return data;
+    } catch (error) {
+      setactiveLoader(false);
+      // errorToast('Something Went Wrong');
+      console.log(error);
+    }
+  };
+
+  const doReplyComment = async (id) => {
+    try {
+      setactiveLoader(true);
+      const BASE_URL = process.env.REACT_APP_API_ENDPOINT;
+      const bearerToken = Cookies.get('x-access-token')
+        ? Cookies.get('x-access-token')
+        : localStorage.getItem('x-access-token')
+        ? localStorage.getItem('x-access-token')
+        : null;
+
+      const { data } = await axios.put(
+        `${BASE_URL}comment/reply/${id}`,
+        {
+          reply_message: commentMessage.trim(),
+          isVisible: true,
+          status: 'Accept',
+        },
+        {
+          headers: {
+            authorization: `Bearer ${bearerToken}`,
+          },
+        }
+      );
+      console.log('🤩 ~ file: CategoriesPage.js:112 ~ fetchEbook ~ data', data);
+      setFilterData(data.result);
+      setactiveLoader(false);
+      setUpdateModalopen(false);
+      successToast('Comment Reply Added Successfully ');
+      fetchEbook();
+    } catch (error) {
+      setactiveLoader(false);
+      errorToast('Something Went Wrong');
+      console.log(error);
+    }
+  };
+
+  const doInactiveComment = async (id) => {
+    try {
+      setactiveLoader(true);
+      const BASE_URL = process.env.REACT_APP_API_ENDPOINT;
+      const bearerToken = Cookies.get('x-access-token')
+        ? Cookies.get('x-access-token')
+        : localStorage.getItem('x-access-token')
+        ? localStorage.getItem('x-access-token')
+        : null;
+
+      const { data } = await axios.put(
+        `${BASE_URL}comment/edit/${id}`,
+        {},
+        {
+          headers: {
+            authorization: `Bearer ${bearerToken}`,
+          },
+        }
+      );
+      console.log('🤩 ~ file: CategoriesPage.js:112 ~ fetchEbook ~ data', data);
+      setFilterData(data.result);
+      setactiveLoader(false);
+      setUpdateModalopen(false);
+      successToast('Comment Inactive Successfully');
+      fetchEbook();
+    } catch (error) {
+      setactiveLoader(false);
+      errorToast('Something Went Wrong');
+      console.log(error);
+    }
+  };
+
   const setEditId = (idData) => {
     console.log('🤩 ~ file: CategoriesPage.js:185 ~ setEditId ~ idData', idData);
     setUpdateData(idData);
+    setCommentMessage(idData?.reply_message);
   };
 
   React.useEffect(() => {
@@ -199,17 +272,16 @@ export default function CommentPage() {
     console.log(id);
     swal({
       title: 'Are you sure?',
-      text: 'Once deleted, you will not be able to recover this user!',
+      text: 'Once deleted, you will not be able to recover this comment!',
       icon: 'error',
       buttons: true,
       dangerMode: true,
     }).then(async (willDelete) => {
-      console.log('🤩 ~ file: UserPage.js:261 ~ handleDelete ~ willDelete', willDelete);
       if (willDelete) {
-        const result = await removeUser(id);
+        const result = await deleteComment(id);
         if (result.success === true) {
           setUpdateData('');
-          successToast('Content Deleted Successfully');
+          successToast('Comment Deleted Successfully');
           fetchEbook();
         } else {
           swal('Something Went Wrong Please try after some time', {
@@ -220,80 +292,8 @@ export default function CommentPage() {
     });
   };
 
-  const doSearchName = (searchQuery) => {
-    console.log('🚀 ~ file: Project.jsx:302 ~ doSearchName ~ e', searchQuery.length);
-    if (searchQuery != '') {
-      const AllFilterArray =
-        EbookList &&
-        EbookList.filter((item) => {
-          return item.catTitle?.toLowerCase()?.includes(searchQuery);
-        });
-      setFilterData(AllFilterArray);
-    } else {
-      setFilterData(EbookList);
-    }
-  };
-
-  const handleSubmit = async () => {
-    const addContentResult = await addContent({ ebookDesc, ebookTags, ebookTitle, attachment });
-    console.log('🤩 ~ file: CategoriesPage.js:289 ~ handleSubmit ~ addContentResult', addContentResult);
-    if (addContentResult.success) {
-      successToast('Content Added Successfully');
-      setUpdateData('');
-      fetchEbook();
-    } else {
-      errorToast(addContentResult.message);
-    }
-  };
-
-  const handleUpdate = async () => {
-    const editCatResult = await updateContent(UpdateData._id, {
-      title: editebookTitle,
-      desc: editebookDesc,
-      tags: editebookTags.includes(',') ? editebookTags.split(',') : editebookTags.fromArray(),
-    });
-    console.log('🤩 ~ file: CategoriesPage.js:289 ~ handleSubmit ~ editCatResult', editCatResult);
-    if (editCatResult.success) {
-      successToast('Content Edited Successfully');
-      setUpdateData('');
-      fetchEbook();
-    } else {
-      errorToast(editCatResult.message);
-    }
-  };
-  const [files, setFiles] = useState([]);
-  const [editfiles, seteditFiles] = useState();
-  const [fileErrMessage, setFileErrMessage] = useState();
-  const [fileSuccess, setfileSuccess] = useState(false);
-  const checkfiles = (fileData) => {
-    console.log('=============================', fileData[0]?.name, fileData[0]?.type);
-    if (fileData[0]?.name.split('.').pop() == 'pdf') {
-      setFiles(fileData);
-      setAttachment(fileData[0]);
-      setfileSuccess(true);
-    } else {
-      setFileErrMessage('File Not Supported');
-      setFileSuccess(false);
-    }
-  };
-
-  function formatFileSize(bytes, decimalPoint) {
-    if (bytes == 0) return '0 Bytes';
-    var k = 1000,
-      dm = decimalPoint || 2,
-      sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],
-      i = Math.floor(Math.log(bytes) / Math.log(k));
-    return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
-  }
-
   const [commentMessage, setCommentMessage] = useState('');
-  const [comName, setcomName] = useState('');
-  const [comPhoneNo, setcomPhoneNo] = useState('');
-  const [comEmail, setcomEmail] = useState('');
-  const [comWebsite, setcomWebsite] = useState('');
-  const [comReplyMessage, setcomReplyMessage] = useState('');
-  const [comBlogTitle, setcomBlogTitle] = useState('');
-  const [comstatus, setcomstatus] = useState('');
+
   /* Show Three Button Change Status like Active Comment, Reject Comment, Delete Comment, Replay Message TextBox */
 
   return (
@@ -436,8 +436,7 @@ export default function CommentPage() {
               sx={{ color: 'success.main' }}
               onClick={() => {
                 handleCloseMenu();
-                setUpdateModalopen(true);
-                seteditcatTitle(UpdateData.catTitle);
+                doActiveComment(UpdateData?._id);
               }}
             >
               <Iconify icon={'healthicons:i-documents-accepted'} sx={{ mr: 2 }} />
@@ -448,7 +447,6 @@ export default function CommentPage() {
               onClick={() => {
                 handleCloseMenu();
                 setUpdateModalopen(true);
-                seteditcatTitle(UpdateData.catTitle);
               }}
             >
               <Iconify icon={'eva:edit-fill'} sx={{ mr: 2 }} />
@@ -458,8 +456,8 @@ export default function CommentPage() {
             <MenuItem
               sx={{ color: 'error.main' }}
               onClick={() => {
-                handleDelete(UpdateData._id);
                 handleCloseMenu();
+                doInactiveComment(UpdateData?._id);
               }}
             >
               <Iconify icon={'charm:cross'} sx={{ mr: 2 }} />
@@ -468,8 +466,8 @@ export default function CommentPage() {
             <MenuItem
               sx={{ color: 'warning.main' }}
               onClick={() => {
-                handleDelete(UpdateData._id);
                 handleCloseMenu();
+                setUpdateModalopen(true);
               }}
             >
               <Iconify icon={'mdi:message-reply-text'} sx={{ mr: 2 }} />
@@ -478,7 +476,7 @@ export default function CommentPage() {
             <MenuItem
               sx={{ color: 'error.main' }}
               onClick={() => {
-                handleDelete(UpdateData._id);
+                handleDelete(UpdateData?._id);
                 handleCloseMenu();
               }}
             >
@@ -486,126 +484,6 @@ export default function CommentPage() {
               Delete
             </MenuItem>
           </Popover>
-
-          <Modal
-            open={Modalopen}
-            onClose={ModalhandleClose}
-            aria-labelledby="modal-modal-title"
-            aria-describedby="modal-modal-description"
-          >
-            <Box sx={style}>
-              <div>
-                <div
-                  style={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                  }}
-                >
-                  <h3>Upload casestudies</h3>
-                  <div style={{ marginTop: '20px' }}>
-                    <TextField
-                      id="outlined-firstname"
-                      label="casestudies Title"
-                      variant="outlined"
-                      style={{ width: '100%' }}
-                      value={ebookTitle}
-                      onChange={(e) => setebookTitle(e.target.value)}
-                    />
-                  </div>
-                  <div style={{ marginTop: '20px' }}>
-                    <TextField
-                      id="outlined-firstname"
-                      label="casestudies Description"
-                      variant="outlined"
-                      style={{ width: '100%' }}
-                      value={ebookDesc}
-                      onChange={(e) => setebookDesc(e.target.value)}
-                    />
-                  </div>
-                  <div style={{ marginTop: '20px' }}>
-                    <TextField
-                      id="outlined-firstname"
-                      label="casestudies Tags"
-                      variant="outlined"
-                      style={{ width: '100%' }}
-                      value={ebookTags}
-                      onChange={(e) => setebookTags(e.target.value)}
-                    />
-                  </div>
-                  {files && files.length > 0 ? (
-                    <div
-                      style={{
-                        marginTop: '20px',
-                        display: 'flex',
-                        justifyContent: 'space-between',
-                        alignItems: 'center',
-                        borderRadius: '50px',
-                        background: '#EE1A25',
-                        color: '#ffffff',
-                      }}
-                    >
-                      <div style={{ width: '90%', display: 'flex', alignItems: 'center', marginLeft: '20px' }}>
-                        <Iconify icon="fluent:document-pdf-20-filled" />
-                        <p>{files[0].name.length > 10 ? files[0].name.substring(0, 10) + '...' : files[0].name}</p>
-                        <p style={{ marginLeft: '10px' }}>({formatFileSize(files[0].size)})</p>
-                      </div>
-                      <div style={{ width: '10%', display: 'flex', alignItems: 'center', marginRight: '10px' }}>
-                        <IconButton
-                          aria-label="upload picture"
-                          style={{ color: '#FFFFFF' }}
-                          component="label"
-                          onClick={() => setFiles([])}
-                        >
-                          <Iconify icon="game-icons:cancel" />
-                        </IconButton>
-                      </div>
-                    </div>
-                  ) : null}
-                  <div style={{ marginTop: '20px' }}>
-                    <FileUpload value={files} onChange={(e) => checkfiles(e)} />
-                  </div>
-                  {!fileSuccess ? (
-                    <div style={{ color: 'red', display: 'flex', justifyContent: 'center', fontSize: '14px' }}>
-                      {fileErrMessage}{' '}
-                    </div>
-                  ) : (
-                    ''
-                  )}
-                  <div
-                    style={{
-                      marginTop: '30px',
-                      display: 'flex',
-                      justifyContent: 'flex-end',
-                      opacity:
-                        ebookTitle.trim() != '' && files.length > 0 && ebookDesc.trim() != '' && ebookTags.trim() != ''
-                          ? 1
-                          : 0.5,
-                    }}
-                  >
-                    <LoadingButton
-                      type="submit"
-                      variant="contained"
-                      style={{
-                        background: '#6ab04c',
-                        padding: '10px 20px',
-                        opacity: 1,
-                        cursor:
-                          ebookTitle.trim() != '' &&
-                          files.length > 0 &&
-                          ebookDesc.trim() != '' &&
-                          ebookTags.trim() != ''
-                            ? 'pointer'
-                            : 'not-allowed',
-                      }}
-                      onClick={() => handleSubmit()}
-                    >
-                      Upload casestudies
-                    </LoadingButton>
-                  </div>
-                </div>
-              </div>
-            </Box>
-          </Modal>
 
           <Modal
             open={UpdateModalopen}
@@ -621,83 +499,147 @@ export default function CommentPage() {
                     flexDirection: 'column',
                   }}
                 >
-                  <h3>Update casestudies</h3>
-                  <div style={{ marginTop: '20px' }}>
-                    <TextField
-                      id="outlined-firstname"
-                      label="casestudies Title"
-                      variant="outlined"
-                      style={{ width: '100%' }}
-                      value={editebookTitle}
-                      onChange={(e) => seteditebookTitle(e.target.value)}
-                    />
+                  <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
+                    <h3>Comment Details</h3>
+                    <Label
+                      color={
+                        UpdateData?.status == 'pending'
+                          ? 'warning'
+                          : UpdateData?.status == 'Accept'
+                          ? 'success'
+                          : UpdateData?.status == 'Accept'
+                          ? 'error'
+                          : 'error'
+                      }
+                      style={{ cursor: 'pointer', marginLeft: '10px' }}
+                    >
+                      {UpdateData?.status == 'pending'
+                        ? UpdateData?.status
+                        : UpdateData?.status == 'Accept'
+                        ? UpdateData?.status
+                        : UpdateData?.status == 'Accept'
+                        ? UpdateData?.status
+                        : UpdateData?.status}
+                    </Label>
                   </div>
-                  <div style={{ marginTop: '20px' }}>
-                    <TextField
-                      id="outlined-firstname"
-                      label="casestudies Description"
-                      variant="outlined"
-                      style={{ width: '100%' }}
-                      value={editebookDesc}
-                      onChange={(e) => seteditebookDesc(e.target.value)}
-                    />
-                  </div>
-                  <div style={{ marginTop: '20px' }}>
-                    <TextField
-                      id="outlined-firstname"
-                      label="casestudies Tags"
-                      variant="outlined"
-                      style={{ width: '100%' }}
-                      value={editebookTags}
-                      onChange={(e) => seteditebookTags(e.target.value)}
-                    />
+                  <div style={{ marginTop: '10px' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', lineHeight: 1 }}>
+                      <div style={{ width: '50%' }}>
+                        <h4>Name:</h4>
+                      </div>
+                      <div style={{ width: '50%' }}>
+                        <p>{UpdateData?.name}</p>
+                      </div>
+                    </div>
+                    <div style={{ display: 'flex', alignItems: 'center', lineHeight: 1 }}>
+                      <div style={{ width: '50%' }}>
+                        <h4>Email:</h4>
+                      </div>
+                      <div style={{ width: '50%' }}>
+                        <p>{UpdateData?.email}</p>
+                      </div>
+                    </div>
+                    <div style={{ display: 'flex', alignItems: 'center', lineHeight: 1 }}>
+                      <div style={{ width: '50%' }}>
+                        <h4>Phone Number:</h4>
+                      </div>
+                      <div style={{ width: '50%' }}>
+                        <p>{UpdateData?.phone_number}</p>
+                      </div>
+                    </div>
+                    <div style={{ display: 'flex', alignItems: 'center', lineHeight: 1 }}>
+                      <div style={{ width: '50%' }}>
+                        <h4>Website:</h4>
+                      </div>
+                      <div style={{ width: '50%' }}>
+                        <p>{UpdateData?.website}</p>
+                      </div>
+                    </div>
+
+                    <div style={{ display: 'flex', alignItems: 'center', lineHeight: 1 }}>
+                      <div style={{ width: '50%' }}>
+                        <h4>Blog Title:</h4>
+                      </div>
+                      <div style={{ width: '50%' }}>
+                        <p>{UpdateData?.blog_id?.postTitle}</p>
+                      </div>
+                    </div>
+                    <div style={{ display: 'flex', alignItems: 'center', lineHeight: 1 }}>
+                      <div style={{ width: '50%' }}>
+                        <h4>Blog Comment:</h4>
+                      </div>
+                      <div style={{ width: '50%' }}>
+                        <p>{UpdateData?.comment}</p>
+                      </div>
+                    </div>
                   </div>
 
-                  <div
-                    style={{
-                      borderRadius: '50px',
-                    }}
-                  >
-                    <div style={{ width: '90%', display: 'flex', alignItems: 'center', marginLeft: '20px' }}>
-                      <Iconify icon="fluent:document-pdf-20-filled" />
-                      <p>
-                        {editfiles?.fileName.length > 10
-                          ? editfiles?.fileName.substring(0, 10) + '...'
-                          : editfiles?.fileName}
-                      </p>
-                      <p style={{ marginLeft: '10px' }}>({editfiles?.fileSize})</p>
-                    </div>
+                  <div style={{ marginTop: '10px' }}>
+                    <TextField
+                      id="outlined-firstname"
+                      label="Reply Comment"
+                      variant="outlined"
+                      style={{ width: '100%' }}
+                      value={commentMessage}
+                      onChange={(e) => setCommentMessage(e.target.value)}
+                    />
                   </div>
-                  <div style={{ marginTop: '20px' }}></div>
-                  {!fileSuccess ? (
-                    <div style={{ color: 'red', display: 'flex', justifyContent: 'center', fontSize: '14px' }}>
-                      {fileErrMessage}{' '}
+                  {activeLoader ? (
+                    <div style={{ display: 'flex', justifyContent: 'flex-end', margin: '20px' }}>
+                      <CircularProgress />
                     </div>
                   ) : (
-                    ''
-                  )}
-                  <div
-                    style={{
-                      marginTop: '30px',
-                      display: 'flex',
-                      justifyContent: 'flex-end',
-                      opacity: 1,
-                    }}
-                  >
-                    <LoadingButton
-                      type="submit"
-                      variant="contained"
+                    <div
                       style={{
-                        background: '#6ab04c',
-                        padding: '10px 20px',
+                        marginTop: '30px',
+                        display: 'flex',
+                        justifyContent: 'space-around',
                         opacity: 1,
-                        cursor: 'pointer',
                       }}
-                      onClick={() => handleUpdate()}
                     >
-                      Edit casestudies Details
-                    </LoadingButton>
-                  </div>
+                      <LoadingButton
+                        type="submit"
+                        variant="contained"
+                        style={{
+                          background: '#6ab04c',
+                          padding: '10px 20px',
+                          opacity: 1,
+                          cursor: 'pointer',
+                          display: UpdateData?.status == 'Accept' ? 'none' : 'block',
+                        }}
+                        onClick={() => doActiveComment(UpdateData?._id)}
+                      >
+                        Accept
+                      </LoadingButton>
+                      <LoadingButton
+                        type="submit"
+                        variant="contained"
+                        style={{
+                          background: '#DC143C',
+                          padding: '10px 20px',
+                          opacity: 1,
+                          cursor: 'pointer',
+                          display: UpdateData?.status == 'Reject' ? 'none' : 'block',
+                        }}
+                        onClick={() => doInactiveComment(UpdateData?._id)}
+                      >
+                        Reject
+                      </LoadingButton>
+                      <LoadingButton
+                        type="submit"
+                        variant="contained"
+                        style={{
+                          background: '#5783db',
+                          padding: '10px 20px',
+                          opacity: commentMessage?.trim() != '' ? 1 : 0.5,
+                          cursor: commentMessage?.trim() != '' ? 'pointer' : 'not-allowed',
+                        }}
+                        onClick={() => doReplyComment(UpdateData?._id)}
+                      >
+                        Reply
+                      </LoadingButton>
+                    </div>
+                  )}
                 </div>
               </div>
             </Box>

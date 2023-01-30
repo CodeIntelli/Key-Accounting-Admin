@@ -406,9 +406,7 @@ export default function CategoriesPage() {
         <title> User | Key CMS Accounting </title>
       </Helmet>
       {isLoading ? (
-        <>
-          <LoadingAnimation />
-        </>
+        <LoadingAnimation />
       ) : (
         <>
           <Container>
