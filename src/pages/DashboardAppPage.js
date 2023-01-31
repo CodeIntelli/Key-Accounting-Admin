@@ -57,52 +57,65 @@ export default function DashboardAppPage() {
 
           <Grid container spacing={3}>
             <Grid item xs={12} sm={6} md={3}>
-              <Link to={'/dashboard/subcategory'}>
-                <AppWidgetSummary title="Total Blogs" total={240} color="success" icon={'simple-icons:blogger'} />
+              <Link to={'/dashboard/blog'}>
+                <AppWidgetSummary title="Blogs" color="success" icon={'simple-icons:blogger'} />
               </Link>
             </Grid>
 
             <Grid item xs={12} sm={6} md={3}>
-              <AppWidgetSummary title="Total Pages" total={240} color="info" icon={'ooui:special-pages-ltr'} />
+              <Link to={'/dashboard/subcategory'}>
+                <AppWidgetSummary title="Blog Subcategories" color="info" icon={'carbon:category'} />
+              </Link>
             </Grid>
-
             <Grid item xs={12} sm={6} md={3}>
-              <AppWidgetSummary title="User Activity" total={240} color="warning" icon={'ic:baseline-work-history'} />
+              <Link to={'/dashboard/category'}>
+                <AppWidgetSummary title="Blog Categories" color="warning" icon={'carbon:category-new-each'} />
+              </Link>
             </Grid>
-
+            <Grid item xs={12} sm={6} md={3}>
+              <Link to={'/dashboard/comments'}>
+                <AppWidgetSummary title="Blogs Comments" color="error" icon={'majesticons:comments'} />
+              </Link>
+            </Grid>
+            <Grid item xs={12} sm={6} md={3}>
+              <Link to={'/dashboard/user'}>
+                <AppWidgetSummary title="User" color="success" icon={'mdi:users-group'} />
+              </Link>
+            </Grid>
+            <Grid item xs={12} sm={6} md={3}>
+              <Link to={'/dashboard/activity'}>
+                <AppWidgetSummary title="User Activity" color="info" icon={'tabler:activity-heartbeat'} />
+              </Link>
+            </Grid>
+            <Grid item xs={12} sm={6} md={3}>
+              <Link to={'/dashboard/feedback'}>
+                <AppWidgetSummary title="User Feedback" color="warning" icon={'mdi:feedback-outline'} />
+              </Link>
+            </Grid>
             <Grid item xs={12} sm={6} md={3}>
               <Link to={'/dashboard/carrier'}>
-                <AppWidgetSummary title="Carrier" total={240} color="warning" icon={'mdi:resume'} />
+                <AppWidgetSummary title="Carrier" color="error" icon={'mdi:resume'} />
               </Link>
             </Grid>
-
             <Grid item xs={12} sm={6} md={3}>
-              <AppWidgetSummary title="Total Ebook" total={240} icon={'mdi:notebook-check'} />
+              <Link to={'/dashboard/ebook'}>
+                <AppWidgetSummary title="Ebook" color="success" icon={'mdi:notebook-check'} />
+              </Link>
             </Grid>
             <Grid item xs={12} sm={6} md={3}>
-              <AppWidgetSummary
-                title="Total Checklist"
-                total={240}
-                color="success"
-                icon={'material-symbols:checklist'}
-              />
+              <Link to={'/dashboard/checklist'}>
+                <AppWidgetSummary title="Total Checklist" color="info" icon={'material-symbols:checklist'} />
+              </Link>
             </Grid>
-
             <Grid item xs={12} sm={6} md={3}>
-              <AppWidgetSummary
-                title="Total Infographics"
-                total={240}
-                color="info"
-                icon={'fluent:diagram-24-regular'}
-              />
+              <Link to={'/dashboard/infographics'}>
+                <AppWidgetSummary title="Infographics" color="warning" icon={'fluent:diagram-24-regular'} />
+              </Link>
             </Grid>
-
             <Grid item xs={12} sm={6} md={3}>
-              <AppWidgetSummary title="Total Case Studies" total={240} color="warning" icon={'fluent-mdl2:test-case'} />
-            </Grid>
-
-            <Grid item xs={12} sm={6} md={3}>
-              <AppWidgetSummary title="Total User" total={240} icon={'mdi:users-group'} />
+              <Link to={'/dashboard/casestudies'}>
+                <AppWidgetSummary title="Case Studies" color="error" icon={'fluent-mdl2:test-case'} />
+              </Link>
             </Grid>
           </Grid>
         </Container>

@@ -336,9 +336,7 @@ export default function UserPage() {
         <title> User | Key CMS Accounting </title>
       </Helmet>
       {isLoading ? (
-        <>
-          <LoadingAnimation />
-        </>
+        <LoadingAnimation />
       ) : (
         <>
           <Container>
@@ -426,7 +424,7 @@ export default function UserPage() {
                         profileImg,
                       } = tableData;
                       return (
-                        <TableBody key={Math.floor(Math.random() * 10000) * Date.now()}>
+                        <TableBody key={_id}>
                           <TableRow hover>
                             <TableCell component="th" scope="row" padding="none">
                               <Stack direction="row" alignItems="center" spacing={2}>
@@ -481,10 +479,10 @@ export default function UserPage() {
           </Container>
 
           <Popover
-            open={open}
+            open={Boolean(open)}
             anchorEl={anchorEl}
             onClose={handleClose}
-            anchorOrigin={{ vertical: 'top', horizontal: 'left' }}
+            anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
             transformOrigin={{ vertical: 'top', horizontal: 'right' }}
             PaperProps={{
               sx: {

@@ -298,9 +298,7 @@ const HomePageContent = () => {
   return (
     <div>
       {isLoading ? (
-        <>
-          <LoadingAnimation />
-        </>
+        <LoadingAnimation />
       ) : (
         <>
           <Grid container spacing={3}>

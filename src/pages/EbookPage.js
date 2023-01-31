@@ -403,7 +403,7 @@ export default function CategoriesPage() {
   return (
     <>
       <Helmet>
-        <title> User | Key CMS Accounting </title>
+        <title> Ebook | Key CMS Accounting </title>
       </Helmet>
       {isLoading ? (
         <LoadingAnimation />
@@ -490,7 +490,7 @@ export default function CategoriesPage() {
                     {filterData.map((tableData, index) => {
                       const { _id, attachment, title, desc, tags, isActive, createdAt } = tableData;
                       return (
-                        <TableBody key={Math.floor(Math.random() * 10000)}>
+                        <TableBody key={_id}>
                           <TableRow hover>
                             <TableCell align="left">{index + 1}</TableCell>
                             <TableCell align="left" style={{ textTransform: 'capitalize' }}>

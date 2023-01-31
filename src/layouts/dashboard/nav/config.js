@@ -23,21 +23,6 @@ const navConfig = [
     icon: icon('ooui:special-pages-ltr'),
   },
   {
-    title: 'Feedbacks',
-    path: '/dashboard/feedback',
-    icon: icon('fluent:person-feedback-20-filled'),
-  },
-  {
-    title: 'activity',
-    path: '/dashboard/activity',
-    icon: icon('ic:baseline-work-history'),
-  },
-  {
-    title: 'Blog Comments',
-    path: '/dashboard/comments',
-    icon: icon('vaadin:comments'),
-  },
-  {
     title: 'ebook',
     path: '/dashboard/ebook',
     icon: icon('mdi:notebook-check'),
@@ -53,7 +38,7 @@ const navConfig = [
     icon: icon('fluent:diagram-24-regular'),
   },
   {
-    title: 'Case Studies',
+    title: 'Casestudies',
     path: '/dashboard/casestudies',
     icon: icon('fluent-mdl2:test-case'),
   },

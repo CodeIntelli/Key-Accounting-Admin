@@ -133,8 +133,6 @@ const ProfilePage = () => {
       content: `${moment(fetchData?.createdAt).format('LL')}`,
     },
   ];
-
-  /* Handle Change Password */
   const [passwordModel, setPasswordModel] = useState(false);
   const [oldPassword, setOldPassword] = useState();
   const [newPassword, setnewPassword] = useState();
@@ -158,7 +156,6 @@ const ProfilePage = () => {
     );
   };
 
-  /* Handle Edit Profile */
   const [editModel, setEditModel] = useState(false);
   const [image, setImage] = useState();
   const handleEditProfile = () => {};
@@ -180,9 +177,7 @@ const ProfilePage = () => {
   return (
     <>
       {isLoading ? (
-        <>
-          <LoadingAnimation />
-        </>
+        <LoadingAnimation />
       ) : (
         <>
           <Grid container spacing={3}>

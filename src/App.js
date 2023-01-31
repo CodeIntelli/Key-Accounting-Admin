@@ -25,7 +25,7 @@ export default function App() {
   const location = useLocation();
   const redirect = location.pathname ? location.pathname.split('=')[1] : '/dashboard/app';
   React.useEffect(() => {
-    if (error && error) {
+    if (!isLoading && error && error) {
       errorToast(error);
       return navigate('/login', { replace: true });
     }

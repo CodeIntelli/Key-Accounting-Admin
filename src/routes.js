@@ -39,6 +39,8 @@ import EbookPageContent from './pages/ContentPage/EbookPageContent';
 import ContactPage from './pages/ContactPage';
 import NavbarPageContent from './pages/ContentPage/NavbarPageContent';
 import CarrierPage from './pages/CarrierPage';
+import AddCarrier from './pages/AddCarrier';
+import CandidatePage from './pages/CandidatePage';
 
 // ----------------------------------------------------------------------
 
@@ -85,6 +87,9 @@ export default function Router() {
         { path: 'comments', element: <CommentPage /> },
         { path: 'feedback', element: <ContactPage /> },
         { path: 'carrier', element: <CarrierPage /> },
+        { path: 'carrier/new', element: <AddCarrier /> },
+        { path: 'carrier/edit/:id', element: <AddCarrier /> },
+        { path: 'carrier/candidate/:id', element: <CandidatePage /> },
       ],
     },
     {

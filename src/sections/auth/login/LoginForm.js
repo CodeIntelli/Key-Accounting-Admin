@@ -23,12 +23,12 @@ export default function LoginForm() {
 
   useEffect(() => {
     // dispatch(loadUser());
-    if (error) {
+    if (!isLoading && error) {
       const errMsg = error.includes('JsonWebTokenError') ? 'Session Time Out Please Login Again' : error;
       errorToast(errMsg);
       dispatch(clearErrors());
     }
-    if (isAuthenticated) {
+    if (!isLoading && isAuthenticated) {
       navigate('/dashboard', { replace: true });
     }
     // if (user && user) {

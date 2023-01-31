@@ -377,12 +377,10 @@ export default function SubCategoriesPage() {
   return (
     <>
       <Helmet>
-        <title> User | Key CMS Accounting </title>
+        <title> Subcategories | Key CMS Accounting </title>
       </Helmet>
       {isLoading ? (
-        <>
-          <LoadingAnimation />
-        </>
+        <LoadingAnimation />
       ) : (
         <>
           <Container>
@@ -459,7 +457,7 @@ export default function SubCategoriesPage() {
                     {filterData.map((tableData, index) => {
                       const { _id, categories, subTitle, isActive, createdAt } = tableData;
                       return (
-                        <TableBody key={Math.floor(Math.random() * 10000)}>
+                        <TableBody key={_id}>
                           <TableRow hover>
                             <TableCell align="left">{index + 1}</TableCell>
                             <TableCell align="left" style={{ textTransform: 'capitalize' }}>

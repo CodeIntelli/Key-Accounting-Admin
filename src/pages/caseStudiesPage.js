@@ -403,12 +403,10 @@ export default function CategoriesPage() {
   return (
     <>
       <Helmet>
-        <title> casestudies | Key CMS Accounting </title>
+        <title> Casestudies | Key CMS Accounting </title>
       </Helmet>
       {isLoading ? (
-        <>
-          <LoadingAnimation />
-        </>
+        <LoadingAnimation />
       ) : (
         <>
           <Container>

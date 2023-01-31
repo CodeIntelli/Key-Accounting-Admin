@@ -85,7 +85,7 @@ export default function ActivityPage() {
   return (
     <>
       <Helmet>
-        <title> Dashboard | Key CMS Accounting </title>
+        <title> Pages | Key CMS Accounting </title>
       </Helmet>
 
       <Container>

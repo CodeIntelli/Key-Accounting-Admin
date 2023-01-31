@@ -154,7 +154,7 @@ export default function BlogPage() {
   return (
     <>
       <Helmet>
-        <title> Dashboard: Blog | Key CMS Accounting </title>
+        <title> Blog | Key CMS Accounting </title>
       </Helmet>
       {isLoading ? (
         <div>

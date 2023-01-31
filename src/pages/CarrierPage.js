@@ -110,51 +110,6 @@ export default function CarrierPage() {
     }
   };
 
-  const addCategory = async (catData) => {
-    try {
-      const BASE_URL = process.env.REACT_APP_API_ENDPOINT;
-      const bearerToken = Cookies.get('x-access-token')
-        ? Cookies.get('x-access-token')
-        : localStorage.getItem('x-access-token')
-        ? localStorage.getItem('x-access-token')
-        : null;
-
-      const { data } = await axios.post(`${BASE_URL}category`, catData, {
-        headers: {
-          authorization: `Bearer ${bearerToken}`,
-        },
-      });
-      console.log('🤩 ~ file: CategoriesPage.js:121 ~ addCategory ~ data', data);
-      setModalopen(false);
-      setcatTitle('');
-      return data;
-    } catch (error) {
-      return error.response.data;
-    }
-  };
-
-  const updateCategory = async (id, updatedData) => {
-    try {
-      const BASE_URL = process.env.REACT_APP_API_ENDPOINT;
-      const bearerToken = Cookies.get('x-access-token')
-        ? Cookies.get('x-access-token')
-        : localStorage.getItem('x-access-token')
-        ? localStorage.getItem('x-access-token')
-        : null;
-
-      const { data } = await axios.put(`${BASE_URL}category/${id}`, updatedData, {
-        headers: {
-          authorization: `Bearer ${bearerToken}`,
-        },
-      });
-      console.log('🤩 ~ file: CategoriesPage.js:145 ~ updateCategory ~ data', data);
-      setUpdateModalopen(false);
-      seteditcatTitle('');
-      return data;
-    } catch (error) {
-      return error.response.data;
-    }
-  };
   const removeUser = async (id) => {
     try {
       const BASE_URL = process.env.REACT_APP_API_ENDPOINT;
@@ -164,7 +119,7 @@ export default function CarrierPage() {
         ? localStorage.getItem('x-access-token')
         : null;
 
-      const { data } = await axios.delete(`${BASE_URL}category/${id}`, {
+      const { data } = await axios.delete(`${BASE_URL}carrier/admin/${id}`, {
         headers: {
           authorization: `Bearer ${bearerToken}`,
         },
@@ -184,7 +139,7 @@ export default function CarrierPage() {
         ? localStorage.getItem('x-access-token')
         : null;
 
-      const { data } = await axios.patch(`${BASE_URL}category/${id}`, bearerToken, {
+      const { data } = await axios.put(`${BASE_URL}carrier/admin/toggler/${id}`, bearerToken, {
         headers: {
           authorization: `Bearer ${bearerToken}`,
         },
@@ -211,8 +166,7 @@ export default function CarrierPage() {
   };
 
   const setEditId = (idData) => {
-    console.log('🤩 ~ file: CategoriesPage.js:185 ~ setEditId ~ idData', idData.catTitle);
-    setUpdateData(idData);
+    setUpdateData(idData && idData);
   };
 
   React.useEffect(() => {
@@ -241,7 +195,7 @@ export default function CarrierPage() {
         const result = await removeUser(id);
         if (result.success === true) {
           setUpdateData('');
-          successToast('Category Deleted Successfully');
+          successToast('Job Deleted Successfully');
           fetchCategory();
         } else {
           swal('Something Went Wrong Please try after some time', {
@@ -264,7 +218,7 @@ export default function CarrierPage() {
         const result = await doTogglerCall(id);
         if (result?.success) {
           setUpdateData('');
-          successToast('Category Status Change Successfully');
+          successToast('Job Status Change Successfully');
           fetchCategory();
         } else {
           swal('Something Went Wrong Please try after some time', {
@@ -316,7 +270,7 @@ export default function CarrierPage() {
   return (
     <>
       <Helmet>
-        <title> User | Key CMS Accounting </title>
+        <title> Carrier | Key CMS Accounting </title>
       </Helmet>
       {isLoading ? (
         <LoadingAnimation />
@@ -327,17 +281,19 @@ export default function CarrierPage() {
               <Typography variant="h4" gutterBottom>
                 Carrier
               </Typography>
-              <Button
-                variant="contained"
-                onClick={() => {
-                  seteditcatTitle('');
-                  setcatTitle('');
-                  setModalopen(true);
-                }}
-                startIcon={<Iconify icon="eva:plus-fill" />}
-              >
-                Add Job
-              </Button>
+              <Link to={'/dashboard/carrier/new'}>
+                <Button
+                  variant="contained"
+                  onClick={() => {
+                    seteditcatTitle('');
+                    setcatTitle('');
+                    setModalopen(true);
+                  }}
+                  startIcon={<Iconify icon="eva:plus-fill" />}
+                >
+                  Add Job
+                </Button>
+              </Link>
             </Stack>
 
             <Card>
@@ -403,7 +359,7 @@ export default function CarrierPage() {
                     {filterData.map((tableData, index) => {
                       const { _id, title, location, isActive, createdAt } = tableData;
                       return (
-                        <TableBody key={Math.floor(Math.random() * 10000)}>
+                        <TableBody key={_id}>
                           <TableRow hover>
                             <TableCell align="left">{index + 1}</TableCell>
                             <TableCell align="left" style={{ textTransform: 'capitalize' }}>
@@ -426,7 +382,10 @@ export default function CarrierPage() {
                             <TableCell align="right">
                               <div>
                                 <IconButton size="large" color="inherit" onClick={handleOpenMenu}>
-                                  <Iconify icon={'eva:more-vertical-fill'} onClick={() => setEditId(tableData)} />
+                                  <Iconify
+                                    icon={'eva:more-vertical-fill'}
+                                    onClick={() => setEditId(tableData && tableData)}
+                                  />
                                 </IconButton>
                               </div>
                             </TableCell>
@@ -449,7 +408,7 @@ export default function CarrierPage() {
             PaperProps={{
               sx: {
                 p: 1,
-                width: 140,
+                width: 180,
                 '& .MuiMenuItem-root': {
                   px: 1,
                   typography: 'body2',
@@ -458,16 +417,27 @@ export default function CarrierPage() {
               },
             }}
           >
-            <MenuItem
-              onClick={() => {
-                handleCloseMenu();
-                setUpdateModalopen(true);
-                seteditcatTitle(UpdateData.catTitle);
-              }}
-            >
-              <Iconify icon={'eva:edit-fill'} sx={{ mr: 2 }} />
-              Edit
-            </MenuItem>
+            <Link to={`/dashboard/carrier/edit/${UpdateData?._id}`}>
+              <MenuItem
+                onClick={() => {
+                  handleCloseMenu();
+                }}
+              >
+                <Iconify icon={'eva:edit-fill'} sx={{ mr: 2 }} />
+                Edit
+              </MenuItem>
+            </Link>
+
+            <Link to={`/dashboard/carrier/candidate/${UpdateData?._id}`}>
+              <MenuItem
+                onClick={() => {
+                  handleCloseMenu();
+                }}
+              >
+                <Iconify icon={'gridicons:multiple-users'} sx={{ mr: 2 }} />
+                View Candidate
+              </MenuItem>
+            </Link>
 
             <MenuItem
               sx={{ color: 'error.main' }}
@@ -480,103 +450,6 @@ export default function CarrierPage() {
               Delete
             </MenuItem>
           </Popover>
-
-          <Modal
-            open={Modalopen}
-            onClose={ModalhandleClose}
-            aria-labelledby="modal-modal-title"
-            aria-describedby="modal-modal-description"
-          >
-            <Box sx={style}>
-              <div>
-                <div
-                  style={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                  }}
-                >
-                  <h3>Create Category</h3>
-                  <TextField
-                    id="outlined-firstname"
-                    label="Category Title"
-                    variant="outlined"
-                    value={catTitle}
-                    onChange={(e) => setcatTitle(e.target.value)}
-                  />
-                  <div
-                    style={{
-                      marginTop: '30px',
-                      display: 'flex',
-                      justifyContent: 'flex-end',
-                      opacity: catTitle.trim().length > 0 ? 1 : 0.5,
-                    }}
-                  >
-                    <LoadingButton
-                      type="submit"
-                      variant="contained"
-                      style={{
-                        background: '#6ab04c',
-                        padding: '10px 20px',
-                        opacity: 1,
-                        cursor: catTitle.trim().length > 0 ? 'pointer' : 'not-allowed',
-                      }}
-                      onClick={() => handleSubmit()}
-                    >
-                      Add Category
-                    </LoadingButton>
-                  </div>
-                </div>
-              </div>
-            </Box>
-          </Modal>
-
-          <Modal
-            open={UpdateModalopen}
-            onClose={UpdateModalhandleClose}
-            aria-labelledby="modal-modal-title"
-            aria-describedby="modal-modal-description"
-          >
-            <Box sx={style}>
-              <div>
-                <div
-                  style={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                  }}
-                >
-                  <h3>Edit Category</h3>
-                  <TextField
-                    id="outlined-firstname"
-                    label="Category Title"
-                    variant="outlined"
-                    value={editcatTitle}
-                    onChange={(e) => seteditcatTitle(e.target.value)}
-                  />
-                  <div
-                    style={{
-                      marginTop: '30px',
-                      display: 'flex',
-                      justifyContent: 'flex-end',
-                    }}
-                  >
-                    <LoadingButton
-                      type="submit"
-                      variant="contained"
-                      style={{
-                        background: '#FFC501',
-                        padding: '10px 20px',
-                        opacity: 1,
-                        cursor: 'pointer',
-                      }}
-                      onClick={() => handleUpdate()}
-                    >
-                      Edit Category
-                    </LoadingButton>
-                  </div>
-                </div>
-              </div>
-            </Box>
-          </Modal>
         </>
       )}
     </>

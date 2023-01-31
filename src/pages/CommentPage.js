@@ -299,7 +299,7 @@ export default function CommentPage() {
   return (
     <>
       <Helmet>
-        <title> casestudies | Key CMS Accounting </title>
+        <title> Comments | Key CMS Accounting </title>
       </Helmet>
       {isLoading ? (
         <LoadingAnimation />
