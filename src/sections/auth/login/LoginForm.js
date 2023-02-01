@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 // @mui
-import { Link, Stack, IconButton, InputAdornment, TextField } from '@mui/material';
+import { Link, Stack, IconButton, InputAdornment, TextField, CircularProgress } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 import { useDispatch, useSelector } from 'react-redux';
 // import { toast, ToastContainer } from 'react-toastify';
@@ -22,7 +22,6 @@ export default function LoginForm() {
   const [password, setpasswordValue] = useState('');
 
   useEffect(() => {
-    // dispatch(loadUser());
     if (!isLoading && error) {
       const errMsg = error.includes('JsonWebTokenError') ? 'Session Time Out Please Login Again' : error;
       errorToast(errMsg);
@@ -31,24 +30,19 @@ export default function LoginForm() {
     if (!isLoading && isAuthenticated) {
       navigate('/dashboard', { replace: true });
     }
-    // if (user && user) {
-    //   navigate('/dashboard', { replace: true });
-    // }
   }, [dispatch, error, isAuthenticated, navigate]);
 
+  const [loginLoading, setLoginLoading] = useState(false);
   const handleClick = () => {
     console.log(email, password);
+    setLoginLoading(true);
     dispatch(login({ email, password }));
     if (!isLoading && isAuthenticated && user) {
+      setLoginLoading(false);
       successToast('Login Successfully');
     }
-
-    // navigate('/dashboard', { replace: true });
+    setLoginLoading(false);
   };
-
-  // if (user && user) {
-  //   return navigate('/dashboard', { replace: true });
-  // }
 
   return (
     <>
@@ -89,8 +83,17 @@ export default function LoginForm() {
         </Link>
       </Stack>
 
-      <LoadingButton fullWidth size="large" type="submit" variant="contained" onClick={handleClick}>
-        Login
+      <LoadingButton
+        fullWidth
+        size="large"
+        type="submit"
+        style={{ opacity: isLoading ? 0.5 : 1 }}
+        variant="contained"
+        onClick={() => {
+          handleClick();
+        }}
+      >
+        {!isLoading ? 'Login' : <CircularProgress style={{ color: 'white', padding: 8 }} />}
       </LoadingButton>
     </>
   );

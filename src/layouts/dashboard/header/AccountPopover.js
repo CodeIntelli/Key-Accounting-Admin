@@ -1,13 +1,15 @@
+/* eslint-disable */
 import { useState } from 'react';
 // @mui
 import { alpha } from '@mui/material/styles';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Box, Divider, Typography, Stack, MenuItem, Avatar, IconButton, Popover } from '@mui/material';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import { successToast } from '../../../utils/Toast';
 // mocks_
 import account from '../../../_mock/account';
+import { logout } from 'src/redux/Actions/userAction';
 
 // ----------------------------------------------------------------------
 
@@ -30,6 +32,7 @@ export default function AccountPopover({ setLogoutUser }) {
   const [open, setOpen] = useState(null);
   const navigate = useNavigate();
   const { isAuthenticated, user } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
   const handleOpen = (event) => {
     setOpen(event.currentTarget);
   };
@@ -40,10 +43,11 @@ export default function AccountPopover({ setLogoutUser }) {
 
   const logoutUser = () => {
     // window.localStorage.removeItem('user');
-    // window.localStorage.removeItem('x-access-token');
+    window.localStorage.removeItem('x-access-token');
     setLogoutUser(true);
-    // successToast('😇 User logged out Successfully');
-    // navigate('/login');
+    dispatch(logout());
+    successToast('😇 User logged out Successfully');
+    navigate('/login', { replace: true });
   };
 
   return (

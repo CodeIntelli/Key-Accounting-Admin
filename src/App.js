@@ -25,15 +25,18 @@ export default function App() {
   const location = useLocation();
   const redirect = location.pathname ? location.pathname.split('=')[1] : '/dashboard/app';
   React.useEffect(() => {
-    if (!isLoading && error && error) {
+    if (!isLoading && error) {
       errorToast(error);
       return navigate('/login', { replace: true });
     }
-    if (!isLoading) {
+  }, [error, redirect, isLoading]);
+  React.useEffect(() => {
+    if (!isLoading && error == undefined) {
+      debugger;
       store.dispatch(loadUser());
       navigate(redirect, { replace: true });
     }
-  }, [error, redirect]);
+  }, []);
   return (
     <ThemeProvider>
       <ScrollToTop />

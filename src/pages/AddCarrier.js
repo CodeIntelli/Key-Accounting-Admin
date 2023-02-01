@@ -93,7 +93,7 @@ const CreateUser = () => {
       setIsLoading(false);
       return data;
     } catch (error) {
-      return error?.data?.response;
+      return error?.response?.data;
     }
   };
   const { id } = useParams();
@@ -130,8 +130,8 @@ const CreateUser = () => {
       setFetchLoading(false);
       return data;
     } catch (error) {
-      return error?.data?.response;
       setFetchLoading(false);
+      return error?.response?.data;
     }
   };
   const doEditData = async (id, updatedRecord) => {
@@ -153,7 +153,7 @@ const CreateUser = () => {
       setIsLoading(false);
       return data;
     } catch (error) {
-      return error?.data?.response;
+      return error?.response?.data;
     }
   };
 

@@ -1,6 +1,7 @@
 /* 
 ============ Basic Setup ============ 
 */
+
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import {
@@ -17,18 +18,8 @@ import {
   ALL_USER_REQUEST,
   ALL_USER_SUCCESS,
   ALL_USER_FAIL,
-  UPDATE_USER_REQUEST,
-  UPDATE_USER_SUCCESS,
-  UPDATE_USER_RESET,
-  UPDATE_USER_FAIL,
-  REMOVE_USER_REQUEST,
-  REMOVE_USER_SUCCESS,
-  REMOVE_USER_RESET,
-  REMOVE_USER_FAIL,
-  DELETE_USER_REQUEST,
-  DELETE_USER_SUCCESS,
-  DELETE_USER_RESET,
-  DELETE_USER_FAIL,
+  LOGOUT_SUCCESS,
+  LOGOUT_FAIL,
 } from '../Constant/userConstant';
 
 /* 
@@ -236,6 +227,16 @@ export const listUser = () => async (dispatch) => {
 export const EditUser = () => async (dispatch) => {};
 export const RemoveUser = () => async (dispatch) => {};
 export const DeleteUser = () => async (dispatch) => {};
+
+export const logout = () => async (dispatch) => {
+  try {
+    localStorage.removeItem('x-access-token');
+    Cookies.remove('x-access-token');
+    dispatch({ type: LOGOUT_SUCCESS, payload: 'Logout Successfully' });
+  } catch (error) {
+    dispatch({ type: LOGOUT_FAIL, payload: 'Something Error Occured' });
+  }
+};
 
 /* 
  

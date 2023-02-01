@@ -1,3 +1,4 @@
+/* eslint-disable */
 import {
   LOGIN_REQUEST,
   LOGIN_SUCCESS,
@@ -12,18 +13,8 @@ import {
   ALL_USER_REQUEST,
   ALL_USER_SUCCESS,
   ALL_USER_FAIL,
-  UPDATE_USER_REQUEST,
-  UPDATE_USER_SUCCESS,
-  UPDATE_USER_RESET,
-  UPDATE_USER_FAIL,
-  REMOVE_USER_REQUEST,
-  REMOVE_USER_SUCCESS,
-  REMOVE_USER_RESET,
-  REMOVE_USER_FAIL,
-  DELETE_USER_REQUEST,
-  DELETE_USER_SUCCESS,
-  DELETE_USER_RESET,
-  DELETE_USER_FAIL,
+  LOGOUT_SUCCESS,
+  LOGOUT_FAIL,
 } from '../Constant/userConstant';
 
 export const authReducer = (state = { user: {} }, action) => {
@@ -40,6 +31,18 @@ export const authReducer = (state = { user: {} }, action) => {
         isLoading: false,
         isAuthenticated: true,
         user: action.payload,
+      };
+    case LOGOUT_SUCCESS:
+      return {
+        loading: false,
+        user: null,
+        isAuthenticated: false,
+      };
+    case LOGOUT_FAIL:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
       };
     case ADD_USER_SUCCESS:
       return {

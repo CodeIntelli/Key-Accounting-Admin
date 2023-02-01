@@ -14,6 +14,7 @@ import Label from '../../../components/label';
 import { sentenceCase } from 'change-case';
 import CreateBlog from 'src/pages/AddBlog';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 // ----------------------------------------------------------------------
 
@@ -62,7 +63,8 @@ BlogPostCard.propTypes = {
   index: PropTypes.number,
 };
 
-export default function BlogPostCard({ post, index, blogToggler, deleteBlog }) {
+export default function BlogPostCard({ key, post, index, blogToggler, deleteBlog }) {
+  const navigation = useNavigate();
   const [openDrawer, setOpenDrawer] = useState(false);
   const [blogData, setBlogData] = useState();
   const { _id, thumbImage, postTitle, user, createdAt, subCategory, isActive } = post;
@@ -71,8 +73,8 @@ export default function BlogPostCard({ post, index, blogToggler, deleteBlog }) {
 
   const getPost = (postData) => {
     console.log(postData);
-    setBlogData(postData);
-    setOpenDrawer(true);
+    // setBlogData(postData);
+    // setOpenDrawer(true);
     // <CreateBlog />;
   };
 
@@ -164,6 +166,7 @@ export default function BlogPostCard({ post, index, blogToggler, deleteBlog }) {
               }),
             }}
             onClick={() => {
+              navigation(`/dashboard/edit/${_id}`);
               getPost(post);
             }}
             style={{ cursor: 'pointer', textTransform: 'capitalize', fontSize: '16px' }}

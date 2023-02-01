@@ -90,6 +90,7 @@ export default function Router() {
         { path: 'carrier/new', element: <AddCarrier /> },
         { path: 'carrier/edit/:id', element: <AddCarrier /> },
         { path: 'carrier/candidate/:id', element: <CandidatePage /> },
+        { path: 'user/edit/:id', element: <AddUser /> },
       ],
     },
     {
