@@ -150,20 +150,6 @@ export default function CarrierPage() {
     }
   };
 
-  const ModalhandleClose = () => {
-    if (Modalopen) {
-      setModalopen(false);
-    } else {
-      setModalopen(true);
-    }
-  };
-  const UpdateModalhandleClose = () => {
-    if (UpdateModalopen) {
-      setUpdateModalopen(false);
-    } else {
-      setUpdateModalopen(true);
-    }
-  };
 
   const setEditId = (idData) => {
     setUpdateData(idData && idData);
@@ -243,29 +229,6 @@ export default function CarrierPage() {
     }
   };
 
-  const handleSubmit = async () => {
-    const addCatResult = await addCategory({ catTitle });
-    console.log('🤩 ~ file: CategoriesPage.js:289 ~ handleSubmit ~ addCatResult', addCatResult);
-    if (addCatResult.success) {
-      successToast('Category Added Successfully');
-      setUpdateData('');
-      fetchCategory();
-    } else {
-      errorToast(addCatResult.message);
-    }
-  };
-
-  const handleUpdate = async () => {
-    const editCatResult = await updateCategory(UpdateData._id, { catTitle: editcatTitle });
-    console.log('🤩 ~ file: CategoriesPage.js:289 ~ handleSubmit ~ editCatResult', editCatResult);
-    if (editCatResult.success) {
-      successToast('Category Edited Successfully');
-      setUpdateData('');
-      fetchCategory();
-    } else {
-      errorToast(editCatResult.message);
-    }
-  };
 
   return (
     <>

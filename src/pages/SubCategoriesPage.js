@@ -30,6 +30,7 @@ import {
   TextField,
   ListItem,
   ListItemText,
+  CircularProgress,
 } from '@mui/material';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
@@ -151,8 +152,12 @@ export default function SubCategoriesPage() {
     }
   };
 
+  const [addLoader, setAddLoader] = useState(false);
+  const [editLoader, setEditLoader] = useState(false);
+
   const addSubCategory = async (id, subCatData) => {
     try {
+      setAddLoader(true);
       const BASE_URL = process.env.REACT_APP_API_ENDPOINT;
       const bearerToken = Cookies.get('x-access-token')
         ? Cookies.get('x-access-token')
@@ -168,14 +173,17 @@ export default function SubCategoriesPage() {
       console.log('🤩 ~ file: CategoriesPage.js:121 ~ addCategory ~ data', data);
       setModalopen(false);
       setSubCategory('');
+      setAddLoader(false);
       return data;
     } catch (error) {
+      setAddLoader(false);
       return error.response.data;
     }
   };
 
   const updateSubCategory = async (id, updatedData) => {
     try {
+      seEditLoader(true);
       const BASE_URL = process.env.REACT_APP_API_ENDPOINT;
       const bearerToken = Cookies.get('x-access-token')
         ? Cookies.get('x-access-token')
@@ -193,8 +201,10 @@ export default function SubCategoriesPage() {
       seteditCategoryIdDropdown('');
       seteditCategorydropdown('');
       seteditSubCategory('');
+      seEditLoader(false);
       return data;
     } catch (error) {
+      seEditLoader(false);
       return error.response.data;
     }
   };
@@ -588,19 +598,23 @@ export default function SubCategoriesPage() {
                       opacity: subCategory.trim().length > 0 ? 1 : 0.5,
                     }}
                   >
-                    <LoadingButton
-                      type="submit"
-                      variant="contained"
-                      style={{
-                        background: '#6ab04c',
-                        padding: '10px 20px',
-                        opacity: 1,
-                        cursor: subCategory.trim().length > 0 ? 'pointer' : 'not-allowed',
-                      }}
-                      onClick={() => handleSubmit()}
-                    >
-                      Add Category
-                    </LoadingButton>
+                    {addLoader ? (
+                      <CircularProgress />
+                    ) : (
+                      <LoadingButton
+                        type="submit"
+                        variant="contained"
+                        style={{
+                          background: '#6ab04c',
+                          padding: '10px 20px',
+                          opacity: 1,
+                          cursor: subCategory.trim().length > 0 ? 'pointer' : 'not-allowed',
+                        }}
+                        onClick={() => handleSubmit()}
+                      >
+                        Add Category
+                      </LoadingButton>
+                    )}
                   </div>
                 </div>
               </div>
@@ -654,22 +668,26 @@ export default function SubCategoriesPage() {
                       opacity: editCategorydropdown.trim().length > 0 && editsubCategory.trim().length > 0 ? 1 : 0.5,
                     }}
                   >
-                    <LoadingButton
-                      type="submit"
-                      variant="contained"
-                      style={{
-                        background: '#FFC501',
-                        padding: '10px 20px',
-                        opacity: 1,
-                        cursor:
-                          editCategorydropdown.trim().length > 0 && editsubCategory.trim().length > 0
-                            ? 'pointer'
-                            : 'not-allowed',
-                      }}
-                      onClick={() => handleUpdate()}
-                    >
-                      Edit Category
-                    </LoadingButton>
+                    {editLoader ? (
+                      <CircularProgress />
+                    ) : (
+                      <LoadingButton
+                        type="submit"
+                        variant="contained"
+                        style={{
+                          background: '#FFC501',
+                          padding: '10px 20px',
+                          opacity: 1,
+                          cursor:
+                            editCategorydropdown.trim().length > 0 && editsubCategory.trim().length > 0
+                              ? 'pointer'
+                              : 'not-allowed',
+                        }}
+                        onClick={() => handleUpdate()}
+                      >
+                        Edit Category
+                      </LoadingButton>
+                    )}
                   </div>
                 </div>
               </div>

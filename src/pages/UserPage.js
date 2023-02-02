@@ -481,8 +481,8 @@ export default function UserPage() {
           <Popover
             open={Boolean(open)}
             anchorEl={anchorEl}
-            onClose={handleClose}
-            anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+            onClose={() => handleClose()}
+            anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
             transformOrigin={{ vertical: 'top', horizontal: 'right' }}
             PaperProps={{
               sx: {
@@ -499,7 +499,8 @@ export default function UserPage() {
             <MenuItem
               onClick={() => {
                 setOpenDrawer(true);
-                handleCloseMenu();
+                // handleCloseMenu();
+                handleClose();
               }}
             >
               <Iconify icon={'eva:edit-fill'} sx={{ mr: 2 }} />
@@ -510,7 +511,8 @@ export default function UserPage() {
               sx={{ color: 'error.main' }}
               onClick={() => {
                 handleDelete(UpdateData._id);
-                handleCloseMenu();
+                handleClose();
+                // handleCloseMenu();
               }}
             >
               <Iconify icon={'eva:trash-2-outline'} sx={{ mr: 2 }} />

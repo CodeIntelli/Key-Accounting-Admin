@@ -191,6 +191,11 @@ const CreateBlog = ({ blogData }) => {
       setAvatarPreview(URL.createObjectURL(e.target.files[0]));
       setImage(e.target.files[0]);
     }
+    if (isUpdate) {
+      if(image && image != undefined){
+        doUploadImageUpload(blogId);
+      }
+    }
   };
 
   const handleSubmit = async () => {
@@ -300,6 +305,30 @@ const CreateBlog = ({ blogData }) => {
   };
 
   // const handleToggler
+
+  const doUploadImageUpload = async (id) => {
+    try {
+      
+      const BASE_URL = process.env.REACT_APP_API_ENDPOINT;
+      const bearerToken = Cookies.get('x-access-token')
+        ? Cookies.get('x-access-token')
+        : localStorage.getItem('x-access-token')
+        ? localStorage.getItem('x-access-token')
+        : null;
+
+      const newImageData = new FormData();
+      newImageData.append('blog_img', image && image );
+      newImageData.append('type', 'editImage');
+      const { data } = await axios.post(`${BASE_URL}blog/${id}`, newImageData, {
+        headers: {
+          authorization: `Bearer ${bearerToken}`,
+        },
+      });
+      return data;
+    } catch (error) {
+      return error?.response?.data;
+    }
+  };
 
   const doFetchBlogData = async () => {
     try {

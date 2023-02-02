@@ -29,6 +29,7 @@ import {
   TextField,
   ListItem,
   ListItemText,
+  CircularProgress,
 } from '@mui/material';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
@@ -143,8 +144,12 @@ export default function CategoriesPage() {
     }
   };
 
+  const [addLoader, setAddLoader] = useState('');
+  const [editLoader, setEditLoader] = useState('');
+
   const addContent = async (contentData) => {
     try {
+      setAddLoader(true);
       const BASE_URL = process.env.REACT_APP_API_ENDPOINT;
       const bearerToken = Cookies.get('x-access-token')
         ? Cookies.get('x-access-token')
@@ -174,14 +179,17 @@ export default function CategoriesPage() {
       setAttachment('');
       setfileSuccess(false);
       setFiles([]);
+      setAddLoader(false);
       return data;
     } catch (error) {
+      setAddLoader(false);
       return error.response.data;
     }
   };
 
   const updateContent = async (id, updatedData) => {
     try {
+      setEditLoader(true);
       const BASE_URL = process.env.REACT_APP_API_ENDPOINT;
       const bearerToken = Cookies.get('x-access-token')
         ? Cookies.get('x-access-token')
@@ -202,8 +210,10 @@ export default function CategoriesPage() {
       setAttachment('');
       setfileSuccess(false);
       setFiles([]);
+      setEditLoader(false);
       return data;
     } catch (error) {
+      setEditLoader(false);
       return error.response.data;
     }
   };
@@ -692,25 +702,29 @@ export default function CategoriesPage() {
                           : 0.5,
                     }}
                   >
-                    <LoadingButton
-                      type="submit"
-                      variant="contained"
-                      style={{
-                        background: '#6ab04c',
-                        padding: '10px 20px',
-                        opacity: 1,
-                        cursor:
-                          ebookTitle.trim() != '' &&
-                          files.length > 0 &&
-                          ebookDesc.trim() != '' &&
-                          ebookTags.trim() != ''
-                            ? 'pointer'
-                            : 'not-allowed',
-                      }}
-                      onClick={() => handleSubmit()}
-                    >
-                      Upload Ebook
-                    </LoadingButton>
+                    {addLoader ? (
+                      <CircularProgress />
+                    ) : (
+                      <LoadingButton
+                        type="submit"
+                        variant="contained"
+                        style={{
+                          background: '#6ab04c',
+                          padding: '10px 20px',
+                          opacity: 1,
+                          cursor:
+                            ebookTitle.trim() != '' &&
+                            files.length > 0 &&
+                            ebookDesc.trim() != '' &&
+                            ebookTags.trim() != ''
+                              ? 'pointer'
+                              : 'not-allowed',
+                        }}
+                        onClick={() => handleSubmit()}
+                      >
+                        Upload Ebook
+                      </LoadingButton>
+                    )}
                   </div>
                 </div>
               </div>
@@ -797,22 +811,26 @@ export default function CategoriesPage() {
                           : 0.5,
                     }}
                   >
-                    <LoadingButton
-                      type="submit"
-                      variant="contained"
-                      style={{
-                        background: '#6ab04c',
-                        padding: '10px 20px',
-                        opacity: 1,
-                        cursor:
-                          editebookTitle.trim() != '' && editebookDesc.trim() != '' && editebookTags.trim() != ''
-                            ? 'pointer'
-                            : 'not-allowed',
-                      }}
-                      onClick={() => handleUpdate()}
-                    >
-                      Edit Ebook Details
-                    </LoadingButton>
+                    {editLoader ? (
+                      <CircularProgress />
+                    ) : (
+                      <LoadingButton
+                        type="submit"
+                        variant="contained"
+                        style={{
+                          background: '#6ab04c',
+                          padding: '10px 20px',
+                          opacity: 1,
+                          cursor:
+                            editebookTitle.trim() != '' && editebookDesc.trim() != '' && editebookTags.trim() != ''
+                              ? 'pointer'
+                              : 'not-allowed',
+                        }}
+                        onClick={() => handleUpdate()}
+                      >
+                        Edit Ebook Details
+                      </LoadingButton>
+                    )}
                   </div>
                 </div>
               </div>

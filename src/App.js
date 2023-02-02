@@ -32,7 +32,6 @@ export default function App() {
   }, [error, redirect, isLoading]);
   React.useEffect(() => {
     if (!isLoading && error == undefined) {
-      debugger;
       store.dispatch(loadUser());
       navigate(redirect, { replace: true });
     }

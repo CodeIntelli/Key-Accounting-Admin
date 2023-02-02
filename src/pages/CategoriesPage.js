@@ -29,6 +29,7 @@ import {
   TextField,
   ListItem,
   ListItemText,
+  CircularProgress,
 } from '@mui/material';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
@@ -109,8 +110,12 @@ export default function CategoriesPage() {
     }
   };
 
+  const [addLoader, setAddLoader] = useState(false);
+  const [editLoader, setEditLoader] = useState(false);
+
   const addCategory = async (catData) => {
     try {
+      setAddLoader(true);
       const BASE_URL = process.env.REACT_APP_API_ENDPOINT;
       const bearerToken = Cookies.get('x-access-token')
         ? Cookies.get('x-access-token')
@@ -126,6 +131,7 @@ export default function CategoriesPage() {
       console.log('🤩 ~ file: CategoriesPage.js:121 ~ addCategory ~ data', data);
       setModalopen(false);
       setcatTitle('');
+      setAddLoader(false);
       return data;
     } catch (error) {
       return error.response.data;
@@ -134,6 +140,7 @@ export default function CategoriesPage() {
 
   const updateCategory = async (id, updatedData) => {
     try {
+      setEditLoader(true);
       const BASE_URL = process.env.REACT_APP_API_ENDPOINT;
       const bearerToken = Cookies.get('x-access-token')
         ? Cookies.get('x-access-token')
@@ -149,8 +156,10 @@ export default function CategoriesPage() {
       console.log('🤩 ~ file: CategoriesPage.js:145 ~ updateCategory ~ data', data);
       setUpdateModalopen(false);
       seteditcatTitle('');
+      setEditLoader(false);
       return data;
     } catch (error) {
+      setEditLoader(false);
       return error.response.data;
     }
   };
@@ -507,19 +516,23 @@ export default function CategoriesPage() {
                       opacity: catTitle.trim().length > 0 ? 1 : 0.5,
                     }}
                   >
-                    <LoadingButton
-                      type="submit"
-                      variant="contained"
-                      style={{
-                        background: '#6ab04c',
-                        padding: '10px 20px',
-                        opacity: 1,
-                        cursor: catTitle.trim().length > 0 ? 'pointer' : 'not-allowed',
-                      }}
-                      onClick={() => handleSubmit()}
-                    >
-                      Add Category
-                    </LoadingButton>
+                    {addLoader ? (
+                      <CircularProgress />
+                    ) : (
+                      <LoadingButton
+                        type="submit"
+                        variant="contained"
+                        style={{
+                          background: '#6ab04c',
+                          padding: '10px 20px',
+                          opacity: 1,
+                          cursor: catTitle.trim().length > 0 ? 'pointer' : 'not-allowed',
+                        }}
+                        onClick={() => handleSubmit()}
+                      >
+                        Add Category
+                      </LoadingButton>
+                    )}
                   </div>
                 </div>
               </div>
@@ -555,19 +568,23 @@ export default function CategoriesPage() {
                       justifyContent: 'flex-end',
                     }}
                   >
-                    <LoadingButton
-                      type="submit"
-                      variant="contained"
-                      style={{
-                        background: '#FFC501',
-                        padding: '10px 20px',
-                        opacity: 1,
-                        cursor: 'pointer',
-                      }}
-                      onClick={() => handleUpdate()}
-                    >
-                      Edit Category
-                    </LoadingButton>
+                    {editLoader ? (
+                      <CircularProgress />
+                    ) : (
+                      <LoadingButton
+                        type="submit"
+                        variant="contained"
+                        style={{
+                          background: '#FFC501',
+                          padding: '10px 20px',
+                          opacity: 1,
+                          cursor: 'pointer',
+                        }}
+                        onClick={() => handleUpdate()}
+                      >
+                        Edit Category
+                      </LoadingButton>
+                    )}
                   </div>
                 </div>
               </div>

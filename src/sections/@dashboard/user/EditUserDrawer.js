@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { LoadingButton } from '@mui/lab';
 import {
   Box,
@@ -65,9 +66,10 @@ const EditUserDrawer = ({ data, changeFunc, closeDrawer }) => {
   const [isUpdateLoading, setIsUpdateLoading] = useState(false);
   const [avatarPreview, setAvatarPreview] = useState('/assets/images/avatars/avatar_18.jpg');
   const [image, setImage] = useState();
-  const UploadFile = async (id, imageData) => {
+  const doUploadFile = async (id) => {
     try {
       setIsUpdateLoading(true);
+      debugger;
       const BASE_URL = process.env.REACT_APP_API_ENDPOINT;
       const bearerToken = Cookies.get('x-access-token')
         ? Cookies.get('x-access-token')
@@ -75,29 +77,37 @@ const EditUserDrawer = ({ data, changeFunc, closeDrawer }) => {
         ? localStorage.getItem('x-access-token')
         : null;
 
-      const { data } = await axios.post(`${BASE_URL}user/profile/${id}`, imageData, {
+      const newImageContent = new FormData();
+      newImageContent.append('profile', image);
+      newImageContent.append('type', 'edit');
+      const { data } = await axios.post(`${BASE_URL}user/profile/${id}`, newImageContent, {
         headers: {
           authorization: `Bearer ${bearerToken}`,
-          'Content-Type': 'multipart/form-data; boundary=<calculated when request is sent>',
         },
       });
+      debugger;
       // setAllUserList(data.result);
       // setFilterData(data.result);
       setIsUpdateLoading(false);
       console.log('🤩 ~ file: UserPage.js:179 ~ updateUserData ~ data', data);
     } catch (error) {
+      debugger;
       console.log('🤩 ~ file: UserPage.js:180 ~ updateUserData ~ error', error.response.data);
     }
   };
   /* Image Uploading */
   const handleImage = async (e) => {
     const { name, value } = e.target;
+
     if (name === 'image') {
       setAvatarPreview(URL.createObjectURL(e.target.files[0]));
+
       setImage(e.target.files[0]);
       const storedData = new FormData();
       storedData.append('profile', image);
-      UploadFile(data._id, image);
+      storedData.append('type', 'edit');
+
+      doUploadFile(data._id, image);
     }
   };
 

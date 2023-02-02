@@ -181,8 +181,11 @@ export default function CommentPage() {
     }
   };
 
+  const [addLoader,setAddLoader] = useState(false);
+
   const doReplyComment = async (id) => {
     try {
+      setAddLoader(true);
       setactiveLoader(true);
       const BASE_URL = process.env.REACT_APP_API_ENDPOINT;
       const bearerToken = Cookies.get('x-access-token')
@@ -190,7 +193,7 @@ export default function CommentPage() {
         : localStorage.getItem('x-access-token')
         ? localStorage.getItem('x-access-token')
         : null;
-
+        
       const { data } = await axios.put(
         `${BASE_URL}comment/reply/${id}`,
         {
@@ -210,10 +213,14 @@ export default function CommentPage() {
       setUpdateModalopen(false);
       successToast('Comment Reply Added Successfully ');
       fetchEbook();
+      setAddLoader(false);
+      return data;
     } catch (error) {
       setactiveLoader(false);
       errorToast('Something Went Wrong');
+      setAddLoader(false);
       console.log(error);
+      return error.response.data;
     }
   };
 
@@ -625,19 +632,23 @@ export default function CommentPage() {
                       >
                         Reject
                       </LoadingButton>
-                      <LoadingButton
-                        type="submit"
-                        variant="contained"
-                        style={{
-                          background: '#5783db',
-                          padding: '10px 20px',
-                          opacity: commentMessage?.trim() != '' ? 1 : 0.5,
-                          cursor: commentMessage?.trim() != '' ? 'pointer' : 'not-allowed',
-                        }}
-                        onClick={() => doReplyComment(UpdateData?._id)}
-                      >
-                        Reply
-                      </LoadingButton>
+                      {addLoader ? (
+                        <CircularProgress />
+                      ) : (
+                        <LoadingButton
+                          type="submit"
+                          variant="contained"
+                          style={{
+                            background: '#5783db',
+                            padding: '10px 20px',
+                            opacity: commentMessage?.trim() != '' ? 1 : 0.5,
+                            cursor: commentMessage?.trim() != '' ? 'pointer' : 'not-allowed',
+                          }}
+                          onClick={() => doReplyComment(UpdateData?._id)}
+                        >
+                          Reply
+                        </LoadingButton>
+                      )}
                     </div>
                   )}
                 </div>
