@@ -30,7 +30,7 @@ import {
   ListItem,
   ListItemText,
 } from '@mui/material';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import { useDispatch } from 'react-redux';
@@ -45,15 +45,15 @@ import { LoadingButton } from '@mui/lab';
 import { errorToast, successToast } from 'src/utils/Toast';
 import FileUpload from 'react-material-file-upload';
 import LoadingAnimation from 'src/components/LoadingAnimation';
+import NoRecordFound from 'src/components/NoRecordFound';
 // sections
 
 // ----------------------------------------------------------------------
 
 const TABLE_HEAD = [
   { id: 'id', label: 'Sr No', alignRight: false },
-  { id: 'title', label: 'Attachment', alignRight: false },
   { id: 'title', label: 'Title', alignRight: false },
-  { id: 'title', label: 'Description', alignRight: false },
+  { id: 'desc', label: 'Description', alignRight: false },
   { id: 'isActive', label: 'Status', alignRight: false },
   { id: 'createdAt', label: 'Created At', alignRight: false },
   { id: '' },
@@ -75,6 +75,7 @@ const style = {
 
 export default function CategoriesPage() {
   const [open, setOpen] = useState(null);
+  const navigate = useNavigate();
 
   const [EbookList, setEbookList] = useState();
   const [filterData, setFilterData] = useState();
@@ -421,144 +422,126 @@ export default function CategoriesPage() {
           <Container>
             <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
               <Typography variant="h4" gutterBottom>
-                infographics
+                Infographics
               </Typography>
-              <Button
-                variant="contained"
-                onClick={() => {
-                  seteditcatTitle('');
-                  setcatTitle('');
-                  setModalopen(true);
-                }}
-                startIcon={<Iconify icon="eva:plus-fill" />}
-              >
-                Add infographics
-              </Button>
+              <Link to={'/dashboard/infographics/add'}>
+                <Button
+                  variant="contained"
+                  onClick={() => {
+                    seteditcatTitle('');
+                    setcatTitle('');
+                    setModalopen(true);
+                  }}
+                  startIcon={<Iconify icon="eva:plus-fill" />}
+                >
+                  Add infographics
+                </Button>
+              </Link>
             </Stack>
 
-            <Card>
-              <FormControl
-                sx={{
-                  m: 1,
-                  width: '50ch',
-                  margin: '29px',
-                  display: 'flex',
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                }}
-                variant="outlined"
-              >
-                <OutlinedInput
-                  id="outlined-adornment-password"
-                  value={searchString}
-                  placeholder="Search User"
-                  type="text"
-                  startAdornment={
-                    <InputAdornment position="start">
-                      <Iconify icon="eva:search-fill" sx={{ color: 'text.disabled', width: 20, height: 20 }} />
-                    </InputAdornment>
-                  }
-                  onChange={(e) => {
-                    doSearchName(e.target.value);
-                    setsearchString(e.target.value);
+            {filterData && filterData.length == 0 ? (
+              <NoRecordFound />
+            ) : (
+              <Card>
+                <FormControl
+                  sx={{
+                    m: 1,
+                    width: '50ch',
+                    margin: '29px',
+                    display: 'flex',
+                    flexDirection: 'row',
+                    alignItems: 'center',
                   }}
-                />
-                {searchString.length > 0 ? (
-                  <div style={{ marginLeft: '40px' }}>
-                    <Label
-                      color={'error'}
-                      style={{ padding: '20px', fontSize: '14px' }}
-                      onClick={() => {
-                        doSearchName('');
-                        setsearchString('');
-                      }}
-                    >
-                      <Iconify icon={'eva:trash-2-outline'} sx={{ mr: 1 }} />
-                      {sentenceCase('Clear')}
-                    </Label>
-                  </div>
-                ) : (
-                  ''
-                )}
-              </FormControl>
-              <Scrollbar>
-                <TableContainer sx={{ minWidth: 800 }}>
-                  <Table>
-                    <TableHead>
-                      <TableRow>
-                        {TABLE_HEAD.map((headCell) => (
-                          <TableCell
-                            key={Math.floor(Math.random() * 10000)}
-                            align={headCell.alignRight ? 'right' : 'left'}
-                          >
-                            <Box>{headCell.label}</Box>
-                          </TableCell>
-                        ))}
-                      </TableRow>
-                    </TableHead>
-                    {filterData.map((tableData, index) => {
-                      const { _id, attachment, title, desc, tags, isActive, createdAt } = tableData;
-                      return (
-                        <TableBody key={_id}>
-                          <TableRow hover>
-                            <TableCell align="left">{index + 1}</TableCell>
-                            <TableCell align="left" style={{ textTransform: 'capitalize' }}>
-                              <a
-                                href={
-                                  attachment.url
-                                    ? attachment.url.split('/upload/')[0] +
-                                      '/upload/fl_attachment/' +
-                                      attachment.url.split('/upload/')[1]
-                                    : ''
-                                }
-                                download={attachment?.fileName}
-                              >
-                                <div style={{ display: 'flex', alignItems: 'center' }}>
-                                  <Label color={'info'} style={{ cursor: 'pointer' }} title={attachment.fileName}>
-                                    <Iconify icon="material-symbols:sim-card-download-rounded" />
-                                    {attachment.fileName.length > 10
-                                      ? `${attachment.fileName.substr(0, 10)}...`
-                                      : sentenceCase(attachment.fileName)}
-                                  </Label>
-                                  <Label color={'success'} style={{ cursor: 'pointer' }}>
-                                    ({attachment.fileSize})
-                                  </Label>
+                  variant="outlined"
+                >
+                  <OutlinedInput
+                    id="outlined-adornment-password"
+                    value={searchString}
+                    placeholder="Search User"
+                    type="text"
+                    startAdornment={
+                      <InputAdornment position="start">
+                        <Iconify icon="eva:search-fill" sx={{ color: 'text.disabled', width: 20, height: 20 }} />
+                      </InputAdornment>
+                    }
+                    onChange={(e) => {
+                      doSearchName(e.target.value);
+                      setsearchString(e.target.value);
+                    }}
+                  />
+                  {searchString.length > 0 ? (
+                    <div style={{ marginLeft: '40px' }}>
+                      <Label
+                        color={'error'}
+                        style={{ padding: '20px', fontSize: '14px' }}
+                        onClick={() => {
+                          doSearchName('');
+                          setsearchString('');
+                        }}
+                      >
+                        <Iconify icon={'eva:trash-2-outline'} sx={{ mr: 1 }} />
+                        {sentenceCase('Clear')}
+                      </Label>
+                    </div>
+                  ) : (
+                    ''
+                  )}
+                </FormControl>
+                <Scrollbar>
+                  <TableContainer sx={{ minWidth: 800 }}>
+                    <Table>
+                      <TableHead>
+                        <TableRow>
+                          {TABLE_HEAD.map((headCell) => (
+                            <TableCell
+                              key={Math.floor(Math.random() * 10000)}
+                              align={headCell.alignRight ? 'right' : 'left'}
+                            >
+                              <Box>{headCell.label}</Box>
+                            </TableCell>
+                          ))}
+                        </TableRow>
+                      </TableHead>
+                      {filterData.map((tableData, index) => {
+                        const { _id, attachment, title, desc, tags, isActive, createdAt } = tableData;
+                        return (
+                          <TableBody key={_id}>
+                            <TableRow hover>
+                              <TableCell align="left">{index + 1}</TableCell>
+                              <TableCell align="left" style={{ textTransform: 'capitalize' }}>
+                                {title}
+                              </TableCell>
+                              <TableCell align="left" style={{ textTransform: 'capitalize' }}>
+                                {desc}
+                              </TableCell>
+
+                              <TableCell align="left">
+                                <Label
+                                  color={isActive ? 'success' : 'error'}
+                                  style={{ cursor: 'pointer' }}
+                                  onClick={() => handleToggler(_id)}
+                                >
+                                  {sentenceCase(isActive ? 'active' : 'inactive')}
+                                </Label>
+                              </TableCell>
+                              <TableCell align="left">{moment(createdAt).format('LL')}</TableCell>
+
+                              <TableCell align="right">
+                                <div>
+                                  <IconButton size="large" color="inherit" onClick={handleOpenMenu}>
+                                    <Iconify icon={'eva:more-vertical-fill'} onClick={() => setEditId(tableData)} />
+                                  </IconButton>
                                 </div>
-                              </a>
-                            </TableCell>
-                            <TableCell align="left" style={{ textTransform: 'capitalize' }}>
-                              {title}
-                            </TableCell>
-                            <TableCell align="left" style={{ textTransform: 'capitalize' }}>
-                              {desc}
-                            </TableCell>
-
-                            <TableCell align="left">
-                              <Label
-                                color={isActive ? 'success' : 'error'}
-                                style={{ cursor: 'pointer' }}
-                                onClick={() => handleToggler(_id)}
-                              >
-                                {sentenceCase(isActive ? 'active' : 'inactive')}
-                              </Label>
-                            </TableCell>
-                            <TableCell align="left">{moment(createdAt).format('LL')}</TableCell>
-
-                            <TableCell align="right">
-                              <div>
-                                <IconButton size="large" color="inherit" onClick={handleOpenMenu}>
-                                  <Iconify icon={'eva:more-vertical-fill'} onClick={() => setEditId(tableData)} />
-                                </IconButton>
-                              </div>
-                            </TableCell>
-                          </TableRow>
-                        </TableBody>
-                      );
-                    })}
-                  </Table>
-                </TableContainer>
-              </Scrollbar>
-            </Card>
+                              </TableCell>
+                            </TableRow>
+                          </TableBody>
+                        );
+                      })}
+                    </Table>
+                  </TableContainer>
+                </Scrollbar>
+              </Card>
+            )}
           </Container>
 
           <Popover
@@ -582,8 +565,8 @@ export default function CategoriesPage() {
             <MenuItem
               onClick={() => {
                 handleCloseMenu();
-                setUpdateModalopen(true);
-                seteditcatTitle(UpdateData.catTitle);
+                navigate(`/dashboard/infographics/edit/${UpdateData._id}`);
+                // seteditcatTitle(UpdateData.catTitle);
               }}
             >
               <Iconify icon={'eva:edit-fill'} sx={{ mr: 2 }} />

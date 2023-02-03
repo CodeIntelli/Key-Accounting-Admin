@@ -41,6 +41,7 @@ import NavbarPageContent from './pages/ContentPage/NavbarPageContent';
 import CarrierPage from './pages/CarrierPage';
 import AddCarrier from './pages/AddCarrier';
 import CandidatePage from './pages/CandidatePage';
+import CreateInfographics from './pages/AddInfographics';
 
 // ----------------------------------------------------------------------
 
@@ -91,6 +92,8 @@ export default function Router() {
         { path: 'carrier/edit/:id', element: <AddCarrier /> },
         { path: 'carrier/candidate/:id', element: <CandidatePage /> },
         { path: 'user/edit/:id', element: <AddUser /> },
+        { path: 'infographics/add', element: <CreateInfographics /> },
+        { path: 'infographics/edit/:id', element: <CreateInfographics /> },
       ],
     },
     {
