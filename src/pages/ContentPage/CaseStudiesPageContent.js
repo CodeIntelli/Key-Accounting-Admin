@@ -25,11 +25,11 @@ const CaseStudiesPageContent = () => {
 
   const setStateData = (data) => {
     debugger;
-    asettitle(data.heroSection.title);
-    asetdesc(data.heroSection.desc);
-    asetbtnTxt(data.heroSection.btnTxt);
-    asetbtnUrl(data.heroSection.btnUrl);
-    asetmainImg(data.heroSection.mainImg);
+    asettitle(data.herosection.title);
+    asetdesc(data.herosection.desc);
+    asetbtnTxt(data.herosection.btnTxt);
+    asetbtnUrl(data.herosection.btnUrl);
+    asetmainImg(data.herosection.mainImg);
     bsetdata(data?.section1?.data);
   };
 
@@ -87,7 +87,7 @@ const CaseStudiesPageContent = () => {
       english: {
         pageTitle: 'CaseStudiesPage',
         content: {
-          heroSection: {
+          herosection: {
             title: atitle,
             desc: adesc,
             btnTxt: abtnTxt,

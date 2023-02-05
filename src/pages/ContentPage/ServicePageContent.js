@@ -48,11 +48,11 @@ const ServicePageContent = () => {
   const setStateData = (data) => {
     /*  */
     debugger;
-    asettitle(data.heroSection.title);
-    asetdesc(data.heroSection.subTitle);
-    asetbtnTxt(data.heroSection.btnTxt);
-    asetbtnUrl(data.heroSection.btnUrl);
-    asetmainImg(data.heroSection.mainImg);
+    asettitle(data.herosection.title);
+    asetdesc(data.herosection.subTitle);
+    asetbtnTxt(data.herosection.btnTxt);
+    asetbtnUrl(data.herosection.btnUrl);
+    asetmainImg(data.herosection.mainImg);
     /*  */
     bsetsubtitle(data.section1.subtitle);
     bsettitle(data.section1.title);
@@ -71,10 +71,10 @@ const ServicePageContent = () => {
     esettitle(data.section4.title);
     esetData(data.section4.data);
     /*  */
-    fsetsubtitle(data.Faq.subtitle);
-    fsettitle(data.Faq.title);
-    fsetmainBtn(data.Faq.mainBtn);
-    fsetData(data.Faq.texts);
+    fsetsubtitle(data.faqSection.subtitle);
+    fsettitle(data.faqSection.title);
+    fsetmainBtn(data.faqSection.mainBtn);
+    fsetData(data.faqSection.texts);
   };
 
   const fetchContent = async () => {
@@ -131,7 +131,7 @@ const ServicePageContent = () => {
       english: {
         pageTitle: 'ServicePage',
         content: {
-          heroSection: {
+          herosection: {
             title: atitle,
             subTitle: adesc,
             btnTxt: abtnTxt,
@@ -158,7 +158,7 @@ const ServicePageContent = () => {
             title: etitle,
             data: eData,
           },
-          Faq: {
+          faqSection: {
             subTitle: fsubtitle,
             title: ftitle,
             mainBtn: fmainBtn,

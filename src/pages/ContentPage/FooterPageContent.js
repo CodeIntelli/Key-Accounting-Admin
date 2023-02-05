@@ -16,9 +16,7 @@ const FooterPageContent = () => {
 
   const [atitle, setatitle] = useState('');
   const [asubtitle, setasubtitle] = useState('');
-  const [afacebooklink, setafacebooklink] = useState('');
-  const [ainstalink, setainstalink] = useState('');
-  const [alinkdinlink, setalinkdinlink] = useState('');
+  const [adata, setadata] = useState('');
 
   const [btitle, setbtitle] = useState('');
   const [bdata, setbdata] = useState('');
@@ -30,30 +28,33 @@ const FooterPageContent = () => {
   const [edata, setedata] = useState('');
 
   const [ftitle, setftitle] = useState('');
-  const [faddress1, setfaddress1] = useState('');
-  const [faddress2, setfaddress2] = useState('');
-  const [fmail, setfmail] = useState('');
-  const [fcontactnumber, setfcontactnumber] = useState('');
+  const [fdata, setfdata] = useState('');
+  // const [faddress1, setfaddress1] = useState('');
+  // const [faddress2, setfaddress2] = useState('');
+  // const [fmail, setfmail] = useState('');
+  // const [fcontactnumber, setfcontactnumber] = useState('');
 
   const setStateData = (data) => {
-    setatitle(data.mainTitle.title);
-    setasubtitle(data.mainTitle.subtitle);
-    setafacebooklink(data.mainTitle.facebooklink);
-    setainstalink(data.mainTitle.instalink);
-    setalinkdinlink(data.mainTitle.linkdinlink);
-    setbtitle(data.companySection.title);
-    setbdata(data.companySection.data);
-    setctitle(data.servicesSection.title);
-    setcdata(data.servicesSection.data);
-    setdtitle(data.industriesSection.title);
-    setddata(data.industriesSection.data);
-    setetitle(data.resourcesSection.title);
-    setedata(data.resourcesSection.data);
-    setftitle(data.contactSection.title);
-    setfaddress1(data.contactSection.address1);
-    setfaddress2(data.contactSection.address2);
-    setfmail(data.contactSection.mail);
-    setfcontactnumber(data.contactSection.contactNo);
+    setatitle(data.title);
+    setasubtitle(data.desc);
+    setadata(data.socialsection.data);
+    // setafacebooklink(data.mainTitle.facebooklink);
+    // setainstalink(data.mainTitle.instalink);
+    // setalinkdinlink(data.mainTitle.linkdinlink);
+    setbtitle(data.section1.title);
+    setbdata(data.section1.data);
+    setctitle(data.section2.title);
+    setcdata(data.section2.data);
+    setdtitle(data.section3.title);
+    setddata(data.section3.data);
+    setetitle(data.section4.title);
+    setedata(data.section4.data);
+    setftitle(data.section5.title);
+    setfdata(data.section5.data);
+    // setfaddress1(data.contactSection.address1);
+    // setfaddress2(data.contactSection.address2);
+    // setfmail(data.contactSection.mail);
+    // setfcontactnumber(data.contactSection.contactNo);
   };
 
   const fetchContent = async () => {
@@ -109,35 +110,28 @@ const FooterPageContent = () => {
     const setFormData = {
       pageTitle: 'footer',
       content: {
-        mainTitle: {
-          title: atitle,
-          subtitle: asubtitle,
-          facebooklink: afacebooklink,
-          instalink: ainstalink,
-          linkdinlink: alinkdinlink,
-        },
-        companySection: {
+        title: atitle,
+        desc: asubtitle,
+        socialsection: adata,
+        section1: {
           title: btitle,
           data: bdata,
         },
-        servicesSection: {
+        section2: {
           title: ctitle,
           data: cdata,
         },
-        industriesSection: {
+        section3: {
           title: dtitle,
           data: ddata,
         },
-        resourcesSection: {
+        section4: {
           title: etitle,
           data: edata,
         },
-        contactSection: {
+        section5: {
           title: ftitle,
-          address1: faddress1,
-          address2: faddress2,
-          mail: fmail,
-          contactNo: fcontactnumber,
+          data: fdata,
         },
       },
     };
@@ -188,34 +182,60 @@ const FooterPageContent = () => {
                           setasubtitle(e.target.value);
                         }}
                       />
-                      <TextField
-                        name="email"
-                        label="Facebook Link"
-                        value={afacebooklink}
-                        style={{ margin: '10px' }}
-                        onChange={(e) => {
-                          setafacebooklink(e.target.value);
-                        }}
-                      />
-                      <TextField
-                        name="email"
-                        label="Instagram Link"
-                        value={ainstalink}
-                        style={{ margin: '10px' }}
-                        onChange={(e) => {
-                          setainstalink(e.target.value);
-                        }}
-                      />
-                      <TextField
-                        name="email"
-                        label="Linkedin Link"
-                        value={alinkdinlink}
-                        style={{ margin: '10px' }}
-                        onChange={(e) => {
-                          setalinkdinlink(e.target.value);
-                        }}
-                      />
                     </Box>
+                    <h3>Social Section Data</h3>
+                    {adata.map((cardData, index) => {
+                      return (
+                        <>
+                          {index === 0 ? '' : <Divider style={{ marginTop: '18px' }} />}
+                          <Box
+                            sx={{
+                              display: 'grid',
+                              columnGap: 2,
+                              rowGap: 3,
+                              gridTemplateColumns: { xs: 'repeat(1, 1fr)', sm: 'repeat(2, 1fr)' },
+                            }}
+                          >
+                            <TextField
+                              name="email"
+                              label="Title"
+                              style={{ width: '100%', marginTop: '24px' }}
+                              value={cardData.title}
+                              onChange={(e) => {
+                                const value = e.target.value;
+                                const dta = [...adata];
+                                dta[index].title = value;
+                                setadata(dta);
+                              }}
+                            />
+                            <TextField
+                              name="email"
+                              label="Routes"
+                              style={{ width: '100%', marginTop: '24px' }}
+                              value={cardData.routes}
+                              onChange={(e) => {
+                                const value = e.target.value;
+                                const dta = [...adata];
+                                dta[index].routes = value;
+                                setadata(dta);
+                              }}
+                            />
+                            <TextField
+                              name="email"
+                              label="Image Link"
+                              style={{ width: '100%', marginTop: '24px' }}
+                              value={cardData.img}
+                              onChange={(e) => {
+                                const value = e.target.value;
+                                const dta = [...adata];
+                                dta[index].img = value;
+                                setadata(dta);
+                              }}
+                            />
+                          </Box>
+                        </>
+                      );
+                    })}
                   </div>
                 </Grid>
               </Card>
@@ -498,42 +518,59 @@ const FooterPageContent = () => {
                           setftitle(e.target.value);
                         }}
                       />
-                      <TextField
-                        name="sub_title"
-                        label="Address One"
-                        value={faddress1}
-                        style={{ margin: '10px' }}
-                        onChange={(e) => {
-                          setfaddress1(e.target.value);
-                        }}
-                      />
-                      <TextField
-                        name="sub_title"
-                        label="Address Two"
-                        value={faddress2}
-                        style={{ margin: '10px' }}
-                        onChange={(e) => {
-                          setfaddress2(e.target.value);
-                        }}
-                      />
-                      <TextField
-                        name="sub_title"
-                        label="Title"
-                        value={fmail}
-                        style={{ margin: '10px' }}
-                        onChange={(e) => {
-                          setfmail(e.target.value);
-                        }}
-                      />
-                      <TextField
-                        name="sub_title"
-                        label="Title"
-                        value={fcontactnumber}
-                        style={{ margin: '10px' }}
-                        onChange={(e) => {
-                          setfcontactnumber(e.target.value);
-                        }}
-                      />
+                      <h3>Social Section Data</h3>
+                      {fdata.map((cardData, index) => {
+                        return (
+                          <>
+                            {index === 0 ? '' : <Divider style={{ marginTop: '18px' }} />}
+                            <Box
+                              sx={{
+                                display: 'grid',
+                                columnGap: 2,
+                                rowGap: 3,
+                                gridTemplateColumns: { xs: 'repeat(1, 1fr)', sm: 'repeat(2, 1fr)' },
+                              }}
+                            >
+                              <TextField
+                                name="email"
+                                label="Title"
+                                style={{ width: '100%', marginTop: '24px' }}
+                                value={cardData.title}
+                                onChange={(e) => {
+                                  const value = e.target.value;
+                                  const dta = [...fdata];
+                                  dta[index].title = value;
+                                  setfdata(dta);
+                                }}
+                              />
+                              <TextField
+                                name="email"
+                                label="Routes"
+                                style={{ width: '100%', marginTop: '24px' }}
+                                value={cardData.routes}
+                                onChange={(e) => {
+                                  const value = e.target.value;
+                                  const dta = [...fdata];
+                                  dta[index].routes = value;
+                                  setfdata(dta);
+                                }}
+                              />
+                              <TextField
+                                name="email"
+                                label="Image Link"
+                                style={{ width: '100%', marginTop: '24px' }}
+                                value={cardData.img}
+                                onChange={(e) => {
+                                  const value = e.target.value;
+                                  const dta = [...fdata];
+                                  dta[index].img = value;
+                                  setfdata(dta);
+                                }}
+                              />
+                            </Box>
+                          </>
+                        );
+                      })}
                     </div>
                   </Grid>
                 </Card>
