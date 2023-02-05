@@ -27,8 +27,11 @@ export default function DashboardAppPage() {
 
   useEffect(() => {
     if (error) {
-      const errMsg = error.includes('JsonWebTokenError') ? 'Session Time Out Please Login Again' : error;
-      errorToast(errMsg);
+      const errMsg =
+        error.includes('JsonWebTokenError') || error.includes('TokenExpiredError') ? 'Session Time Out' : error;
+      if (Cookies.get('x-access-token') || localStorage.getItem('x-access-token')) {
+        errorToast(errMsg);
+      }
       if (!isLoading) {
         navigate('/login', { replace: true });
       }
