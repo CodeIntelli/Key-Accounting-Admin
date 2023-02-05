@@ -26,7 +26,13 @@ export default function App() {
   const redirect = location.pathname ? location.pathname.split('=')[1] : '/dashboard/app';
   React.useEffect(() => {
     if (!isLoading && error) {
-      errorToast(error);
+      const errMsg =
+        error.includes('JsonWebTokenError') || error.includes('TokenExpiredError') ? 'Session Time Out' : error;
+      if (Cookies.get('x-access-token') || localStorage.getItem('x-access-token')) {
+        // errorToast(errMsg);
+        console.log('========================', error);
+      }
+      // errorToast(error);
       return navigate('/login', { replace: true });
     }
   }, [error, redirect, isLoading]);
