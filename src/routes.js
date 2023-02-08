@@ -45,6 +45,11 @@ import CreateInfographics from './pages/AddInfographics';
 import ServiceList from './pages/ServicesList';
 import IndustriesList from './pages/IndustryList';
 import AccountPayAndReceivablesService from './pages/ContentPage/Services/AccountPayAndReceivablesService';
+import ClinicsAccounting from './pages/ContentPage/Industries/ClinicsAccounting';
+import LandscapingAccounting from './pages/ContentPage/Industries/LandscapingAccounting';
+import LawfirmAccounting from './pages/ContentPage/Industries/LawfirmAccounting';
+import RentalServicesAccounting from './pages/ContentPage/Industries/RentalServicesAccounting';
+import RestaurantAccounting from './pages/ContentPage/Industries/RestaurantAccounting';
 
 // ----------------------------------------------------------------------
 
@@ -62,9 +67,14 @@ export default function Router() {
         { path: 'pages/footer', element: <FooterPageContent /> },
         { path: 'pages/home', element: <HomePageContent /> },
         { path: 'pages/service', element: <ServiceList /> },
+        { path: 'pages/service/AccountPayAndReceivablesService', element: <AccountPayAndReceivablesService /> },
         { path: 'pages/contact', element: <ContactPageContent /> },
         { path: 'pages/industries', element: <IndustriesList /> },
-        { path: 'pages/industries/AccountPayAndReceivablesService', element: <AccountPayAndReceivablesService /> },
+        { path: 'pages/industries/ClinicsAccounting', element: <ClinicsAccounting /> },
+        { path: 'pages/industries/LandscapingAccounting', element: <LandscapingAccounting /> },
+        { path: 'pages/industries/LawfirmAccounting', element: <LawfirmAccounting /> },
+        { path: 'pages/industries/RentalServicesAccounting', element: <RentalServicesAccounting /> },
+        { path: 'pages/industries/RestaurantAccounting', element: <RestaurantAccounting /> },
         { path: 'pages/casestudy', element: <CaseStudiesPageContent /> },
         { path: 'pages/infographics', element: <InfoGraphicsPageContent /> },
         { path: 'pages/checklist', element: <ChecklistPageContent /> },
