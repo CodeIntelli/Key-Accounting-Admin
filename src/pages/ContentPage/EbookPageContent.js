@@ -24,7 +24,7 @@ const EbookPageContent = () => {
   const [bdata, bsetdata] = useState('');
 
   const setStateData = (data) => {
-    debugger;
+    // debugger;
     asettitle(data.heroSection.title);
     asetdesc(data.heroSection.desc);
     asetbtnTxt(data.heroSection.btnTxt);
