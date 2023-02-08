@@ -24,7 +24,7 @@ const CaseStudiesPageContent = () => {
   const [bdata, bsetdata] = useState('');
 
   const setStateData = (data) => {
-    debugger;
+    // debugger;
     asettitle(data.herosection.title);
     asetdesc(data.herosection.desc);
     asetbtnTxt(data.herosection.btnTxt);

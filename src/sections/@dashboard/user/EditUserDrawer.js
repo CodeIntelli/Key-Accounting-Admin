@@ -69,7 +69,7 @@ const EditUserDrawer = ({ data, changeFunc, closeDrawer }) => {
   const doUploadFile = async (id) => {
     try {
       setIsUpdateLoading(true);
-      debugger;
+      // debugger;
       const BASE_URL = process.env.REACT_APP_API_ENDPOINT;
       const bearerToken = Cookies.get('x-access-token')
         ? Cookies.get('x-access-token')
@@ -85,13 +85,13 @@ const EditUserDrawer = ({ data, changeFunc, closeDrawer }) => {
           authorization: `Bearer ${bearerToken}`,
         },
       });
-      debugger;
+      // debugger;
       // setAllUserList(data.result);
       // setFilterData(data.result);
       setIsUpdateLoading(false);
       console.log('🤩 ~ file: UserPage.js:179 ~ updateUserData ~ data', data);
     } catch (error) {
-      debugger;
+      // debugger;
       console.log('🤩 ~ file: UserPage.js:180 ~ updateUserData ~ error', error.response.data);
     }
   };

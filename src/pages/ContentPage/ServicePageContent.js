@@ -47,7 +47,7 @@ const ServicePageContent = () => {
 
   const setStateData = (data) => {
     /*  */
-    debugger;
+    // debugger;
     asettitle(data.herosection.title);
     asetdesc(data.herosection.subTitle);
     asetbtnTxt(data.herosection.btnTxt);
@@ -382,7 +382,7 @@ const ServicePageContent = () => {
                         }}
                       />
                       {dData?.map((cardData, index) => {
-                        debugger;
+                        // debugger;
                         return (
                           <>
                             <Divider style={{ marginTop: '20px' }} />

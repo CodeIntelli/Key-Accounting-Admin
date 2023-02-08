@@ -80,7 +80,7 @@ export const loadUser = (userData) => async (dispatch) => {
 });
 
 export const login = createAsyncThunk('auth/login', async ({ email, password }, thunkAPI) => {
-  debugger; // eslint-disable-line no-debugger
+  // debugger; // eslint-disable-line no-debugger
   console.log('🤩 ~ file: authAction.js:26 ~ login ~ email, password', email, password);
   try {
     const { data } = await axios.post(`${API_URL}auth/login`, {
