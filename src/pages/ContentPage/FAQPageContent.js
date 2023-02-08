@@ -143,7 +143,7 @@ const FAQPageContent = () => {
                     />
                     <TextField
                       name="title"
-                      label="Desc"
+                      label="Description"
                       value={adesc}
                       style={{ margin: '10px' }}
                       onChange={(e) => {
@@ -152,7 +152,7 @@ const FAQPageContent = () => {
                     />
                     <TextField
                       name="title"
-                      label="Txt"
+                      label="Button Text"
                       value={abtnTxt}
                       style={{ margin: '10px' }}
                       onChange={(e) => {
@@ -210,7 +210,7 @@ const FAQPageContent = () => {
                       />
                       <TextField
                         name="title"
-                        label="Title"
+                        label="Sidebar Image"
                         value={bsidebarImg}
                         style={{ margin: '10px' }}
                         onChange={(e) => {
@@ -223,7 +223,7 @@ const FAQPageContent = () => {
                             {index === 0 ? '' : <Divider style={{ marginTop: '18px' }} />}
                             <TextField
                               name="email"
-                              label="Title"
+                              label="Question"
                               style={{ width: '100%', marginTop: '24px' }}
                               value={cardData.que}
                               onChange={(e) => {
@@ -235,7 +235,7 @@ const FAQPageContent = () => {
                             />
                             <TextField
                               name="email"
-                              label="Image"
+                              label="Answer"
                               style={{ width: '100%', marginTop: '24px' }}
                               value={cardData.ans}
                               onChange={(e) => {
