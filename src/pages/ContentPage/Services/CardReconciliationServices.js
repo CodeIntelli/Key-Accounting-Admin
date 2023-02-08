@@ -244,7 +244,7 @@ const AccountPayAndReceivablesService = () => {
                     <TextField
                       name="email"
                       style={{ width: '100%' }}
-                      label="Main Image URL"
+                      label="Main Image"
                       value={amainImg}
                       onChange={(e) => {
                         asetmainImg(e.target.value);
@@ -543,7 +543,7 @@ const AccountPayAndReceivablesService = () => {
                       </Box>
                       <TextField
                         name="email"
-                        label="Button Title"
+                        label="Main Button"
                         style={{ width: '100%', marginTop: '24px' }}
                         value={fmainBtn}
                         onChange={(e) => {

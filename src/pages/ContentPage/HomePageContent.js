@@ -405,7 +405,7 @@ const HomePageContent = () => {
                       >
                         <TextField
                           name="email"
-                          label="Sub Title"
+                          label="Main Title"
                           style={{ width: '100%', marginTop: '24px' }}
                           value={bmainTitle}
                           onChange={(e) => {
@@ -414,7 +414,7 @@ const HomePageContent = () => {
                         />
                         <TextField
                           name="email"
-                          label="Sub Title"
+                          label="Title"
                           style={{ width: '100%', marginTop: '24px' }}
                           value={btitle}
                           onChange={(e) => {
@@ -424,7 +424,7 @@ const HomePageContent = () => {
                       </Box>
                       <TextField
                         name="email"
-                        label="Sub Title"
+                        label="Main Images"
                         style={{ width: '100%', marginTop: '24px' }}
                         value={bmain_images}
                         onChange={(e) => {
@@ -508,7 +508,7 @@ const HomePageContent = () => {
                       >
                         <TextField
                           name="email"
-                          label="Sub Title"
+                          label="Main Title"
                           style={{ width: '100%', marginTop: '24px' }}
                           value={cmainTitle}
                           onChange={(e) => {
@@ -517,7 +517,7 @@ const HomePageContent = () => {
                         />
                         <TextField
                           name="email"
-                          label="Sub Title"
+                          label="Title"
                           style={{ width: '100%', marginTop: '24px' }}
                           value={ctitle}
                           onChange={(e) => {
@@ -527,7 +527,7 @@ const HomePageContent = () => {
                       </Box>
                       <TextField
                         name="email"
-                        label="Sub Title"
+                        label="Main Images"
                         style={{ width: '100%', marginTop: '24px' }}
                         value={cmain_images}
                         onChange={(e) => {
@@ -561,7 +561,7 @@ const HomePageContent = () => {
                               />
                               <TextField
                                 name="email"
-                                label={`Card Image ${index + 1}`}
+                                label={`Image ${index + 1}`}
                                 style={{ width: '100%', marginTop: '24px' }}
                                 defaultValue={cardData.img}
                                 onChange={(e) => {
@@ -575,7 +575,7 @@ const HomePageContent = () => {
                               />
                               <TextField
                                 name="email"
-                                label={`Card Subtitle ${index + 1}`}
+                                label={`Sub Title ${index + 1}`}
                                 style={{ width: '100%' }}
                                 defaultValue={cardData.subTitle}
                                 onChange={(e) => {
@@ -674,7 +674,7 @@ const HomePageContent = () => {
                       >
                         <TextField
                           name="email"
-                          label="Button Text"
+                          label="Sub Title"
                           style={{ width: '100%', marginTop: '24px' }}
                           value={esubtitle}
                           onChange={(e) => {
@@ -919,7 +919,7 @@ const HomePageContent = () => {
                       >
                         <TextField
                           name="email"
-                          label="Button Text"
+                          label="Sub Title"
                           style={{ width: '100%', marginTop: '24px' }}
                           value={gsubtitle}
                           onChange={(e) => {
@@ -974,7 +974,7 @@ const HomePageContent = () => {
                             >
                               <TextField
                                 name="email"
-                                label={`Message ${index + 1}`}
+                                label={`Title ${index + 1}`}
                                 style={{ width: '100%', marginTop: '24px' }}
                                 value={cardData.title}
                                 onChange={(e) => {
@@ -1191,7 +1191,7 @@ const HomePageContent = () => {
                         />
                         <TextField
                           name="email"
-                          label="Sub Title"
+                          label="Soft Text"
                           style={{ width: '100%', marginTop: '24px' }}
                           value={isoftTxt}
                           onChange={(e) => {
@@ -1285,7 +1285,7 @@ const HomePageContent = () => {
                       >
                         <TextField
                           name="email"
-                          label="Button Text"
+                          label="Sub Title"
                           style={{ width: '100%', marginTop: '24px' }}
                           value={jsubtitle}
                           onChange={(e) => {
@@ -1474,7 +1474,7 @@ const HomePageContent = () => {
                       </Box>
                       <TextField
                         name="email"
-                        label="Button Title"
+                        label="Main Button"
                         style={{ width: '100%', marginTop: '24px' }}
                         value={kmainBtn}
                         onChange={(e) => {

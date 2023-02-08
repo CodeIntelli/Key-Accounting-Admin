@@ -143,7 +143,7 @@ const EbookPageContent = () => {
                     />
                     <TextField
                       name="title"
-                      label="Txt"
+                      label="Button Text"
                       value={abtnTxt}
                       style={{ margin: '10px' }}
                       onChange={(e) => {
@@ -237,7 +237,7 @@ const EbookPageContent = () => {
                             />
                             <TextField
                               name="email"
-                              label="Button Value"
+                              label="Button Text"
                               style={{ width: '100%', marginTop: '24px' }}
                               value={cardData.btnTxt}
                               onChange={(e) => {

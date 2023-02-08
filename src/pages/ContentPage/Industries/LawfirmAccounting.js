@@ -316,7 +316,7 @@ const ServicePageContent = () => {
 
                         <TextField
                           name="email"
-                          label="Main image"
+                          label="Button Text"
                           style={{ width: '100%', marginTop: '24px' }}
                           value={bbtnTxt}
                           onChange={(e) => {
@@ -325,7 +325,7 @@ const ServicePageContent = () => {
                         />
                         <TextField
                           name="email"
-                          label="Main image"
+                          label="Button ROute"
                           style={{ width: '100%', marginTop: '24px' }}
                           value={bbtnRoutes}
                           onChange={(e) => {
@@ -577,7 +577,7 @@ const ServicePageContent = () => {
                       />
                       <TextField
                         name="email"
-                        label="Sub title"
+                        label="Main Image"
                         style={{ width: '100%', marginTop: '24px' }}
                         value={emainImg}
                         onChange={(e) => {
@@ -586,7 +586,7 @@ const ServicePageContent = () => {
                       />
                       <TextField
                         name="email"
-                        label="Sub title"
+                        label="Main Button"
                         style={{ width: '100%', marginTop: '24px' }}
                         value={emainBtn}
                         onChange={(e) => {
