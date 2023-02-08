@@ -30,6 +30,7 @@ export default function DashboardAppPage() {
     if (error) {
       const errMsg =
         error.includes('JsonWebTokenError') || error.includes('TokenExpiredError') ? 'Session Time Out' : error;
+
       if (Cookies.get('x-access-token') || localStorage.getItem('x-access-token')) {
         errorToast(errMsg);
       }

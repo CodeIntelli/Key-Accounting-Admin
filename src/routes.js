@@ -42,6 +42,9 @@ import CarrierPage from './pages/CarrierPage';
 import AddCarrier from './pages/AddCarrier';
 import CandidatePage from './pages/CandidatePage';
 import CreateInfographics from './pages/AddInfographics';
+import ServiceList from './pages/ServicesList';
+import IndustriesList from './pages/IndustryList';
+import AccountPayAndReceivablesService from './pages/ContentPage/Services/AccountPayAndReceivablesService';
 
 // ----------------------------------------------------------------------
 
@@ -58,9 +61,10 @@ export default function Router() {
         // { path: 'pages/navbar', element: <NavbarContent /> },
         { path: 'pages/footer', element: <FooterPageContent /> },
         { path: 'pages/home', element: <HomePageContent /> },
-        { path: 'pages/service', element: <ServicePageContent /> },
+        { path: 'pages/service', element: <ServiceList /> },
         { path: 'pages/contact', element: <ContactPageContent /> },
-        { path: 'pages/industries', element: <IndustriesPageContent /> },
+        { path: 'pages/industries', element: <IndustriesList /> },
+        { path: 'pages/industries/AccountPayAndReceivablesService', element: <AccountPayAndReceivablesService /> },
         { path: 'pages/casestudy', element: <CaseStudiesPageContent /> },
         { path: 'pages/infographics', element: <InfoGraphicsPageContent /> },
         { path: 'pages/checklist', element: <ChecklistPageContent /> },
