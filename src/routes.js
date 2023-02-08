@@ -53,6 +53,11 @@ import FinancialStatmentPreparationServices from './pages/ContentPage/Services/F
 import PayrollReconciliationServices from './pages/ContentPage/Services/PayrollReconciliationServices';
 import VirtualAccountingServices from './pages/ContentPage/Services/VirtualAccountingServices';
 import PayrollServices from './pages/ContentPage/Services/PayrollServices';
+import ClinicsAccounting from './pages/ContentPage/Industries/ClinicsAccounting';
+import LandscapingAccounting from './pages/ContentPage/Industries/LandscapingAccounting';
+import LawfirmAccounting from './pages/ContentPage/Industries/LawfirmAccounting';
+import RentalServicesAccounting from './pages/ContentPage/Industries/RentalServicesAccounting';
+import RestaurantAccounting from './pages/ContentPage/Industries/RestaurantAccounting';
 
 // ----------------------------------------------------------------------
 
@@ -68,11 +73,16 @@ export default function Router() {
         { path: 'pages', element: <ContentAppPage /> },
         // { path: 'pages/navbar', element: <NavbarContent /> },
         { path: 'pages/footer', element: <FooterPageContent /> },
-        { path: 'pages/home', element: <HomePageContent /> },
-        { path: 'pages/service', element: <ServiceList /> },
-        { path: 'pages/service/AccountPayAndReceivablesService', element: <AccountPayAndReceivablesService /> },
-        { path: 'pages/contact', element: <ContactPageContent /> },
         { path: 'pages/industries', element: <IndustriesList /> },
+        { path: 'pages/industries/ClinicsAccounting', element: <ClinicsAccounting /> },
+        { path: 'pages/industries/LandscapingAccounting', element: <LandscapingAccounting /> },
+        { path: 'pages/industries/LawfirmAccounting', element: <LawfirmAccounting /> },
+        { path: 'pages/industries/RentalServicesAccounting', element: <RentalServicesAccounting /> },
+        { path: 'pages/industries/RestaurantAccounting', element: <RestaurantAccounting /> },
+        { path: 'pages/contact', element: <ContactPageContent /> },
+        { path: 'pages/home', element: <HomePageContent /> },
+
+        { path: 'pages/service', element: <ServiceList /> },
         { path: 'pages/service/AccountPayAndReceivablesService', element: <AccountPayAndReceivablesService /> },
         { path: 'pages/service/BankReconciliationServices', element: <BankReconciliationServices /> },
         { path: 'pages/service/BookkepingServices', element: <BookkepingServices /> },
@@ -88,6 +98,7 @@ export default function Router() {
         { path: 'pages/service/PayrollReconciliationServices', element: <PayrollReconciliationServices /> },
         { path: 'pages/service/PayrollServices', element: <PayrollServices /> },
         { path: 'pages/service/VirtualAccountingServices', element: <VirtualAccountingServices /> },
+
         { path: 'pages/casestudy', element: <CaseStudiesPageContent /> },
         { path: 'pages/infographics', element: <InfoGraphicsPageContent /> },
         { path: 'pages/checklist', element: <ChecklistPageContent /> },
