@@ -566,7 +566,7 @@ export default function SubCategoriesPage() {
                     flexDirection: 'column',
                   }}
                 >
-                  <h3>Create Category</h3>
+                  <h3>Create Subcategory</h3>
                   <TextField
                     id="outlined-firstname"
                     label="Category Title"
@@ -635,7 +635,7 @@ export default function SubCategoriesPage() {
                     flexDirection: 'column',
                   }}
                 >
-                  <h3>Create Category</h3>
+                  <h3>Edit Subcategory</h3>
                   <TextField
                     id="outlined-firstname"
                     label="Category Title"

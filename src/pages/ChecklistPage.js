@@ -144,8 +144,8 @@ export default function CategoriesPage() {
     }
   };
 
-   const [addLoader, setAddLoader] = useState(false);
-   const [editLoader, setEditLoader] = useState(false);
+  const [addLoader, setAddLoader] = useState(false);
+  const [editLoader, setEditLoader] = useState(false);
   const addContent = async (contentData) => {
     try {
       setAddLoader(true);
@@ -690,6 +690,9 @@ export default function CategoriesPage() {
                   ) : (
                     ''
                   )}
+                  <div>
+                    <p style={{ color: '#FF0000' }}>*please upload attachment only in .pdf formate</p>
+                  </div>
                   <div
                     style={{
                       marginTop: '30px',

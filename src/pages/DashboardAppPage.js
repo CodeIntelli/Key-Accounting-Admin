@@ -94,7 +94,7 @@ export default function DashboardAppPage() {
             </Grid>
             <Grid item xs={12} sm={6} md={3}>
               <Link to={'/dashboard/feedback'}>
-                <AppWidgetSummary title="User Feedback" color="warning" icon={'mdi:feedback-outline'} />
+                <AppWidgetSummary title="Contact User List" color="warning" icon={'mdi:feedback-outline'} />
               </Link>
             </Grid>
             <Grid item xs={12} sm={6} md={3}>

@@ -78,13 +78,13 @@ export default function BlogPostCard({ key, post, index, blogToggler, deleteBlog
     // <CreateBlog />;
   };
 
-  const getList = () => (
-    <div style={{ width: 350 }}>
-      {/* <div onClick={() => setOpenDrawer(false)}> */}
-      {/* </div> */}
-      <CreateBlog blogData={blogData} />
-    </div>
-  );
+  // const getList = () => (
+  //   <div style={{ width: 350 }}>
+  //     {/* <div onClick={() => setOpenDrawer(false)}> */}
+  //     {/* </div> */}
+  //     <CreateBlog blogData={blogData} />
+  //   </div>
+  // );
 
   return (
     <Grid item xs={12} sm={latestPostLarge ? 12 : 6} md={latestPostLarge ? 6 : 3}>
@@ -214,9 +214,6 @@ export default function BlogPostCard({ key, post, index, blogToggler, deleteBlog
           </div>
         </CardContent>
       </Card>
-      <Drawer open={openDrawer} anchor={'right'} onClose={() => setOpenDrawer(false)}>
-        {getList()}
-      </Drawer>
     </Grid>
   );
 }

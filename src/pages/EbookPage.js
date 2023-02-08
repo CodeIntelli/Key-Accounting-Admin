@@ -691,6 +691,9 @@ export default function CategoriesPage() {
                   ) : (
                     ''
                   )}
+                  <div>
+                    <p style={{ color: '#FF0000' }}>*please upload attachment only in .pdf formate</p>
+                  </div>
                   <div
                     style={{
                       marginTop: '30px',
