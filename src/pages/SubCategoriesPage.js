@@ -422,7 +422,7 @@ export default function SubCategoriesPage() {
                 <OutlinedInput
                   id="outlined-adornment-password"
                   value={searchString}
-                  placeholder="Search User"
+                  placeholder="Search Here..."
                   type="text"
                   startAdornment={
                     <InputAdornment position="start">

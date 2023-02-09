@@ -150,7 +150,6 @@ export default function CarrierPage() {
     }
   };
 
-
   const setEditId = (idData) => {
     setUpdateData(idData && idData);
   };
@@ -229,7 +228,6 @@ export default function CarrierPage() {
     }
   };
 
-
   return (
     <>
       <Helmet>
@@ -274,7 +272,7 @@ export default function CarrierPage() {
                 <OutlinedInput
                   id="outlined-adornment-password"
                   value={searchString}
-                  placeholder="Search User"
+                  placeholder="Search Here..."
                   type="text"
                   startAdornment={
                     <InputAdornment position="start">

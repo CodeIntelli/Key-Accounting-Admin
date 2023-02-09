@@ -157,7 +157,7 @@ export default function UserPage() {
                 <OutlinedInput
                   id="outlined-adornment-password"
                   value={searchString}
-                  placeholder="Search User"
+                  placeholder="Search Here..."
                   type="text"
                   startAdornment={
                     <InputAdornment position="start">
