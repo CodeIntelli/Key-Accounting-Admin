@@ -18,6 +18,8 @@ import Lottie from 'react-lottie';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Select from 'react-select';
+// import Select from 'react-select';
+import makeAnimated from 'react-select/animated';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import Iconify from '../components/iconify';
 // import { AddUser } from '../redux/Actions/userAction';
@@ -33,6 +35,8 @@ import JoditEditor from 'jodit-react';
 import LoadingAnimation from 'src/components/LoadingAnimation';
 import { errorToast, successToast } from 'src/utils/Toast';
 // import { Navigation } from '@mui/icons-material';
+
+const animatedComponents = makeAnimated();
 
 const editorConfig = {
   readonly: false,
@@ -97,6 +101,20 @@ const CreateBlog = ({ blogData }) => {
   const [editBlogLoader, setEditBlogLoader] = useState(false);
   const [fetcher, setFetcher] = useState(false);
 
+  const [releventGroup, setReleventGroup] = useState();
+
+  const [check, setCheck] = useState();
+
+  const [avatarPreview, setAvatarPreview] = useState('/assets/images/avatars/avatar_18.jpg');
+  const [image, setImage] = useState();
+
+  /* Modal States */
+  const [open, setOpen] = React.useState(false);
+  const handleClose = () => setOpen(false);
+  const [errMsg, setErrMsg] = React.useState('');
+  const [successMsg, setSuccessMsg] = React.useState('');
+  const [blogId, setBlogId] = React.useState('');
+
   const addBlog = async (id, Blogdata) => {
     try {
       setAddBlogLoader(true);
@@ -154,6 +172,120 @@ const CreateBlog = ({ blogData }) => {
     }
   };
 
+  const doUploadImageUpload = async (id) => {
+    try {
+      const BASE_URL = process.env.REACT_APP_API_ENDPOINT;
+      const bearerToken = Cookies.get('x-access-token')
+        ? Cookies.get('x-access-token')
+        : localStorage.getItem('x-access-token')
+        ? localStorage.getItem('x-access-token')
+        : null;
+
+      const newImageData = new FormData();
+      newImageData.append('blog_img', image && image);
+      newImageData.append('type', 'editImage');
+      const { data } = await axios.post(`${BASE_URL}blog/${id}`, newImageData, {
+        headers: {
+          authorization: `Bearer ${bearerToken}`,
+        },
+      });
+      return data;
+    } catch (error) {
+      return error?.response?.data;
+    }
+  };
+
+  const doFetchAllBlogData = async () => {
+    try {
+      debugger;
+      const BASE_URL = process.env.REACT_APP_API_ENDPOINT;
+      const bearerToken = Cookies.get('x-access-token')
+        ? Cookies.get('x-access-token')
+        : localStorage.getItem('x-access-token')
+        ? localStorage.getItem('x-access-token')
+        : null;
+      debugger;
+      const { data } = await axios.get(`${BASE_URL}blog/list/admin/blog`, {
+        headers: {
+          authorization: `Bearer ${bearerToken}`,
+        },
+      });
+      debugger;
+      let newData = data?.result?.map((mapData) => {
+        return {
+          label: mapData.postTitle,
+          value: mapData._id,
+        };
+      });
+      setReleventGroup(newData);
+      debugger;
+
+      // setTimeout(() => {
+      const doCheckReleventBlogData =
+        releventGroup &&
+        releventGroup.map((mapdata) => {
+          debugger;
+          let newFilter = BlogReleventData.filter((filterData) => {
+            debugger;
+            return mapdata.value === filterData._id;
+          });
+          return { ...newFilter[0] };
+        });
+      const doremovenullobj = doCheckReleventBlogData.filter((value) => Object.keys(value).length !== 0);
+      const finalResult = doremovenullobj.map((newData) => {
+        debugger;
+        return { label: newData.postTitle, value: newData._id };
+      });
+      console.log('🤩 ~ file: AddBlog.js:231 ~ finalResult ~ finalResult', finalResult);
+      debugger;
+      setCheck(finalResult);
+      debugger;
+      // }, 500);
+
+      return data;
+    } catch (error) {
+      return error?.response?.data;
+    }
+  };
+
+  const [BlogReleventData, setBlogReleventData] = useState();
+
+  const doFetchBlogData = async () => {
+    try {
+      debugger;
+      setFetcher(true);
+      // if (releventGroup && releventGroup !== undefined) {
+      const BASE_URL = process.env.REACT_APP_API_ENDPOINT;
+      const bearerToken = Cookies.get('x-access-token')
+        ? Cookies.get('x-access-token')
+        : localStorage.getItem('x-access-token')
+        ? localStorage.getItem('x-access-token')
+        : null;
+
+      const { data } = await axios.get(`${BASE_URL}blog/${id}`, {
+        headers: {
+          authorization: `Bearer ${bearerToken}`,
+        },
+      });
+      console.log('🤩 ~ file: AddCarrier.js:110 ~ doFetchData ~ data', data);
+      setUpdateData(data?.result);
+      setBlogReleventData(data?.result?.ReleventBlog);
+      debugger;
+      // setFetcher(false);
+      setFetcher(false);
+      return data;
+    } catch (error) {
+      setFetcher(false);
+      return error?.response?.data;
+    }
+  };
+
+  const handleReleventDropdown = (e) => {
+    debugger;
+    console.log('=========================================>', e);
+    setCheck(e);
+  };
+
   const handleDropdown = (data) => {
     setCategoryIdDropdown(data.label);
     setCategoryValueDropdown(data.value);
@@ -161,6 +293,7 @@ const CreateBlog = ({ blogData }) => {
 
   const editBlog = async (id, UpdatedData) => {
     try {
+      debugger;
       setEditBlogLoader(true);
       const BASE_URL = process.env.REACT_APP_API_ENDPOINT;
       const bearerToken = Cookies.get('x-access-token')
@@ -182,8 +315,6 @@ const CreateBlog = ({ blogData }) => {
     }
   };
 
-  const [avatarPreview, setAvatarPreview] = useState('/assets/images/avatars/avatar_18.jpg');
-  const [image, setImage] = useState();
   /* Image Uploading */
   const handleImage = async (e) => {
     const { name, value } = e.target;
@@ -192,7 +323,7 @@ const CreateBlog = ({ blogData }) => {
       setImage(e.target.files[0]);
     }
     if (isUpdate) {
-      if(image && image != undefined){
+      if (image && image != undefined) {
         doUploadImageUpload(blogId);
       }
     }
@@ -225,13 +356,6 @@ const CreateBlog = ({ blogData }) => {
     }
   };
 
-  /* Modal States */
-  const [open, setOpen] = React.useState(false);
-  const handleClose = () => setOpen(false);
-  const [errMsg, setErrMsg] = React.useState('');
-  const [successMsg, setSuccessMsg] = React.useState('');
-  const [blogId, setBlogId] = React.useState('');
-
   /* 
   Lottie Configuration
   */
@@ -252,7 +376,8 @@ const CreateBlog = ({ blogData }) => {
     },
   };
 
-  const setUpdateData = (updatedData) => {
+  const setUpdateData = async (updatedData) => {
+    debugger;
     const {
       _id,
       content,
@@ -266,17 +391,40 @@ const CreateBlog = ({ blogData }) => {
       tags,
       thumbImage,
     } = updatedData;
+    console.log(
+      '🤩 ~ =========================================file: AddBlog.js:270 ~ setUpdateData ~ updatedData',
+      updatedData
+    );
+    debugger;
     setpostTitle(postTitle);
-    setpostDesc(postDesc);
+    setpostDesc(metaDesc);
     setcontent(content);
     setpost_slug(post_slug);
     setAvatarPreview(thumbImage.url);
-    settags(tags.toString());
-    setmetaTitle(metaTitle);
-    setmetaDesc(metaDesc);
-    setmetaKeyword(metaKeyword.toString());
+    // settags(tags.toString());
+    setmetaTitle(updatedData.metaTitle);
+    setmetaDesc(updatedData.metaDesc);
+    setmetaKeyword(updatedData.metaKeyword.toString());
     setCategoryIdDropdown(subCategory.subTitle);
     setCategoryValueDropdown(subCategory._id);
+    debugger;
+    // if (updatedData?.ReleventBlog) {
+    //   const doCheckReleventBlogData =
+    //     releventGroup &&
+    //     releventGroup.map((mapdata) => {
+    //       let newFilter = updatedData?.ReleventBlog.filter((filterData) => {
+    //         return mapdata.value === filterData._id;
+    //       });
+    //       return { ...newFilter[0] };
+    //     });
+    //   const doremovenullobj = doCheckReleventBlogData.filter((value) => Object.keys(value).length !== 0);
+    //   const finalResult = doremovenullobj.map((newData) => {
+    //     return { label: newData.postTitle, value: newData._id };
+    //   });
+    //   setCheck(finalResult);
+    // }
+    // setReleventData(updatedData?.ReleventBlog );
+    // setReleventLabel();
     setBlogId(_id);
     setisUpdate(true);
   };
@@ -304,63 +452,16 @@ const CreateBlog = ({ blogData }) => {
     console.log('🤩 ~ file: AddBlog.js:280 ~ handleEditSubmit ~ doEditRecord', doEditRecord);
   };
 
-  // const handleToggler
-
-  const doUploadImageUpload = async (id) => {
-    try {
-      
-      const BASE_URL = process.env.REACT_APP_API_ENDPOINT;
-      const bearerToken = Cookies.get('x-access-token')
-        ? Cookies.get('x-access-token')
-        : localStorage.getItem('x-access-token')
-        ? localStorage.getItem('x-access-token')
-        : null;
-
-      const newImageData = new FormData();
-      newImageData.append('blog_img', image && image );
-      newImageData.append('type', 'editImage');
-      const { data } = await axios.post(`${BASE_URL}blog/${id}`, newImageData, {
-        headers: {
-          authorization: `Bearer ${bearerToken}`,
-        },
-      });
-      return data;
-    } catch (error) {
-      return error?.response?.data;
-    }
-  };
-
-  const doFetchBlogData = async () => {
-    try {
-      setFetcher(true);
-      const BASE_URL = process.env.REACT_APP_API_ENDPOINT;
-      const bearerToken = Cookies.get('x-access-token')
-        ? Cookies.get('x-access-token')
-        : localStorage.getItem('x-access-token')
-        ? localStorage.getItem('x-access-token')
-        : null;
-
-      const { data } = await axios.get(`${BASE_URL}blog/${id}`, {
-        headers: {
-          authorization: `Bearer ${bearerToken}`,
-        },
-      });
-      console.log('🤩 ~ file: AddCarrier.js:110 ~ doFetchData ~ data', data);
-      setUpdateData(data?.result);
-      setFetcher(false);
-      return data;
-    } catch (error) {
-      return error?.response?.data;
-    }
-  };
-
   const { id } = useParams();
 
   useEffect(() => {
+    doFetchAllBlogData();
     fetchCategories();
-    if (id && id) {
-      doFetchBlogData(id);
-    }
+    setTimeout(() => {
+      if (id && id) {
+        doFetchBlogData(id);
+      }
+    }, 500);
     // if (blogData) {
     //   setUpdateData(blogData);
     // }
@@ -452,6 +553,15 @@ const CreateBlog = ({ blogData }) => {
                     onChange={(e) => setpostTitle(e.target.value)}
                   />
                   <TextField
+                    id="outlined-content"
+                    label="Meta Description"
+                    variant="outlined"
+                    value={metaDesc}
+                    multiline
+                    rows={4}
+                    onChange={(e) => setmetaDesc(e.target.value)}
+                  />
+                  {/*  <TextField
                     id="outlined-lastname"
                     label="Post Description"
                     variant="outlined"
@@ -459,7 +569,7 @@ const CreateBlog = ({ blogData }) => {
                     multiline
                     rows={4}
                     onChange={(e) => setpostDesc(e.target.value)}
-                  />
+                /> */}
                   <JoditEditor
                     value={content}
                     config={editorConfig}
@@ -476,6 +586,7 @@ const CreateBlog = ({ blogData }) => {
                   onChange={(e) => setcontent(e.target.value)}
                 /> */}
                   <div styles={{ padding: '50px' }}>
+                    <h4>Select Subcategory</h4>
                     <Select
                       styles={customStyles}
                       placeholder="Select Category"
@@ -495,6 +606,22 @@ const CreateBlog = ({ blogData }) => {
                       </Link>
                     </p>
                   </div>
+                  <div styles={{ padding: '50px' }}>
+                    <h4>Select Relevent Blog</h4>
+                    <Select
+                      closeMenuOnSelect={false}
+                      components={animatedComponents}
+                      styles={customStyles}
+                      value={check}
+                      onChange={(e) => {
+                        handleReleventDropdown(e);
+                      }}
+                      placeholder="Select Relevent Blog"
+                      // defaultValue={[colourOptions[4], colourOptions[5]]}
+                      isMulti
+                      options={releventGroup}
+                    />
+                  </div>
                   <TextField
                     id="outlined-firstname"
                     label="Post Slug"
@@ -502,13 +629,13 @@ const CreateBlog = ({ blogData }) => {
                     value={post_slug}
                     onChange={(e) => setpost_slug(e.target.value)}
                   />
-                  <TextField
+                  {/* <TextField
                     id="outlined-tags"
                     label="Tags"
                     variant="outlined"
                     value={tags}
                     onChange={(e) => settags(e.target.value)}
-                  />
+                    /> */}
                   <TextField
                     id="outlined-content"
                     label="Meta Title"
@@ -516,15 +643,7 @@ const CreateBlog = ({ blogData }) => {
                     value={metaTitle}
                     onChange={(e) => setmetaTitle(e.target.value)}
                   />
-                  <TextField
-                    id="outlined-content"
-                    label="Meta Description"
-                    variant="outlined"
-                    value={metaDesc}
-                    multiline
-                    rows={4}
-                    onChange={(e) => setmetaDesc(e.target.value)}
-                  />
+
                   <TextField
                     id="outlined-content"
                     label="Meta Keywords"
