@@ -108,6 +108,15 @@ const CreateBlog = ({ blogData }) => {
   const [avatarPreview, setAvatarPreview] = useState('/assets/images/avatars/avatar_18.jpg');
   const [image, setImage] = useState();
 
+  const [releventBlogOne, setreleventBlogOne] = useState();
+  const [releventBlogTwo, setreleventBlogTwo] = useState();
+  const [releventBlogThree, setreleventBlogThree] = useState();
+  const [releventBlogFour, setreleventBlogFour] = useState();
+  const [releventBlogOneId, setreleventBlogOneId] = useState();
+  const [releventBlogTwoId, setreleventBlogTwoId] = useState();
+  const [releventBlogThreeId, setreleventBlogThreeId] = useState();
+  const [releventBlogFourId, setreleventBlogFourId] = useState();
+
   /* Modal States */
   const [open, setOpen] = React.useState(false);
   const handleClose = () => setOpen(false);
@@ -197,20 +206,20 @@ const CreateBlog = ({ blogData }) => {
 
   const doFetchAllBlogData = async () => {
     try {
-      debugger;
+      // debugger;
       const BASE_URL = process.env.REACT_APP_API_ENDPOINT;
       const bearerToken = Cookies.get('x-access-token')
         ? Cookies.get('x-access-token')
         : localStorage.getItem('x-access-token')
         ? localStorage.getItem('x-access-token')
         : null;
-      debugger;
+      // debugger;
       const { data } = await axios.get(`${BASE_URL}blog/list/admin/blog`, {
         headers: {
           authorization: `Bearer ${bearerToken}`,
         },
       });
-      debugger;
+      // debugger;
       let newData = data?.result?.map((mapData) => {
         return {
           label: mapData.postTitle,
@@ -218,28 +227,26 @@ const CreateBlog = ({ blogData }) => {
         };
       });
       setReleventGroup(newData);
-      debugger;
+      // debugger;
 
       // setTimeout(() => {
-      const doCheckReleventBlogData =
-        releventGroup &&
-        releventGroup.map((mapdata) => {
-          debugger;
-          let newFilter = BlogReleventData.filter((filterData) => {
-            debugger;
-            return mapdata.value === filterData._id;
-          });
-          return { ...newFilter[0] };
+      const doCheckReleventBlogData = await releventGroup.map((mapdata) => {
+        // debugger;
+        let newFilter = BlogReleventData.filter((filterData) => {
+          // debugger;
+          return mapdata.value === filterData._id;
         });
-      const doremovenullobj = doCheckReleventBlogData.filter((value) => Object.keys(value).length !== 0);
-      const finalResult = doremovenullobj.map((newData) => {
-        debugger;
+        return { ...newFilter[0] };
+      });
+      const doremovenullobj = await doCheckReleventBlogData.filter((value) => Object.keys(value).length !== 0);
+      const finalResult = await doremovenullobj.map((newData) => {
+        // debugger;
         return { label: newData.postTitle, value: newData._id };
       });
-      console.log('🤩 ~ file: AddBlog.js:231 ~ finalResult ~ finalResult', finalResult);
-      debugger;
+      // debugger;
       setCheck(finalResult);
-      debugger;
+      // debugger;
+      // console.log('==================>', finalResult);
       // }, 500);
 
       return data;
@@ -252,7 +259,7 @@ const CreateBlog = ({ blogData }) => {
 
   const doFetchBlogData = async () => {
     try {
-      debugger;
+      // debugger;
       setFetcher(true);
       // if (releventGroup && releventGroup !== undefined) {
       const BASE_URL = process.env.REACT_APP_API_ENDPOINT;
@@ -267,10 +274,10 @@ const CreateBlog = ({ blogData }) => {
           authorization: `Bearer ${bearerToken}`,
         },
       });
-      console.log('🤩 ~ file: AddCarrier.js:110 ~ doFetchData ~ data', data);
+      // console.log('🤩 ~ file: AddCarrier.js:110 ~ doFetchData ~ data', data);
       setUpdateData(data?.result);
       setBlogReleventData(data?.result?.ReleventBlog);
-      debugger;
+      // debugger;
       // setFetcher(false);
       setFetcher(false);
       return data;
@@ -281,9 +288,9 @@ const CreateBlog = ({ blogData }) => {
   };
 
   const handleReleventDropdown = (e) => {
-    debugger;
+    // debugger;
     console.log('=========================================>', e);
-    setCheck(e);
+    // setCheck(e);
   };
 
   const handleDropdown = (data) => {
@@ -293,7 +300,7 @@ const CreateBlog = ({ blogData }) => {
 
   const editBlog = async (id, UpdatedData) => {
     try {
-      debugger;
+      // debugger;
       setEditBlogLoader(true);
       const BASE_URL = process.env.REACT_APP_API_ENDPOINT;
       const bearerToken = Cookies.get('x-access-token')
@@ -330,19 +337,35 @@ const CreateBlog = ({ blogData }) => {
   };
 
   const handleSubmit = async () => {
+    /* 
+    postTitle,
+      content,
+      post_slug,
+      cat_id: CategoryValueDropdown,
+      metaTitle,
+      metaDesc,
+      metaKeyword,
+      ReleventBlog: [releventBlogOneId, releventBlogTwoId, releventBlogThreeId, releventBlogFourId],
+    
+    */
     const storedData = new FormData();
     const tagsArr = tags.split(',');
     storedData.append('postTitle', postTitle);
-    storedData.append('postDesc', postDesc);
+    // storedData.append('postDesc', postDesc);
     storedData.append('content', content);
     storedData.append('post_slug', post_slug);
-    tagsArr.map((tagdata, index) => {
-      return storedData.append(`tags[${index}]`, tagdata);
-    });
+    // tagsArr.map((tagdata, index) => {
+    //   return storedData.append(`tags[${index}]`, tagdata);
+    // });
     storedData.append('metaTitle', metaTitle);
     storedData.append('metaDesc', metaDesc);
     storedData.append('metaKeyword', metaKeyword);
     storedData.append('blogImg', image);
+    storedData.append('ReleventBlog[0]', releventBlogOneId);
+    storedData.append('ReleventBlog[1]', releventBlogTwoId);
+    storedData.append('ReleventBlog[2]', releventBlogThreeId);
+    storedData.append('ReleventBlog[3]', releventBlogFourId);
+    // storedData.append('blogImg', image);
 
     const addBlogresult = await addBlog(CategoryValueDropdown, storedData);
     if (addBlogresult.success) {
@@ -377,7 +400,7 @@ const CreateBlog = ({ blogData }) => {
   };
 
   const setUpdateData = async (updatedData) => {
-    debugger;
+    // debugger;
     const {
       _id,
       content,
@@ -391,11 +414,11 @@ const CreateBlog = ({ blogData }) => {
       tags,
       thumbImage,
     } = updatedData;
-    console.log(
-      '🤩 ~ =========================================file: AddBlog.js:270 ~ setUpdateData ~ updatedData',
-      updatedData
-    );
-    debugger;
+    // console.log(
+    //   '🤩 ~ =========================================file: AddBlog.js:270 ~ setUpdateData ~ updatedData',
+    //   updatedData
+    // );
+    // debugger;
     setpostTitle(postTitle);
     setpostDesc(metaDesc);
     setcontent(content);
@@ -407,24 +430,18 @@ const CreateBlog = ({ blogData }) => {
     setmetaKeyword(updatedData.metaKeyword.toString());
     setCategoryIdDropdown(subCategory.subTitle);
     setCategoryValueDropdown(subCategory._id);
-    debugger;
-    // if (updatedData?.ReleventBlog) {
-    //   const doCheckReleventBlogData =
-    //     releventGroup &&
-    //     releventGroup.map((mapdata) => {
-    //       let newFilter = updatedData?.ReleventBlog.filter((filterData) => {
-    //         return mapdata.value === filterData._id;
-    //       });
-    //       return { ...newFilter[0] };
-    //     });
-    //   const doremovenullobj = doCheckReleventBlogData.filter((value) => Object.keys(value).length !== 0);
-    //   const finalResult = doremovenullobj.map((newData) => {
-    //     return { label: newData.postTitle, value: newData._id };
-    //   });
-    //   setCheck(finalResult);
-    // }
-    // setReleventData(updatedData?.ReleventBlog );
-    // setReleventLabel();
+    console.log(updatedData.ReleventBlog[0]);
+    setreleventBlogOneId(updatedData.ReleventBlog[0] ? updatedData.ReleventBlog[0]._id : null);
+    setreleventBlogOne(updatedData.ReleventBlog[0] ? updatedData.ReleventBlog[0].postTitle : null);
+    console.log(updatedData.ReleventBlog[1]);
+    setreleventBlogTwoId(updatedData.ReleventBlog[1] ? updatedData.ReleventBlog[1]._id : null);
+    setreleventBlogTwo(updatedData.ReleventBlog[1] ? updatedData.ReleventBlog[1].postTitle : null);
+    console.log(updatedData.ReleventBlog[2]);
+    setreleventBlogThreeId(updatedData.ReleventBlog[2] ? updatedData.ReleventBlog[2]._id : null);
+    setreleventBlogThree(updatedData.ReleventBlog[2] ? updatedData.ReleventBlog[2].postTitle : null);
+    setreleventBlogFourId(updatedData.ReleventBlog[3] ? updatedData.ReleventBlog[3]._id : null);
+    setreleventBlogFour(updatedData.ReleventBlog[3] ? updatedData.ReleventBlog[3].postTitle : null);
+    console.log(updatedData.ReleventBlog[3]);
     setBlogId(_id);
     setisUpdate(true);
   };
@@ -432,14 +449,13 @@ const CreateBlog = ({ blogData }) => {
   const handleEditSubmit = async () => {
     const editedData = {
       postTitle,
-      postDesc,
       content,
       post_slug,
-      tags: tags.includes(',') ? tags.split(',') : tags.toArray(),
       cat_id: CategoryValueDropdown,
       metaTitle,
       metaDesc,
       metaKeyword,
+      ReleventBlog: [releventBlogOneId, releventBlogTwoId, releventBlogThreeId, releventBlogFourId],
     };
     console.log(editedData);
     const doEditRecord = await editBlog(blogId, editedData);
@@ -449,7 +465,7 @@ const CreateBlog = ({ blogData }) => {
     } else {
       errorToast(doEditRecord.message);
     }
-    console.log('🤩 ~ file: AddBlog.js:280 ~ handleEditSubmit ~ doEditRecord', doEditRecord);
+    // console.log('🤩 ~ file: AddBlog.js:280 ~ handleEditSubmit ~ doEditRecord', doEditRecord);
   };
 
   const { id } = useParams();
@@ -607,19 +623,71 @@ const CreateBlog = ({ blogData }) => {
                     </p>
                   </div>
                   <div styles={{ padding: '50px' }}>
-                    <h4>Select Relevent Blog</h4>
+                    <h4>Select Relevent Blog 1</h4>
                     <Select
-                      closeMenuOnSelect={false}
-                      components={animatedComponents}
                       styles={customStyles}
-                      value={check}
-                      onChange={(e) => {
-                        handleReleventDropdown(e);
-                      }}
                       placeholder="Select Relevent Blog"
-                      // defaultValue={[colourOptions[4], colourOptions[5]]}
-                      isMulti
+                      value={{
+                        label: releventBlogOne ? releventBlogOne : 'Select Relevent Blog',
+                        value: releventBlogOneId,
+                        type: 1,
+                      }}
                       options={releventGroup}
+                      onChange={(e) => {
+                        setreleventBlogOne(e.label);
+                        setreleventBlogOneId(e.value);
+                      }}
+                    />
+                  </div>
+                  <div styles={{ padding: '50px' }}>
+                    <h4>Select Relevent Blog 2</h4>
+                    <Select
+                      styles={customStyles}
+                      placeholder="Select Relevent Blog"
+                      value={{
+                        label: releventBlogTwo ? releventBlogTwo : 'Select Relevent Blog',
+                        value: releventBlogTwoId,
+                        type: 2,
+                      }}
+                      options={releventGroup}
+                      onChange={(e) => {
+                        setreleventBlogTwo(e.label);
+                        setreleventBlogTwoId(e.value);
+                      }}
+                    />
+                  </div>
+                  <div styles={{ padding: '50px' }}>
+                    <h4>Select Relevent Blog 3</h4>
+                    <Select
+                      styles={customStyles}
+                      placeholder="Select Relevent Blog"
+                      value={{
+                        label: releventBlogThree ? releventBlogThree : 'Select Relevent Blog',
+                        value: releventBlogThreeId,
+                        type: 3,
+                      }}
+                      options={releventGroup}
+                      onChange={(e) => {
+                        setreleventBlogThree(e.label);
+                        setreleventBlogThreeId(e.value);
+                      }}
+                    />
+                  </div>
+                  <div styles={{ padding: '50px' }}>
+                    <h4>Select Relevent Blog 4</h4>
+                    <Select
+                      styles={customStyles}
+                      placeholder="Select Relevent Blog"
+                      value={{
+                        label: releventBlogFour ? releventBlogFour : 'Select Relevent Blog',
+                        value: releventBlogFourId,
+                        type: 4,
+                      }}
+                      options={releventGroup}
+                      onChange={(e) => {
+                        setreleventBlogFour(e.label);
+                        setreleventBlogFourId(e.value);
+                      }}
                     />
                   </div>
                   <TextField

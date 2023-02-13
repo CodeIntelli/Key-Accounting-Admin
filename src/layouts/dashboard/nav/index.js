@@ -62,13 +62,13 @@ export default function Nav({ openNav, onCloseNav }) {
             alignItems: 'center',
           }}
         >
-          <img
+          {/* <img
             src={Logo}
             alt="key-cms"
             style={{
               maxWidth: '130px',
             }}
-          />
+          /> */}
         </div>
       </Box>
 
