@@ -52,8 +52,8 @@ import LoadingAnimation from 'src/components/LoadingAnimation';
 
 const TABLE_HEAD = [
   { id: 'id', label: 'Sr No', alignRight: false },
-  { id: 'title', label: 'Title', alignRight: false },
-  { id: 'Category', label: 'Category', alignRight: false },
+  { id: 'title', label: 'Subcategory Title', alignRight: false },
+  { id: 'Category', label: 'Category Name', alignRight: false },
   { id: 'isActive', label: 'Status', alignRight: false },
   { id: 'createdAt', label: 'Created At', alignRight: false },
   { id: '' },
@@ -569,7 +569,7 @@ export default function SubCategoriesPage() {
                   <h3>Create Subcategory</h3>
                   <TextField
                     id="outlined-firstname"
-                    label="Category Title"
+                    label="Subcategory Title"
                     variant="outlined"
                     value={subCategory}
                     onChange={(e) => setSubCategory(e.target.value)}
@@ -638,14 +638,14 @@ export default function SubCategoriesPage() {
                   <h3>Edit Subcategory</h3>
                   <TextField
                     id="outlined-firstname"
-                    label="Category Title"
+                    label="Subcategory Title"
                     variant="outlined"
                     value={editsubCategory}
                     onChange={(e) => seteditSubCategory(e.target.value)}
                   />
                   <div style={{ marginTop: '20px' }}>
                     <Select
-                      placeholder="Select Country"
+                      placeholder="Select Category"
                       styles={{ padding: '50px' }}
                       value={{ label: editCategorydropdown, value: editCategoryIdDropdown }}
                       options={catData}

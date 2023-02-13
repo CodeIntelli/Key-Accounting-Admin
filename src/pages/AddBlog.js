@@ -230,21 +230,21 @@ const CreateBlog = ({ blogData }) => {
       // debugger;
 
       // setTimeout(() => {
-      const doCheckReleventBlogData = await releventGroup.map((mapdata) => {
-        // debugger;
-        let newFilter = BlogReleventData.filter((filterData) => {
-          // debugger;
-          return mapdata.value === filterData._id;
-        });
-        return { ...newFilter[0] };
-      });
-      const doremovenullobj = await doCheckReleventBlogData.filter((value) => Object.keys(value).length !== 0);
-      const finalResult = await doremovenullobj.map((newData) => {
-        // debugger;
-        return { label: newData.postTitle, value: newData._id };
-      });
+      // const doCheckReleventBlogData = await releventGroup.map((mapdata) => {
+      //   // debugger;
+      //   let newFilter = BlogReleventData.filter((filterData) => {
+      //     // debugger;
+      //     return mapdata.value === filterData._id;
+      //   });
+      //   return { ...newFilter[0] };
+      // });
+      // const doremovenullobj = await doCheckReleventBlogData.filter((value) => Object.keys(value).length !== 0);
+      // const finalResult = await doremovenullobj.map((newData) => {
+      //   // debugger;
+      //   return { label: newData.postTitle, value: newData._id };
+      // });
       // debugger;
-      setCheck(finalResult);
+      // setCheck(finalResult);
       // debugger;
       // console.log('==================>', finalResult);
       // }, 500);
@@ -349,11 +349,11 @@ const CreateBlog = ({ blogData }) => {
     
     */
     const storedData = new FormData();
-    const tagsArr = tags.split(',');
     storedData.append('postTitle', postTitle);
     // storedData.append('postDesc', postDesc);
     storedData.append('content', content);
     storedData.append('post_slug', post_slug);
+    const tagsArr = tags.split(',');
     // tagsArr.map((tagdata, index) => {
     //   return storedData.append(`tags[${index}]`, tagdata);
     // });

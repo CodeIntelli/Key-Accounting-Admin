@@ -31,7 +31,7 @@ import {
   ListItemText,
   CircularProgress,
 } from '@mui/material';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import { useDispatch } from 'react-redux';
@@ -52,9 +52,9 @@ import LoadingAnimation from 'src/components/LoadingAnimation';
 
 const TABLE_HEAD = [
   { id: 'id', label: 'Sr No', alignRight: false },
-  { id: 'title', label: 'Attachment', alignRight: false },
+  { id: 'Attachment', label: 'Attachment', alignRight: false },
   { id: 'title', label: 'Title', alignRight: false },
-  { id: 'title', label: 'Description', alignRight: false },
+  { id: 'subcategories', label: 'Subcategory', alignRight: false },
   { id: 'isActive', label: 'Status', alignRight: false },
   { id: 'createdAt', label: 'Created At', alignRight: false },
   { id: '' },
@@ -76,6 +76,7 @@ const style = {
 
 export default function CategoriesPage() {
   const [open, setOpen] = useState(null);
+  const navigate = useNavigate();
 
   const [EbookList, setEbookList] = useState();
   const [filterData, setFilterData] = useState();
@@ -144,9 +145,8 @@ export default function CategoriesPage() {
     }
   };
 
-  const [addLoader, setAddLoader] = useState('');
-  const [editLoader, setEditLoader] = useState('');
-
+  const [addLoader, setAddLoader] = useState(false);
+  const [editLoader, setEditLoader] = useState(false);
   const addContent = async (contentData) => {
     try {
       setAddLoader(true);
@@ -350,7 +350,7 @@ export default function CategoriesPage() {
       const AllFilterArray =
         EbookList &&
         EbookList.filter((item) => {
-          return item.catTitle?.toLowerCase()?.includes(searchQuery);
+          return item.title?.toLowerCase()?.includes(searchQuery);
         });
       setFilterData(AllFilterArray);
     } else {
@@ -413,7 +413,7 @@ export default function CategoriesPage() {
   return (
     <>
       <Helmet>
-        <title> Ebook | Key CMS Accounting </title>
+        <title> ebook | Key CMS Accounting </title>
       </Helmet>
       {isLoading ? (
         <LoadingAnimation />
@@ -422,19 +422,21 @@ export default function CategoriesPage() {
           <Container>
             <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
               <Typography variant="h4" gutterBottom>
-                Ebook
+                ebook
               </Typography>
-              <Button
-                variant="contained"
-                onClick={() => {
-                  seteditcatTitle('');
-                  setcatTitle('');
-                  setModalopen(true);
-                }}
-                startIcon={<Iconify icon="eva:plus-fill" />}
-              >
-                Add Ebook
-              </Button>
+              <Link to={'/dashboard/ebook/add'}>
+                <Button
+                  variant="contained"
+                  onClick={() => {
+                    seteditcatTitle('');
+                    setcatTitle('');
+                    setModalopen(true);
+                  }}
+                  startIcon={<Iconify icon="eva:plus-fill" />}
+                >
+                  Add ebook
+                </Button>
+              </Link>
             </Stack>
 
             <Card>
@@ -506,23 +508,23 @@ export default function CategoriesPage() {
                             <TableCell align="left" style={{ textTransform: 'capitalize' }}>
                               <a
                                 href={
-                                  attachment.url
-                                    ? attachment.url.split('/upload/')[0] +
+                                  attachment?.url
+                                    ? attachment?.url?.split('/upload/')[0] +
                                       '/upload/fl_attachment/' +
-                                      attachment.url.split('/upload/')[1]
+                                      attachment?.url?.split('/upload/')[1]
                                     : ''
                                 }
                                 download={attachment?.fileName}
                               >
                                 <div style={{ display: 'flex', alignItems: 'center' }}>
-                                  <Label color={'info'} style={{ cursor: 'pointer' }} title={attachment.fileName}>
+                                  <Label color={'info'} style={{ cursor: 'pointer' }} title={attachment?.fileName}>
                                     <Iconify icon="material-symbols:sim-card-download-rounded" />
-                                    {attachment.fileName.length > 10
-                                      ? `${attachment.fileName.substr(0, 10)}...`
-                                      : sentenceCase(attachment.fileName)}
+                                    {attachment?.fileName?.length > 10
+                                      ? `${attachment?.fileName?.substr(0, 10)}...`
+                                      : attachment?.fileName}
                                   </Label>
                                   <Label color={'success'} style={{ cursor: 'pointer' }}>
-                                    ({attachment.fileSize})
+                                    ({attachment?.fileSize})
                                   </Label>
                                 </div>
                               </a>
@@ -531,7 +533,7 @@ export default function CategoriesPage() {
                               {title}
                             </TableCell>
                             <TableCell align="left" style={{ textTransform: 'capitalize' }}>
-                              {desc}
+                              {tableData?.subCategory?.subTitle}
                             </TableCell>
 
                             <TableCell align="left">
@@ -583,8 +585,9 @@ export default function CategoriesPage() {
             <MenuItem
               onClick={() => {
                 handleCloseMenu();
-                setUpdateModalopen(true);
-                seteditcatTitle(UpdateData.catTitle);
+                navigate(`/dashboard/ebook/edit/${UpdateData._id}`);
+                // setUpdateModalopen(true);
+                // seteditcatTitle(UpdateData.catTitle);
               }}
             >
               <Iconify icon={'eva:edit-fill'} sx={{ mr: 2 }} />
@@ -602,243 +605,6 @@ export default function CategoriesPage() {
               Delete
             </MenuItem>
           </Popover>
-
-          <Modal
-            open={Modalopen}
-            onClose={ModalhandleClose}
-            aria-labelledby="modal-modal-title"
-            aria-describedby="modal-modal-description"
-          >
-            <Box sx={style}>
-              <div>
-                <div
-                  style={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                  }}
-                >
-                  <h3>Upload Ebook</h3>
-                  <div style={{ marginTop: '20px' }}>
-                    <TextField
-                      id="outlined-firstname"
-                      label="Ebook Title"
-                      variant="outlined"
-                      style={{ width: '100%' }}
-                      value={ebookTitle}
-                      onChange={(e) => setebookTitle(e.target.value)}
-                    />
-                  </div>
-                  <div style={{ marginTop: '20px' }}>
-                    <TextField
-                      id="outlined-firstname"
-                      label="Ebook Description"
-                      variant="outlined"
-                      style={{ width: '100%' }}
-                      value={ebookDesc}
-                      onChange={(e) => setebookDesc(e.target.value)}
-                    />
-                  </div>
-                  <div style={{ marginTop: '20px' }}>
-                    <TextField
-                      id="outlined-firstname"
-                      label="Ebook Tags"
-                      variant="outlined"
-                      style={{ width: '100%' }}
-                      value={ebookTags}
-                      onChange={(e) => setebookTags(e.target.value)}
-                    />
-                  </div>
-                  {files && files.length > 0 ? (
-                    <>
-                      <div
-                        style={{
-                          marginTop: '20px',
-                          display: 'flex',
-                          justifyContent: 'space-between',
-                          alignItems: 'center',
-                          borderRadius: '50px',
-                          background: '#EE1A25',
-                          color: '#ffffff',
-                        }}
-                      >
-                        <div style={{ width: '90%', display: 'flex', alignItems: 'center', marginLeft: '20px' }}>
-                          <Iconify icon="fluent:document-pdf-20-filled" />
-                          <p>{files[0].name.length > 10 ? files[0].name.substring(0, 10) + '...' : files[0].name}</p>
-                          <p style={{ marginLeft: '10px' }}>({formatFileSize(files[0].size)})</p>
-                        </div>
-                        <div style={{ width: '10%', display: 'flex', alignItems: 'center', marginRight: '10px' }}>
-                          <IconButton
-                            aria-label="upload picture"
-                            style={{ color: '#FFFFFF' }}
-                            component="label"
-                            onClick={() => setFiles([])}
-                          >
-                            <Iconify icon="game-icons:cancel" />
-                          </IconButton>
-                        </div>
-                      </div>
-                    </>
-                  ) : (
-                    <></>
-                  )}
-                  <div style={{ marginTop: '20px' }}>
-                    <FileUpload value={files} onChange={(e) => checkfiles(e)} />
-                  </div>
-                  {!fileSuccess ? (
-                    <div style={{ color: 'red', display: 'flex', justifyContent: 'center', fontSize: '14px' }}>
-                      {fileErrMessage}{' '}
-                    </div>
-                  ) : (
-                    ''
-                  )}
-                  <div>
-                    <p style={{ color: '#FF0000' }}>*please upload attachment only in .pdf formate</p>
-                  </div>
-                  <div
-                    style={{
-                      marginTop: '30px',
-                      display: 'flex',
-                      justifyContent: 'flex-end',
-                      opacity:
-                        ebookTitle.trim() != '' && files.length > 0 && ebookDesc.trim() != '' && ebookTags.trim() != ''
-                          ? 1
-                          : 0.5,
-                    }}
-                  >
-                    {addLoader ? (
-                      <CircularProgress />
-                    ) : (
-                      <LoadingButton
-                        type="submit"
-                        variant="contained"
-                        style={{
-                          background: '#6ab04c',
-                          padding: '10px 20px',
-                          opacity: 1,
-                          cursor:
-                            ebookTitle.trim() != '' &&
-                            files.length > 0 &&
-                            ebookDesc.trim() != '' &&
-                            ebookTags.trim() != ''
-                              ? 'pointer'
-                              : 'not-allowed',
-                        }}
-                        onClick={() => handleSubmit()}
-                      >
-                        Upload Ebook
-                      </LoadingButton>
-                    )}
-                  </div>
-                </div>
-              </div>
-            </Box>
-          </Modal>
-
-          <Modal
-            open={UpdateModalopen}
-            onClose={UpdateModalhandleClose}
-            aria-labelledby="modal-modal-title"
-            aria-describedby="modal-modal-description"
-          >
-            <Box sx={style}>
-              <div>
-                <div
-                  style={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                  }}
-                >
-                  <h3>Upload Ebook</h3>
-                  <div style={{ marginTop: '20px' }}>
-                    <TextField
-                      id="outlined-firstname"
-                      label="Ebook Title"
-                      variant="outlined"
-                      style={{ width: '100%' }}
-                      value={editebookTitle}
-                      onChange={(e) => seteditebookTitle(e.target.value)}
-                    />
-                  </div>
-                  <div style={{ marginTop: '20px' }}>
-                    <TextField
-                      id="outlined-firstname"
-                      label="Ebook Description"
-                      variant="outlined"
-                      style={{ width: '100%' }}
-                      value={editebookDesc}
-                      onChange={(e) => seteditebookDesc(e.target.value)}
-                    />
-                  </div>
-                  <div style={{ marginTop: '20px' }}>
-                    <TextField
-                      id="outlined-firstname"
-                      label="Ebook Tags"
-                      variant="outlined"
-                      style={{ width: '100%' }}
-                      value={editebookTags}
-                      onChange={(e) => seteditebookTags(e.target.value)}
-                    />
-                  </div>
-
-                  <div
-                    style={{
-                      borderRadius: '50px',
-                    }}
-                  >
-                    <div style={{ width: '90%', display: 'flex', alignItems: 'center', marginLeft: '20px' }}>
-                      <Iconify icon="fluent:document-pdf-20-filled" />
-                      <p>
-                        {editfiles?.fileName.length > 10
-                          ? editfiles?.fileName.substring(0, 10) + '...'
-                          : editfiles?.fileName}
-                      </p>
-                      <p style={{ marginLeft: '10px' }}>({editfiles?.fileSize})</p>
-                    </div>
-                  </div>
-                  <div style={{ marginTop: '20px' }}></div>
-                  {!fileSuccess ? (
-                    <div style={{ color: 'red', display: 'flex', justifyContent: 'center', fontSize: '14px' }}>
-                      {fileErrMessage}{' '}
-                    </div>
-                  ) : (
-                    ''
-                  )}
-                  <div
-                    style={{
-                      marginTop: '30px',
-                      display: 'flex',
-                      justifyContent: 'flex-end',
-                      opacity:
-                        editebookTitle.trim() != '' && editebookDesc.trim() != '' && editebookTags.trim() != ''
-                          ? 1
-                          : 0.5,
-                    }}
-                  >
-                    {editLoader ? (
-                      <CircularProgress />
-                    ) : (
-                      <LoadingButton
-                        type="submit"
-                        variant="contained"
-                        style={{
-                          background: '#6ab04c',
-                          padding: '10px 20px',
-                          opacity: 1,
-                          cursor:
-                            editebookTitle.trim() != '' && editebookDesc.trim() != '' && editebookTags.trim() != ''
-                              ? 'pointer'
-                              : 'not-allowed',
-                        }}
-                        onClick={() => handleUpdate()}
-                      >
-                        Edit Ebook Details
-                      </LoadingButton>
-                    )}
-                  </div>
-                </div>
-              </div>
-            </Box>
-          </Modal>
         </>
       )}
     </>

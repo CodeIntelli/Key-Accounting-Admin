@@ -42,6 +42,9 @@ import CarrierPage from './pages/CarrierPage';
 import AddCarrier from './pages/AddCarrier';
 import CandidatePage from './pages/CandidatePage';
 import CreateInfographics from './pages/AddInfographics';
+import Createcasestudies from './pages/AddCasestudies';
+import Createchecklist from './pages/AddChecklist';
+import Createebook from './pages/AddEbook';
 import ServiceList from './pages/ServicesList';
 import IndustriesList from './pages/IndustryList';
 import AccountPayAndReceivablesService from './pages/ContentPage/Services/AccountPayAndReceivablesService';
@@ -132,6 +135,12 @@ export default function Router() {
         { path: 'user/edit/:id', element: <AddUser /> },
         { path: 'infographics/add', element: <CreateInfographics /> },
         { path: 'infographics/edit/:id', element: <CreateInfographics /> },
+        { path: 'casestudies/add', element: <Createcasestudies /> },
+        { path: 'casestudies/edit/:id', element: <Createcasestudies /> },
+        { path: 'checklist/add', element: <Createchecklist /> },
+        { path: 'checklist/edit/:id', element: <Createchecklist /> },
+        { path: 'ebook/add', element: <Createebook /> },
+        { path: 'ebook/edit/:id', element: <Createebook /> },
       ],
     },
     {

@@ -53,7 +53,7 @@ import NoRecordFound from 'src/components/NoRecordFound';
 const TABLE_HEAD = [
   { id: 'id', label: 'Sr No', alignRight: false },
   { id: 'title', label: 'Title', alignRight: false },
-  { id: 'desc', label: 'Description', alignRight: false },
+  { id: 'Subcategory', label: 'Subcategory', alignRight: false },
   { id: 'isActive', label: 'Status', alignRight: false },
   { id: 'createdAt', label: 'Created At', alignRight: false },
   { id: '' },
@@ -350,7 +350,7 @@ export default function CategoriesPage() {
       const AllFilterArray =
         EbookList &&
         EbookList.filter((item) => {
-          return item.catTitle?.toLowerCase()?.includes(searchQuery);
+          return item.title?.toLowerCase()?.includes(searchQuery);
         });
       setFilterData(AllFilterArray);
     } else {
@@ -512,7 +512,7 @@ export default function CategoriesPage() {
                                 {title}
                               </TableCell>
                               <TableCell align="left" style={{ textTransform: 'capitalize' }}>
-                                {desc}
+                                {tableData?.subCategoryTitle}
                               </TableCell>
 
                               <TableCell align="left">
@@ -584,240 +584,6 @@ export default function CategoriesPage() {
               Delete
             </MenuItem>
           </Popover>
-
-          <Modal
-            open={Modalopen}
-            onClose={ModalhandleClose}
-            aria-labelledby="modal-modal-title"
-            aria-describedby="modal-modal-description"
-          >
-            <Box sx={style}>
-              <div>
-                <div
-                  style={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                  }}
-                >
-                  <h3>Upload infographics</h3>
-                  <div style={{ marginTop: '20px' }}>
-                    <TextField
-                      id="outlined-firstname"
-                      label="infographics Title"
-                      variant="outlined"
-                      style={{ width: '100%' }}
-                      value={ebookTitle}
-                      onChange={(e) => setebookTitle(e.target.value)}
-                    />
-                  </div>
-                  <div style={{ marginTop: '20px' }}>
-                    <TextField
-                      id="outlined-firstname"
-                      label="infographics Description"
-                      variant="outlined"
-                      style={{ width: '100%' }}
-                      value={ebookDesc}
-                      onChange={(e) => setebookDesc(e.target.value)}
-                    />
-                  </div>
-                  <div style={{ marginTop: '20px' }}>
-                    <TextField
-                      id="outlined-firstname"
-                      label="infographics Tags"
-                      variant="outlined"
-                      style={{ width: '100%' }}
-                      value={ebookTags}
-                      onChange={(e) => setebookTags(e.target.value)}
-                    />
-                  </div>
-                  {files && files.length > 0 ? (
-                    <>
-                      <div
-                        style={{
-                          marginTop: '20px',
-                          display: 'flex',
-                          justifyContent: 'space-between',
-                          alignItems: 'center',
-                          borderRadius: '50px',
-                          background: '#EE1A25',
-                          color: '#ffffff',
-                        }}
-                      >
-                        <div style={{ width: '90%', display: 'flex', alignItems: 'center', marginLeft: '20px' }}>
-                          <Iconify icon="fluent:document-pdf-20-filled" />
-                          <p>{files[0].name.length > 10 ? files[0].name.substring(0, 10) + '...' : files[0].name}</p>
-                          <p style={{ marginLeft: '10px' }}>({formatFileSize(files[0].size)})</p>
-                        </div>
-                        <div style={{ width: '10%', display: 'flex', alignItems: 'center', marginRight: '10px' }}>
-                          <IconButton
-                            aria-label="upload picture"
-                            style={{ color: '#FFFFFF' }}
-                            component="label"
-                            onClick={() => setFiles([])}
-                          >
-                            <Iconify icon="game-icons:cancel" />
-                          </IconButton>
-                        </div>
-                      </div>
-                    </>
-                  ) : (
-                    <></>
-                  )}
-                  <div style={{ marginTop: '20px' }}>
-                    <FileUpload value={files} onChange={(e) => checkfiles(e)} />
-                  </div>
-                  {!fileSuccess ? (
-                    <div style={{ color: 'red', display: 'flex', justifyContent: 'center', fontSize: '14px' }}>
-                      {fileErrMessage}{' '}
-                    </div>
-                  ) : (
-                    ''
-                  )}
-                  <div
-                    style={{
-                      marginTop: '30px',
-                      display: 'flex',
-                      justifyContent: 'flex-end',
-                      opacity:
-                        ebookTitle.trim() != '' && files.length > 0 && ebookDesc.trim() != '' && ebookTags.trim() != ''
-                          ? 1
-                          : 0.5,
-                    }}
-                  >
-                    {addLoader ? (
-                      <CircularProgress />
-                    ) : (
-                      <LoadingButton
-                        type="submit"
-                        variant="contained"
-                        style={{
-                          background: '#6ab04c',
-                          padding: '10px 20px',
-                          opacity: 1,
-                          cursor:
-                            ebookTitle.trim() != '' &&
-                            files.length > 0 &&
-                            ebookDesc.trim() != '' &&
-                            ebookTags.trim() != ''
-                              ? 'pointer'
-                              : 'not-allowed',
-                        }}
-                        onClick={() => handleSubmit()}
-                      >
-                        Upload infographics
-                      </LoadingButton>
-                    )}
-                  </div>
-                </div>
-              </div>
-            </Box>
-          </Modal>
-
-          <Modal
-            open={UpdateModalopen}
-            onClose={UpdateModalhandleClose}
-            aria-labelledby="modal-modal-title"
-            aria-describedby="modal-modal-description"
-          >
-            <Box sx={style}>
-              <div>
-                <div
-                  style={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                  }}
-                >
-                  <h3>Update infographics</h3>
-                  <div style={{ marginTop: '20px' }}>
-                    <TextField
-                      id="outlined-firstname"
-                      label="infographics Title"
-                      variant="outlined"
-                      style={{ width: '100%' }}
-                      value={editebookTitle}
-                      onChange={(e) => seteditebookTitle(e.target.value)}
-                    />
-                  </div>
-                  <div style={{ marginTop: '20px' }}>
-                    <TextField
-                      id="outlined-firstname"
-                      label="infographics Description"
-                      variant="outlined"
-                      style={{ width: '100%' }}
-                      value={editebookDesc}
-                      onChange={(e) => seteditebookDesc(e.target.value)}
-                    />
-                  </div>
-                  <div style={{ marginTop: '20px' }}>
-                    <TextField
-                      id="outlined-firstname"
-                      label="infographics Tags"
-                      variant="outlined"
-                      style={{ width: '100%' }}
-                      value={editebookTags}
-                      onChange={(e) => seteditebookTags(e.target.value)}
-                    />
-                  </div>
-
-                  <div
-                    style={{
-                      borderRadius: '50px',
-                    }}
-                  >
-                    <div style={{ width: '90%', display: 'flex', alignItems: 'center', marginLeft: '20px' }}>
-                      <Iconify icon="fluent:document-pdf-20-filled" />
-                      <p>
-                        {editfiles?.fileName.length > 10
-                          ? editfiles?.fileName.substring(0, 10) + '...'
-                          : editfiles?.fileName}
-                      </p>
-                      <p style={{ marginLeft: '10px' }}>({editfiles?.fileSize})</p>
-                    </div>
-                  </div>
-                  <div style={{ marginTop: '20px' }}></div>
-                  {!fileSuccess ? (
-                    <div style={{ color: 'red', display: 'flex', justifyContent: 'center', fontSize: '14px' }}>
-                      {fileErrMessage}{' '}
-                    </div>
-                  ) : (
-                    ''
-                  )}
-                  <div
-                    style={{
-                      marginTop: '30px',
-                      display: 'flex',
-                      justifyContent: 'flex-end',
-                      opacity:
-                        editebookTitle.trim() != '' && editebookDesc.trim() != '' && editebookTags.trim() != ''
-                          ? 1
-                          : 0.5,
-                    }}
-                  >
-                    {editLoader ? (
-                      <CircularProgress />
-                    ) : (
-                      <LoadingButton
-                        type="submit"
-                        variant="contained"
-                        style={{
-                          background: '#6ab04c',
-                          padding: '10px 20px',
-                          opacity: 1,
-                          cursor:
-                            editebookTitle.trim() != '' && editebookDesc.trim() != '' && editebookTags.trim() != ''
-                              ? 'pointer'
-                              : 'not-allowed',
-                        }}
-                        onClick={() => handleUpdate()}
-                      >
-                        Edit infographics Details
-                      </LoadingButton>
-                    )}
-                  </div>
-                </div>
-              </div>
-            </Box>
-          </Modal>
         </>
       )}
     </>
