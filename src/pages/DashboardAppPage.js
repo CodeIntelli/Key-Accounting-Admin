@@ -122,6 +122,11 @@ export default function DashboardAppPage() {
                 <AppWidgetSummary title="Case Studies" color="error" icon={'fluent-mdl2:test-case'} />
               </Link>
             </Grid>
+            <Grid item xs={12} sm={6} md={3}>
+              <Link to={'/dashboard/featured/blog'}>
+                <AppWidgetSummary title="Featured Blog" color="success" icon={'mdi:feature-highlight'} />
+              </Link>
+            </Grid>
           </Grid>
         </Container>
       )}

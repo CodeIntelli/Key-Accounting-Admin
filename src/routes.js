@@ -61,6 +61,7 @@ import LandscapingAccounting from './pages/ContentPage/Industries/LandscapingAcc
 import LawfirmAccounting from './pages/ContentPage/Industries/LawfirmAccounting';
 import RentalServicesAccounting from './pages/ContentPage/Industries/RentalServicesAccounting';
 import RestaurantAccounting from './pages/ContentPage/Industries/RestaurantAccounting';
+import FeaturedBlog from './pages/FeaturedBlog';
 
 // ----------------------------------------------------------------------
 
@@ -115,6 +116,7 @@ export default function Router() {
         { path: 'pages/navbar', element: <NavbarPageContent /> },
         { path: 'pages', element: <ContentAppPage /> },
         { path: 'blog', element: <BlogPage /> },
+        { path: 'featured/blog', element: <FeaturedBlog /> },
         { path: 'activity', element: <ActivityAppPage /> },
         { path: 'checklist', element: <ChecklistPage /> },
         { path: 'ebook', element: <EbookPage /> },

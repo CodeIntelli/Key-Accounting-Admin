@@ -227,28 +227,6 @@ const CreateBlog = ({ blogData }) => {
         };
       });
       setReleventGroup(newData);
-      // debugger;
-
-      // setTimeout(() => {
-      // const doCheckReleventBlogData = await releventGroup.map((mapdata) => {
-      //   // debugger;
-      //   let newFilter = BlogReleventData.filter((filterData) => {
-      //     // debugger;
-      //     return mapdata.value === filterData._id;
-      //   });
-      //   return { ...newFilter[0] };
-      // });
-      // const doremovenullobj = await doCheckReleventBlogData.filter((value) => Object.keys(value).length !== 0);
-      // const finalResult = await doremovenullobj.map((newData) => {
-      //   // debugger;
-      //   return { label: newData.postTitle, value: newData._id };
-      // });
-      // debugger;
-      // setCheck(finalResult);
-      // debugger;
-      // console.log('==================>', finalResult);
-      // }, 500);
-
       return data;
     } catch (error) {
       return error?.response?.data;
