@@ -9,7 +9,7 @@ import LoginPage from './pages/LoginPage';
 import Page404 from './pages/Page404';
 import ContentAppPage from './pages/ContentPage';
 import DashboardAppPage from './pages/DashboardAppPage';
-import ActivityAppPage from './pages/ActivityPage';
+import UserActivityPage from './pages/UserActivity';
 import ChecklistPage from './pages/ChecklistPage';
 import EbookPage from './pages/EbookPage';
 import CaseStudiesPage from './pages/caseStudiesPage';
@@ -62,6 +62,7 @@ import LawfirmAccounting from './pages/ContentPage/Industries/LawfirmAccounting'
 import RentalServicesAccounting from './pages/ContentPage/Industries/RentalServicesAccounting';
 import RestaurantAccounting from './pages/ContentPage/Industries/RestaurantAccounting';
 import FeaturedBlog from './pages/FeaturedBlog';
+import ActivityCardList from './pages/ActivityCardList';
 
 // ----------------------------------------------------------------------
 
@@ -117,7 +118,8 @@ export default function Router() {
         { path: 'pages', element: <ContentAppPage /> },
         { path: 'blog', element: <BlogPage /> },
         { path: 'featured/blog', element: <FeaturedBlog /> },
-        { path: 'activity', element: <ActivityAppPage /> },
+        { path: 'activity', element: <ActivityCardList /> },
+        { path: 'activity/:id', element: <UserActivityPage /> },
         { path: 'checklist', element: <ChecklistPage /> },
         { path: 'ebook', element: <EbookPage /> },
         { path: 'adduser', element: <AddUser /> },

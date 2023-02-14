@@ -168,7 +168,7 @@ export default function FeaturedBlog() {
 
   React.useEffect(() => {
     doFetchAllBlogData();
-    fetchCategory();
+    // fetchCategory();
     fetchFeaturedBlog();
   }, []);
 
