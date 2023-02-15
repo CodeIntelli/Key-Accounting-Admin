@@ -316,8 +316,8 @@ const ServicePageContent = () => {
 
                         <TextField
                           name="email"
-                          label="Main image"
-                          style={{ width: '100%', marginTop: '24px' }}
+                          label="Button Text"
+                          style={{ width: '100%' }}
                           value={bbtnTxt}
                           onChange={(e) => {
                             bsetbtnTxt(e.target.value);
@@ -325,8 +325,8 @@ const ServicePageContent = () => {
                         />
                         <TextField
                           name="email"
-                          label="Main image"
-                          style={{ width: '100%', marginTop: '24px' }}
+                          label="Button Routes"
+                          style={{ width: '100%' }}
                           value={bbtnRoutes}
                           onChange={(e) => {
                             bsetbtnRoutes(e.target.value);

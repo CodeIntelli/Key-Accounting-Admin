@@ -234,7 +234,7 @@ export default function FeaturedBlog() {
       if (willDelete) {
         const result = await removeUser(id);
         if (result.success === true) {
-          fetchCategory();
+          // fetchCategory();
           fetchFeaturedBlog();
           successToast('Featured Blog deleted successfully');
         } else {

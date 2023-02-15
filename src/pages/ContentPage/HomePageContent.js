@@ -64,8 +64,10 @@ const HomePageContent = () => {
   const [hcontenttitle, hsetcontenttitle] = useState('');
   const [hbtn2Txt, hsetbtn2Txt] = useState('');
   const [hbtnTxt, hsetbtnTxt] = useState('');
+  const [hbtnRoutes, hsetbtnRoutes] = useState('');
   /*section3  */
   const [ibtnTitle, isetbtnTitle] = useState('');
+  const [ibtnRoutes, isetbtnRoutes] = useState('');
   const [isoftTxt, isetsoftTxt] = useState('');
   const [ititle, isettitle] = useState('');
   const [iData, isetData] = useState('');
@@ -85,75 +87,76 @@ const HomePageContent = () => {
 
   const setStateData = (data) => {
     // Hero Section
-    asetsubtitle1(data.heroSection.subtitle1);
-    asettitle(data.heroSection.title);
-    asetsubTitle(data.heroSection.subTitle);
-    asetbtnTxt(data.heroSection.btnTxt);
-    asetbtnUrl(data.heroSection.btnUrl);
-    asetmainImg(data.heroSection.mainImg);
+    asetsubtitle1(data?.heroSection?.subtitle1);
+    asettitle(data?.heroSection?.title);
+    asetsubTitle(data?.heroSection?.subTitle);
+    asetbtnTxt(data?.heroSection?.btnTxt);
+    asetbtnUrl(data?.heroSection?.btnUrl);
+    asetmainImg(data?.heroSection?.mainImg);
     // section1
-    bsetmainTitle(data.section1.mainTitle);
-    bsettitle(data.section1.title);
-    bsetmain_images(data.section1.main_images);
-    bsetimgData(data.section1.data);
+    bsetmainTitle(data?.section1?.mainTitle);
+    bsettitle(data?.section1?.title);
+    bsetmain_images(data?.section1?.main_images);
+    bsetimgData(data?.section1?.data);
 
     // section2
-    csetmainTitle(data.section2.mainTitle);
-    csettitle(data.section2.title);
-    csetmain_images(data.section2.main_images);
-    csetimgData(data.section2.data);
+    csetmainTitle(data?.section2?.mainTitle);
+    csettitle(data?.section2?.title);
+    csetmain_images(data?.section2?.main_images);
+    csetimgData(data?.section2?.data);
 
     //
-    dsettitle(data.dynamicHeading.title);
-    dsetbtnTxt(data.dynamicHeading.btnTxt);
-    dsetbtnUrl(data.dynamicHeading.btnRoutes);
+    dsettitle(data?.dynamicHeading?.title);
+    dsetbtnTxt(data?.dynamicHeading?.btnTxt);
+    dsetbtnUrl(data?.dynamicHeading?.btnRoutes);
 
     //
-    esetsubtitle(data.serviceSection.subtitle);
-    esettitle(data.serviceSection.title);
-    esetdata(data.serviceSection.data);
+    esetsubtitle(data?.serviceSection?.subtitle);
+    esettitle(data?.serviceSection?.title);
+    esetdata(data?.serviceSection?.data);
 
     //
-    fsetsubtitle(data.companyChoose.subtitle);
-    fsettitle(data.companyChoose.title);
-    fsetlastDesc(data.companyChoose.lastDesc);
-    fsetbtnTxt(data.companyChoose.btnTxt);
-    fsetbtnUrl(data.companyChoose.btnUrl);
-    fsetmainImg(data.companyChoose.mainImg);
-    fsetdata(data.companyChoose.data);
+    fsetsubtitle(data?.companyChoose?.subtitle);
+    fsettitle(data?.companyChoose?.title);
+    fsetlastDesc(data?.companyChoose?.lastDesc);
+    fsetbtnTxt(data?.companyChoose?.btnTxt);
+    fsetbtnUrl(data?.companyChoose?.btnUrl);
+    fsetmainImg(data?.companyChoose?.mainImg);
+    fsetdata(data?.companyChoose?.data);
 
     //
-    gsetsubtitle(data.SliderSection1.subtitle);
-    gsettitle(data.SliderSection1.title);
-    gsetimgData(data.SliderSection1.imgData);
-    gsetcardData(data.SliderSection1.cardData);
+    gsetsubtitle(data?.SliderSection1?.subtitle);
+    gsettitle(data?.SliderSection1?.title);
+    gsetimgData(data?.SliderSection1?.imgData);
+    gsetcardData(data?.SliderSection1?.cardData);
 
     //
-    hsetsubtitle(data.workSection.subtitle);
-    hsettitle(data.workSection.title);
-    hsetdesc(data.workSection.desc);
-    hsetdesc2(data.workSection.desc2);
-    hsetmainImg(data.workSection.mainImg);
-    hsetcontent(data.workSection.contents[0]);
-    hsetcontent2(data.workSection.contents[1]);
-    hsetcontenttitle(data.workSection.contentTitle); // new state
-    hsetbtn2Txt(data.workSection.btn2Txt);
-    hsetbtnTxt(data.workSection.btnTxt);
+    hsetsubtitle(data?.workSection?.subtitle);
+    hsettitle(data?.workSection?.title);
+    hsetdesc(data?.workSection?.desc);
+    hsetdesc2(data?.workSection?.desc2);
+    hsetmainImg(data?.workSection?.mainImg);
+    hsetcontent(data?.workSection?.contents[0]);
+    hsetcontent2(data?.workSection?.contents[1]);
+    hsetcontenttitle(data?.workSection?.contentTitle); // new state
+    hsetbtn2Txt(data?.workSection?.btn2Txt);
+    hsetbtnTxt(data?.workSection?.btnTxt);
+    hsetbtnRoutes(data?.workSection?.btnRoutes);
 
     //
-    isetbtnTitle(data.section3.btnTitle);
-    isetsoftTxt(data.section3.softTxt);
-    isettitle(data.section3.title);
-    isetData(data.section3.imgData);
+    isetbtnTitle(data?.section3?.btnTitle);
+    isetsoftTxt(data?.section3?.softTxt);
+    isettitle(data?.section3?.title);
+    isetData(data?.section3?.imgData);
     //
-    jsetsubtitle(data.latestResource.subtitle);
-    jsettitle(data.latestResource.title);
-    jsetcardData(data.latestResource.card);
+    jsetsubtitle(data?.latestResource?.subtitle);
+    jsettitle(data?.latestResource?.title);
+    jsetcardData(data?.latestResource?.card);
     //
-    ksetsubtitle(data.Faq.subTitle);
-    ksettitle(data.Faq.title);
-    ksetmainBtn(data.Faq.mainBtn);
-    ksetcardData(data.Faq.texts);
+    ksetsubtitle(data?.Faq?.subTitle);
+    ksettitle(data?.Faq?.title);
+    ksetmainBtn(data?.Faq?.mainBtn);
+    ksetcardData(data?.Faq?.texts);
   };
 
   const fetchContent = async () => {
@@ -265,9 +268,11 @@ const HomePageContent = () => {
             contentTitle: hcontenttitle,
             btn2Txt: hbtn2Txt,
             btnTxt: hbtnTxt,
+            btnRoutes: hbtnRoutes,
           },
           section3: {
             btnTitle: ibtnTitle,
+            btnRoutes: ibtnRoutes,
             softTxt: isoftTxt,
             title: ititle,
             imgData: iData,
@@ -747,6 +752,19 @@ const HomePageContent = () => {
                                   // esetdata[index].btnTxt(e.target.value);
                                 }}
                               />
+                              <TextField
+                                name="email"
+                                label={`Card Button Routes ${index + 1}`}
+                                style={{ width: '100%' }}
+                                value={cardData?.btnRoutes}
+                                onChange={(e) => {
+                                  let value = e.target.value;
+                                  let dta = [...edata];
+                                  dta[index].btnRoutes = value;
+                                  esetdata(dta);
+                                  // esetdata[index].btnTxt(e.target.value);
+                                }}
+                              />
                             </Box>
                           </>
                         );
@@ -1116,6 +1134,14 @@ const HomePageContent = () => {
                       />
                       <TextField
                         name="email"
+                        label="Main Button Route"
+                        value={hbtnRoutes}
+                        onChange={(e) => {
+                          hsetbtnRoutes(e.target.value);
+                        }}
+                      />
+                      {/* <TextField
+                        name="email"
                         label="Card Button Text"
                         value={hbtn2Txt}
                         onChange={(e) => {
@@ -1145,7 +1171,7 @@ const HomePageContent = () => {
                         onChange={(e) => {
                           hsetcontenttitle(e.target.value);
                         }}
-                      />
+                      /> */}
                     </Box>
                     <div style={{ padding: '0px 40px' }}>
                       <TextField
@@ -1155,6 +1181,24 @@ const HomePageContent = () => {
                         value={hmainImg}
                         onChange={(e) => {
                           hsetmainImg(e.target.value);
+                        }}
+                      />
+                      <TextField
+                        name="email"
+                        label="Main Section Button Text"
+                        style={{ width: '100%', marginTop: '24px' }}
+                        value={ibtnTitle}
+                        onChange={(e) => {
+                          isetbtnTitle(e.target.value);
+                        }}
+                      />
+                      <TextField
+                        name="email"
+                        label="Main Section Button Routes "
+                        style={{ width: '100%', marginTop: '24px' }}
+                        value={ibtnRoutes}
+                        onChange={(e) => {
+                          isetbtnRoutes(e.target.value);
                         }}
                       />
                     </div>
@@ -1171,7 +1215,7 @@ const HomePageContent = () => {
                 <Card sx={{ py: 2, px: 3 }}>
                   <h2>Section 3</h2>
                   <Grid item xs={12} md={12}>
-                    <div style={{ padding: '0px 40px' }}>
+                    <div>
                       <Box
                         sx={{
                           display: 'grid',
@@ -1199,15 +1243,6 @@ const HomePageContent = () => {
                           }}
                         />
                       </Box>
-                      <TextField
-                        name="email"
-                        label="Button Title"
-                        style={{ width: '100%', marginTop: '24px' }}
-                        value={ibtnTitle}
-                        onChange={(e) => {
-                          isetbtnTitle(e.target.value);
-                        }}
-                      />
                     </div>
                     <h3>Image Section </h3>
                     {iData.map((cardData, index) => {
@@ -1293,7 +1328,7 @@ const HomePageContent = () => {
                           }}
                         />
                       </Box>
-                      <h3>Image Section </h3>
+                      <h3>Card Section </h3>
                       {jcardData.map((cardData, index) => {
                         return (
                           <>
@@ -1345,19 +1380,6 @@ const HomePageContent = () => {
                                   // jsetcardData[index].categories[1](e.target.value);
                                 }}
                               />
-                              <TextField
-                                name="email"
-                                label={`Description`}
-                                style={{ width: '100%' }}
-                                value={cardData.desc}
-                                onChange={(e) => {
-                                  let value = e.target.value;
-                                  let dta = [...jcardData];
-                                  dta[index].desc = value;
-                                  jsetcardData(dta);
-                                  // jsetcardData[index].desc(e.target.value);
-                                }}
-                              />
 
                               <TextField
                                 name="email"
@@ -1374,7 +1396,7 @@ const HomePageContent = () => {
                               />
                               <TextField
                                 name="email"
-                                label={`Main Button Text`}
+                                label={`Download Button Text`}
                                 style={{ width: '100%' }}
                                 value={cardData.mainBtn}
                                 onChange={(e) => {
@@ -1394,6 +1416,19 @@ const HomePageContent = () => {
                                   let value = e.target.value;
                                   let dta = [...jcardData];
                                   dta[index].btnUrl = value;
+                                  jsetcardData(dta);
+                                  // jsetcardData[index].btnUrl(e.target.value);
+                                }}
+                              />
+                              <TextField
+                                name="email"
+                                label={`Download Button Routes`}
+                                style={{ width: '100%' }}
+                                value={cardData.downloadUrl}
+                                onChange={(e) => {
+                                  let value = e.target.value;
+                                  let dta = [...jcardData];
+                                  dta[index].downloadUrl = value;
                                   jsetcardData(dta);
                                   // jsetcardData[index].btnUrl(e.target.value);
                                 }}
