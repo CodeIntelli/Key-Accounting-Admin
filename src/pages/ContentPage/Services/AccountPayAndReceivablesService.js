@@ -27,6 +27,8 @@ const AccountPayAndReceivablesService = () => {
   /* section2 */
   const [cdesc, csetdesc] = useState('');
   const [cimg, csetimg] = useState('');
+  const [cbtnTxt, csetbtnTxt] = useState('');
+  const [cbtnRoutes, csetbtnRoutes] = useState('');
   /* section3 */
   const [dsubtitle, dsetsubtitle] = useState('');
   const [dtitle, dsettitle] = useState('');
@@ -61,6 +63,8 @@ const AccountPayAndReceivablesService = () => {
     /*  */
     csetdesc(data.section2.desc);
     csetimg(data.section2.img);
+    csetbtnTxt(data?.section2?.btnTxt);
+    csetbtnRoutes(data?.section2?.btnRoutes);
 
     /*  */
     dsetsubtitle(data.section3.subtitle);
@@ -147,6 +151,8 @@ const AccountPayAndReceivablesService = () => {
           section2: {
             desc: cdesc,
             img: cimg,
+            btnTxt: cbtnTxt,
+            btnRoutes: cbtnRoutes,
           },
           section3: {
             subtitle: dsubtitle,
@@ -346,6 +352,24 @@ const AccountPayAndReceivablesService = () => {
                           value={cimg}
                           onChange={(e) => {
                             csetimg(e.target.value);
+                          }}
+                        />
+                        <TextField
+                          name="email"
+                          label="Button Text"
+                          style={{ width: '100%', marginTop: '24px' }}
+                          value={cbtnTxt}
+                          onChange={(e) => {
+                            csetbtnTxt(e.target.value);
+                          }}
+                        />
+                        <TextField
+                          name="email"
+                          label="Button Routes"
+                          style={{ width: '100%', marginTop: '24px' }}
+                          value={cbtnRoutes}
+                          onChange={(e) => {
+                            csetbtnRoutes(e.target.value);
                           }}
                         />
                       </Box>

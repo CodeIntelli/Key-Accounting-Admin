@@ -348,6 +348,25 @@ const ServicePageContent = () => {
                             csetimg(e.target.value);
                           }}
                         />
+
+                        <TextField
+                          name="email"
+                          label="Button Text"
+                          style={{ width: '100%', marginTop: '24px' }}
+                          value={cbtnTxt}
+                          onChange={(e) => {
+                            csetbtnTxt(e.target.value);
+                          }}
+                        />
+                        <TextField
+                          name="email"
+                          label="Button Routes"
+                          style={{ width: '100%', marginTop: '24px' }}
+                          value={cbtnRoutes}
+                          onChange={(e) => {
+                            csetbtnRoutes(e.target.value);
+                          }}
+                        />
                       </Box>
                     </div>
                   </Grid>
