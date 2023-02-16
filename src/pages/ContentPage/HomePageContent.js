@@ -80,6 +80,7 @@ const HomePageContent = () => {
   const [ktitle, ksettitle] = useState('');
   const [kmainBtn, ksetmainBtn] = useState('');
   const [kcardData, ksetcardData] = useState('');
+  const [kmainBtnRoute, ksetmainBtnRoute] = useState('');
 
   const [addRecordLoader, setaddLoader] = useState(false);
   const [id, setid] = useState();
@@ -157,6 +158,7 @@ const HomePageContent = () => {
     ksettitle(data?.Faq?.title);
     ksetmainBtn(data?.Faq?.mainBtn);
     ksetcardData(data?.Faq?.texts);
+    ksetmainBtnRoute(data?.faqSection?.mainBtnRoute);
   };
 
   const fetchContent = async () => {
@@ -286,6 +288,7 @@ const HomePageContent = () => {
             subTitle: ksubtitle,
             title: ktitle,
             mainBtn: kmainBtn,
+            mainBtnRoutes: kmainBtnRoute,
             texts: kcardData,
           },
         },
@@ -1514,6 +1517,15 @@ const HomePageContent = () => {
                         value={kmainBtn}
                         onChange={(e) => {
                           ksetmainBtn(e.target.value);
+                        }}
+                      />
+                      <TextField
+                        name="email"
+                        label="Main Button Routes"
+                        style={{ width: '100%', marginTop: '24px' }}
+                        value={kmainBtnRoute}
+                        onChange={(e) => {
+                          ksetmainBtnRoute(e.target.value);
                         }}
                       />
                       {/* kcardData */}

@@ -40,6 +40,7 @@ const ServicePageContent = () => {
   const [etitle, esettitle] = useState('');
   const [eData, esetData] = useState('');
   const [emainBtn, esetmainBtn] = useState('');
+  const [emainBtnRoute, esetmainBtnRoute] = useState('');
   const [emainImg, esetmainImg] = useState('');
 
   const [addRecordLoader, setaddLoader] = useState(false);
@@ -76,6 +77,7 @@ const ServicePageContent = () => {
     esettitle(data.faqSection.title);
     esetData(data.faqSection.texts);
     esetmainBtn(data.faqSection.mainBtn);
+    esetmainBtnRoute(data?.faqSection?.mainBtnRoute);
     esetmainImg(data.faqSection.mainImg);
   };
 
@@ -166,6 +168,7 @@ const ServicePageContent = () => {
             title: etitle,
             mainBtn: emainBtn,
             mainImg: emainImg,
+            mainBtnRoutes: emainBtnRoute,
             texts: eData,
           },
         },
@@ -604,6 +607,15 @@ const ServicePageContent = () => {
                         value={emainBtn}
                         onChange={(e) => {
                           esetmainBtn(e.target.value);
+                        }}
+                      />
+                      <TextField
+                        name="email"
+                        label="Button Routes"
+                        style={{ width: '100%', marginTop: '24px' }}
+                        value={emainBtnRoute}
+                        onChange={(e) => {
+                          esetmainBtnRoute(e.target.value);
                         }}
                       />
                       {eData.map((cardData, index) => {
