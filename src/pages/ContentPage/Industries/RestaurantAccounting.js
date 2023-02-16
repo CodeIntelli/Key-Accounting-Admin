@@ -466,6 +466,19 @@ const ServicePageContent = () => {
                                 // csetdata(e.target.value);
                               }}
                             />
+                            <TextField
+                              name="email"
+                              label="Button Routes"
+                              style={{ width: '100%', marginTop: '24px' }}
+                              value={cardData?.btnRoutes}
+                              onChange={(e) => {
+                                let value = e.target.value;
+                                let dta = [...cdata];
+                                dta[index].btnRoutes = value;
+                                csetdata(dta);
+                                // csetdata(e.target.value);
+                              }}
+                            />
                           </>
                         );
                       })}
