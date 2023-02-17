@@ -339,10 +339,18 @@ const CreateBlog = ({ blogData }) => {
     storedData.append('metaDesc', metaDesc);
     storedData.append('metaKeyword', metaKeyword);
     storedData.append('blogImg', image);
-    storedData.append('ReleventBlog[0]', releventBlogOneId);
-    storedData.append('ReleventBlog[1]', releventBlogTwoId);
-    storedData.append('ReleventBlog[2]', releventBlogThreeId);
-    storedData.append('ReleventBlog[3]', releventBlogFourId);
+    if(releventBlogOneId != undefined){
+      storedData.append('ReleventBlog[0]', releventBlogOneId);
+    }
+    if(releventBlogTwoId != undefined){
+      storedData.append('ReleventBlog[1]', releventBlogTwoId);
+    }
+      if(releventBlogThreeId != undefined){
+        storedData.append('ReleventBlog[2]', releventBlogThreeId);
+      }
+      if(releventBlogFourId != undefined){
+        storedData.append('ReleventBlog[3]', releventBlogFourId);
+      }
     // storedData.append('blogImg', image);
 
     const addBlogresult = await addBlog(CategoryValueDropdown, storedData);
