@@ -327,7 +327,10 @@ export default function SubCategoriesPage() {
   };
 
   const handleUpdate = async () => {
-    const editCatResult = await updateSubCategory(UpdateData._id, { catTitle: editsubCategory });
+    const editCatResult = await updateSubCategory(UpdateData._id, {
+      catTitle: editsubCategory,
+      categoriesId: editCategoryIdDropdown,
+    });
     console.log('🤩 ~ file: CategoriesPage.js:289 ~ handleSubmit ~ editCatResult', editCatResult);
     if (editCatResult.success) {
       successToast('Sub Category Edited Successfully');
@@ -669,7 +672,8 @@ export default function SubCategoriesPage() {
                       marginTop: '30px',
                       display: 'flex',
                       justifyContent: 'flex-end',
-                      opacity: editCategorydropdown.trim().length > 0 && editsubCategory.trim().length > 0 ? 1 : 0.5,
+                      opacity:
+                        editCategorydropdown?.trim()?.length > 0 && editsubCategory?.trim()?.length > 0 ? 1 : 0.5,
                     }}
                   >
                     {editLoader ? (
@@ -683,7 +687,7 @@ export default function SubCategoriesPage() {
                           padding: '10px 20px',
                           opacity: 1,
                           cursor:
-                            editCategorydropdown.trim().length > 0 && editsubCategory.trim().length > 0
+                            editCategorydropdown?.trim()?.length > 0 && editsubCategory?.trim()?.length > 0
                               ? 'pointer'
                               : 'not-allowed',
                         }}
