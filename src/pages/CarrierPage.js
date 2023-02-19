@@ -220,7 +220,7 @@ export default function CarrierPage() {
       const AllFilterArray =
         CategoryList &&
         CategoryList.filter((item) => {
-          return item.title?.toLowerCase()?.includes(searchQuery);
+          return item.title?.toLowerCase()?.includes(searchQuery.toLowerCase());
         });
       setFilterData(AllFilterArray);
     } else {

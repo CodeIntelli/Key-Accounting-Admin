@@ -540,21 +540,24 @@ const Createchecklist = () => {
                   <></>
                 )}
 
-                <div
-                  style={{
-                    borderRadius: '50px',
-                  }}
-                >
-                  <div style={{ width: '90%', display: 'flex', alignItems: 'center', marginLeft: '20px' }}>
-                    <Iconify icon="fluent:document-pdf-20-filled" />
-                    <p>
-                      {editfiles?.fileName?.length > 10
-                        ? editfiles?.fileName?.substring(0, 10) + '...'
-                        : editfiles?.fileName}
-                    </p>
-                    <p style={{ marginLeft: '10px' }}>({editfiles?.fileSize})</p>
+                {isEditedData ? (
+                  <div
+                    style={{
+                      borderRadius: '50px',
+                    }}
+                  >
+                    <div style={{ width: '90%', display: 'flex', alignItems: 'center', marginLeft: '20px' }}>
+                      <Iconify icon="fluent:document-pdf-20-filled" />
+                      <p>
+                        {editfiles?.fileName?.length > 10
+                          ? editfiles?.fileName?.substring(0, 10) + '...'
+                          : editfiles?.fileName}
+                      </p>
+                      <p style={{ marginLeft: '10px' }}>({editfiles?.fileSize})</p>
+                    </div>
                   </div>
-                </div>
+                ) : null}
+
                 <div style={{ marginTop: '20px' }}>
                   <FileUpload value={files} onChange={(e) => checkfiles(e)} />
                 </div>

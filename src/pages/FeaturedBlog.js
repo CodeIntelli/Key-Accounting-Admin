@@ -186,8 +186,8 @@ export default function FeaturedBlog() {
         CategoryList &&
         CategoryList.filter((item) => {
           return (
-            item.blog_id?.postTitle?.toLowerCase()?.includes(searchQuery) ||
-            item.blog_id?.subCategoryTitle?.toLowerCase()?.includes(searchQuery)
+            item.blog_id?.postTitle?.toLowerCase()?.includes(searchQuery.toLowerCase()) ||
+            item.blog_id?.subCategoryTitle?.toLowerCase()?.includes(searchQuery.toLowerCase())
           );
         });
 
@@ -351,7 +351,10 @@ export default function FeaturedBlog() {
                     <Label
                       color={'error'}
                       style={{ padding: '20px', fontSize: '14px' }}
-                      onClick={() => setsearchString('')}
+                      onClick={() => {
+                        doSearchName('');
+                        setsearchString('');
+                      }}
                     >
                       <Iconify icon={'eva:trash-2-outline'} sx={{ mr: 1 }} />
                       {sentenceCase('Clear')}

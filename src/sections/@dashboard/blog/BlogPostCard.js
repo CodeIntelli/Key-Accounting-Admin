@@ -179,7 +179,7 @@ export default function BlogPostCard({ key, post, index, blogToggler, deleteBlog
             sx={{ color: 'text.disabled', display: 'block' }}
             style={{ textTransform: 'capitalize' }}
           >
-            <span style={{ fontWeight: 'bold', color: '#000' }}>Category</span> {subCategory.subTitle}
+            <span style={{ fontWeight: 'bold', color: '#000' }}>Category</span> {subCategory?.subTitle}
           </Typography>
           <div
             style={{

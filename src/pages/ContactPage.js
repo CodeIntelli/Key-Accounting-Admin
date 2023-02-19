@@ -103,11 +103,11 @@ export default function UserPage() {
         allUserList &&
         allUserList.filter((item) => {
           return (
-            item.firstName?.toLowerCase()?.includes(searchQuery) ||
-            item.lastName?.toLowerCase()?.includes(searchQuery) ||
-            item.companySector?.toLowerCase()?.includes(searchQuery) ||
-            item.phoneNumber?.toLowerCase()?.includes(searchQuery) ||
-            item.email?.toLowerCase()?.includes(searchQuery)
+            item.firstName?.toLowerCase()?.includes(searchQuery.toLowerCase()) ||
+            item.lastName?.toLowerCase()?.includes(searchQuery.toLowerCase()) ||
+            item.companySector?.toLowerCase()?.includes(searchQuery.toLowerCase()) ||
+            item.phoneNumber?.toLowerCase()?.includes(searchQuery.toLowerCase()) ||
+            item.email?.toLowerCase()?.includes(searchQuery.toLowerCase())
           );
         });
 
@@ -163,7 +163,10 @@ export default function UserPage() {
                     <Label
                       color={'error'}
                       style={{ padding: '20px', fontSize: '14px' }}
-                      onClick={() => setsearchString('')}
+                      onClick={() => {
+                        doSearchName('');
+                        setsearchString('');
+                      }}
                     >
                       <Iconify icon={'eva:trash-2-outline'} sx={{ mr: 1 }} />
                       {sentenceCase('Clear')}

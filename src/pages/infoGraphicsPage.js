@@ -350,7 +350,7 @@ export default function CategoriesPage() {
       const AllFilterArray =
         EbookList &&
         EbookList.filter((item) => {
-          return item.title?.toLowerCase()?.includes(searchQuery);
+          return item.title?.toLowerCase()?.includes(searchQuery.toLowerCase());
         });
       setFilterData(AllFilterArray);
     } else {

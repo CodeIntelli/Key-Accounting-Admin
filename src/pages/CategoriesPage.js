@@ -289,7 +289,7 @@ export default function CategoriesPage() {
       const AllFilterArray =
         CategoryList &&
         CategoryList.filter((item) => {
-          return item.catTitle?.toLowerCase()?.includes(searchQuery);
+          return item.catTitle?.toLowerCase()?.includes(searchQuery.toLowerCase());
         });
       setFilterData(AllFilterArray);
     } else {

@@ -181,7 +181,7 @@ export default function CommentPage() {
     }
   };
 
-  const [addLoader,setAddLoader] = useState(false);
+  const [addLoader, setAddLoader] = useState(false);
 
   const doReplyComment = async (id) => {
     try {
@@ -193,7 +193,7 @@ export default function CommentPage() {
         : localStorage.getItem('x-access-token')
         ? localStorage.getItem('x-access-token')
         : null;
-        
+
       const { data } = await axios.put(
         `${BASE_URL}comment/reply/${id}`,
         {
@@ -529,7 +529,7 @@ export default function CommentPage() {
                         : UpdateData?.status}
                     </Label>
                   </div>
-                  <div style={{ marginTop: '10px' }}>
+                  <div style={{ marginTop: '10px', wordWrap: 'break-word' }}>
                     <div style={{ display: 'flex', alignItems: 'center', lineHeight: 1 }}>
                       <div style={{ width: '50%' }}>
                         <h4>Name:</h4>

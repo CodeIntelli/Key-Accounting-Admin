@@ -65,8 +65,6 @@ const CreateUser = () => {
   const [location, setLocation] = useState('');
   const [jobDescription, setjobdescription] = useState('');
   const [rolesRes, setRolesRes] = useState('');
-  const [indeedLink, setIndeedLink] = useState('');
-  const [linkdinLink, setLinkdinLink] = useState('');
   const [recordId, setRecordId] = useState('');
   const [isEditedData, setIsEditedData] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -123,8 +121,6 @@ const CreateUser = () => {
       setLocation(data?.result?.location);
       setjobdescription(data?.result?.jobDescription);
       setRolesRes(data?.result?.rolesAndResponsbility);
-      setIndeedLink(data?.result?.linkdinLink);
-      setLinkdinLink(data?.result?.indeedLink);
       setRecordId(data?.result?._id);
       setIsEditedData(true);
       setFetchLoading(false);
@@ -163,8 +159,6 @@ const CreateUser = () => {
       location,
       jobDescription,
       rolesAndResponsbility: rolesRes,
-      indeedLink,
-      linkdinLink,
     };
     let storeResult;
     if (!isEditedData) {
@@ -230,22 +224,6 @@ const CreateUser = () => {
                   <div style={{ width: '100%', marginTop: '24px' }}>
                     <JoditEditor value={rolesRes} config={editorConfig} onChange={(value) => setRolesRes(value)} />
                   </div>
-                  <TextField
-                    id="outlined-lastname"
-                    label="Indeed Link"
-                    variant="outlined"
-                    style={{ width: '100%', marginTop: '24px' }}
-                    value={indeedLink}
-                    onChange={(e) => setIndeedLink(e.target.value)}
-                  />
-                  <TextField
-                    id="outlined-lastname"
-                    label="Job Description"
-                    style={{ width: '100%', marginTop: '24px', marginBottom: '20px' }}
-                    variant="outlined"
-                    value={linkdinLink}
-                    onChange={(e) => setLinkdinLink(e.target.value)}
-                  />
                 </Card>
                 <div
                   style={{
@@ -256,9 +234,7 @@ const CreateUser = () => {
                       title?.trim() !== '' &&
                       location?.trim() !== '' &&
                       jobDescription?.trim() !== '' &&
-                      rolesRes?.trim() !== '' &&
-                      indeedLink?.trim() !== '' &&
-                      linkdinLink?.trim() !== ''
+                      rolesRes?.trim() !== ''
                         ? 1
                         : 0.5,
                   }}
@@ -279,9 +255,7 @@ const CreateUser = () => {
                           title?.trim() !== '' &&
                           location?.trim() !== '' &&
                           jobDescription?.trim() !== '' &&
-                          rolesRes?.trim() !== '' &&
-                          indeedLink?.trim() !== '' &&
-                          linkdinLink?.trim() !== ''
+                          rolesRes?.trim() !== ''
                             ? 'pointer'
                             : 'not-allowed',
                       }}

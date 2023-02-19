@@ -41,6 +41,7 @@ import Scrollbar from '../components/scrollbar';
 import Label from '../components/label';
 // sections
 import LoadingAnimation from '../components/LoadingAnimation';
+import NoRecordFound from 'src/components/NoRecordFound';
 
 // ----------------------------------------------------------------------
 
@@ -94,6 +95,7 @@ export default function UserPage() {
       setFilterData(data.result);
       setIsLoading(false);
     } catch (error) {
+      setIsLoading(false);
       console.log(error);
     }
   };
@@ -114,11 +116,11 @@ export default function UserPage() {
         allUserList &&
         allUserList.filter((item) => {
           return (
-            item.firstName?.toLowerCase()?.includes(searchQuery) ||
-            item.lastName?.toLowerCase()?.includes(searchQuery) ||
-            item.email?.toLowerCase()?.includes(searchQuery) ||
-            item.phoneNumber?.toLowerCase()?.includes(searchQuery) ||
-            item.experiance?.toLowerCase()?.includes(searchQuery)
+            item.firstName?.toLowerCase()?.includes(searchQuery.toLowerCase()) ||
+            item.lastName?.toLowerCase()?.includes(searchQuery.toLowerCase()) ||
+            item.email?.toLowerCase()?.includes(searchQuery.toLowerCase()) ||
+            item.phoneNumber?.toLowerCase()?.includes(searchQuery.toLowerCase()) ||
+            item.experiance?.toLowerCase()?.includes(searchQuery.toLowerCase())
           );
         });
 
@@ -174,7 +176,10 @@ export default function UserPage() {
                     <Label
                       color={'error'}
                       style={{ padding: '20px', fontSize: '14px' }}
-                      onClick={() => setsearchString('')}
+                      onClick={() => {
+                        doSearchName('');
+                        setsearchString('');
+                      }}
                     >
                       <Iconify icon={'eva:trash-2-outline'} sx={{ mr: 1 }} />
                       {sentenceCase('Clear')}
@@ -187,64 +192,73 @@ export default function UserPage() {
               <Scrollbar>
                 <TableContainer sx={{ minWidth: 800 }}>
                   <Table>
-                    <TableHead>
-                      <TableRow>
-                        {TABLE_HEAD.map((headCell) => (
-                          <TableCell
-                            key={Math.floor(Math.random() * 10000) * Date.now()}
-                            align={headCell.alignRight ? 'right' : 'left'}
-                          >
-                            <Box>{headCell.label}</Box>
-                          </TableCell>
-                        ))}
-                      </TableRow>
-                    </TableHead>
-                    {filterData?.map((tableData, index) => {
-                      const { _id, firstName, lastName, email, phoneNumber, experiance, createdAt, attachment } =
-                        tableData;
-                      return (
-                        <TableBody key={_id}>
-                          <TableRow hover>
-                            <TableCell align="left">{index + 1}</TableCell>
-                            <TableCell align="left">{`${firstName} ${lastName}`}</TableCell>
-
-                            <TableCell align="left">
-                              <div style={{ width: '150px', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                                {email}
-                              </div>
-                            </TableCell>
-                            <TableCell align="left">{phoneNumber}</TableCell>
-                            <TableCell align="left">{experiance}</TableCell>
-                            <TableCell align="left" style={{ textTransform: 'capitalize' }}>
-                              <a
-                                href={
-                                  attachment.url
-                                    ? attachment.url.split('/upload/')[0] +
-                                      '/upload/fl_attachment/' +
-                                      attachment.url.split('/upload/')[1]
-                                    : ''
-                                }
-                                download={attachment?.fileName}
+                    {console.log(filterData, '<==========================================')}
+                    {filterData && filterData.length == 0 ? (
+                      <NoRecordFound />
+                    ) : (
+                      <>
+                        <TableHead>
+                          <TableRow>
+                            {TABLE_HEAD.map((headCell) => (
+                              <TableCell
+                                key={Math.floor(Math.random() * 10000) * Date.now()}
+                                align={headCell.alignRight ? 'right' : 'left'}
                               >
-                                <div style={{ display: 'flex', alignItems: 'center' }}>
-                                  <Label color={'info'} style={{ cursor: 'pointer' }} title={attachment.fileName}>
-                                    <Iconify icon="material-symbols:sim-card-download-rounded" />
-                                    {attachment.fileName.length > 10
-                                      ? `${attachment.fileName.substr(0, 10)}...`
-                                      : sentenceCase(attachment.fileName)}
-                                  </Label>
-                                  <Label color={'success'} style={{ cursor: 'pointer' }}>
-                                    ({attachment.fileSize})
-                                  </Label>
-                                </div>
-                              </a>
-                            </TableCell>
-
-                            <TableCell align="left">{moment(createdAt).format('DD MMM YYYY ')}</TableCell>
+                                <Box>{headCell.label}</Box>
+                              </TableCell>
+                            ))}
                           </TableRow>
-                        </TableBody>
-                      );
-                    })}
+                        </TableHead>
+                        {filterData?.map((tableData, index) => {
+                          const { _id, firstName, lastName, email, phoneNumber, experiance, createdAt, attachment } =
+                            tableData;
+                          return (
+                            <TableBody key={_id}>
+                              <TableRow hover>
+                                <TableCell align="left">{index + 1}</TableCell>
+                                <TableCell align="left">{`${firstName} ${lastName}`}</TableCell>
+
+                                <TableCell align="left">
+                                  <div style={{ width: '150px', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                                    {email}
+                                  </div>
+                                </TableCell>
+                                <TableCell align="left">{phoneNumber}</TableCell>
+                                <TableCell align="left">{experiance}</TableCell>
+                                <TableCell align="left" style={{ textTransform: 'capitalize' }}>
+                                  <a
+                                    href={
+                                      attachment?.url
+                                        ? attachment?.url?.split('/upload/')[0] +
+                                          '/upload/fl_attachment/' +
+                                          attachment?.url?.split('/upload/')[1]
+                                        : ''
+                                    }
+                                    download={attachment?.fileName}
+                                  >
+                                    <div style={{ display: 'flex', alignItems: 'center' }}>
+                                      <Label color={'info'} style={{ cursor: 'pointer' }} title={attachment?.fileName}>
+                                        <Iconify icon="material-symbols:sim-card-download-rounded" />
+                                        {attachment?.fileName
+                                          ? attachment?.fileName?.length > 10
+                                            ? `${attachment?.fileName?.substr(0, 10)}...`
+                                            : sentenceCase(attachment.fileName)
+                                          : ''}
+                                      </Label>
+                                      <Label color={'success'} style={{ cursor: 'pointer' }}>
+                                        ({attachment?.fileSize})
+                                      </Label>
+                                    </div>
+                                  </a>
+                                </TableCell>
+
+                                <TableCell align="left">{moment(createdAt).format('DD MMM YYYY ')}</TableCell>
+                              </TableRow>
+                            </TableBody>
+                          );
+                        })}
+                      </>
+                    )}
                   </Table>
                 </TableContainer>
               </Scrollbar>

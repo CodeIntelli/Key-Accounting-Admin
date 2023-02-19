@@ -183,7 +183,7 @@ export default function SubCategoriesPage() {
 
   const updateSubCategory = async (id, updatedData) => {
     try {
-      seEditLoader(true);
+      setEditLoader(true);
       const BASE_URL = process.env.REACT_APP_API_ENDPOINT;
       const bearerToken = Cookies.get('x-access-token')
         ? Cookies.get('x-access-token')
@@ -201,10 +201,10 @@ export default function SubCategoriesPage() {
       seteditCategoryIdDropdown('');
       seteditCategorydropdown('');
       seteditSubCategory('');
-      seEditLoader(false);
+      setEditLoader(false);
       return data;
     } catch (error) {
-      seEditLoader(false);
+      setEditLoader(false);
       return error.response.data;
     }
   };
@@ -291,8 +291,9 @@ export default function SubCategoriesPage() {
         CategoryList &&
         CategoryList.filter((item) => {
           return (
-            item.subTitle?.toLowerCase()?.includes(searchQuery) ||
-            item.categories.catTitle?.toLowerCase()?.includes(searchQuery)
+            item.subTitle?.toLowerCase()?.includes(searchQuery.toLowerCase()) ||
+            item.categories?.catTitle?.toLowerCase()?.includes(searchQuery.toLowerCase())
+            // item.subTitle?.toLowerCase()?.includes(searchQuery.toLowerCase())
           );
         });
 
@@ -439,7 +440,10 @@ export default function SubCategoriesPage() {
                     <Label
                       color={'error'}
                       style={{ padding: '20px', fontSize: '14px' }}
-                      onClick={() => setsearchString('')}
+                      onClick={(e) => {
+                        doSearchName('');
+                        setsearchString('');
+                      }}
                     >
                       <Iconify icon={'eva:trash-2-outline'} sx={{ mr: 1 }} />
                       {sentenceCase('Clear')}
