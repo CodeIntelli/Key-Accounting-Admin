@@ -47,7 +47,8 @@ const TABLE_HEAD = [
   { id: 'id', label: 'Sr No', alignRight: false },
   { id: 'title', label: 'Featured Blog Title', alignRight: false },
   { id: 'Category', label: 'Subcategory Name', alignRight: false },
-  { id: 'isActive', label: 'Position', alignRight: false },
+  { id: 'position', label: 'Position', alignRight: false },
+  { id: 'isActive', label: 'Blog Status', alignRight: false },
   { id: 'createdAt', label: 'Created At', alignRight: false },
   { id: '' },
 ];
@@ -318,7 +319,9 @@ export default function FeaturedBlog() {
                 Add Featured Blog
               </Button>
             </Stack>
-
+            <p style={{ color: 'red' }}>
+              Please Remove Inactive Blogs because it dosen't show user side and your UI not look well
+            </p>
             <Card>
               <FormControl
                 sx={{
@@ -393,6 +396,12 @@ export default function FeaturedBlog() {
                             </TableCell>
                             <TableCell align="left" style={{ color: 'red', textTransform: 'capitalize' }}>
                               {position}
+                            </TableCell>
+
+                            <TableCell align="left">
+                              <Label color={blog_id.isActive ? 'success' : 'error'} style={{ cursor: 'pointer' }}>
+                                {sentenceCase(blog_id.isActive ? 'active' : 'inactive')}
+                              </Label>
                             </TableCell>
                             <TableCell align="left">{moment(createdAt).format('LL')}</TableCell>
 

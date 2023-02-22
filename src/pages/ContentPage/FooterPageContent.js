@@ -108,30 +108,32 @@ const FooterPageContent = () => {
   const handleSubmit = async () => {
     setaddLoader(true);
     const setFormData = {
-      pageTitle: 'footer',
-      content: {
-        title: atitle,
-        desc: asubtitle,
-        socialsection: adata,
-        section1: {
-          title: btitle,
-          data: bdata,
-        },
-        section2: {
-          title: ctitle,
-          data: cdata,
-        },
-        section3: {
-          title: dtitle,
-          data: ddata,
-        },
-        section4: {
-          title: etitle,
-          data: edata,
-        },
-        section5: {
-          title: ftitle,
-          data: fdata,
+      english: {
+        pageTitle: 'footer',
+        content: {
+          title: atitle,
+          desc: asubtitle,
+          socialsection: adata,
+          section1: {
+            title: btitle,
+            data: bdata,
+          },
+          section2: {
+            title: ctitle,
+            data: cdata,
+          },
+          section3: {
+            title: dtitle,
+            data: ddata,
+          },
+          section4: {
+            title: etitle,
+            data: edata,
+          },
+          section5: {
+            title: ftitle,
+            data: fdata,
+          },
         },
       },
     };
@@ -543,18 +545,7 @@ const FooterPageContent = () => {
                                   setfdata(dta);
                                 }}
                               />
-                              <TextField
-                                name="email"
-                                label="Routes"
-                                style={{ width: '100%', marginTop: '24px' }}
-                                value={cardData.routes}
-                                onChange={(e) => {
-                                  const value = e.target.value;
-                                  const dta = [...fdata];
-                                  dta[index].routes = value;
-                                  setfdata(dta);
-                                }}
-                              />
+
                               <TextField
                                 name="email"
                                 label="Image Link"

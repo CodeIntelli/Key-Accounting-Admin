@@ -197,6 +197,7 @@ const CreateBlog = ({ blogData }) => {
         headers: {
           authorization: `Bearer ${bearerToken}`,
         },
+        onUploadProgress: (progressEvent) => console.log(progressEvent.loaded),
       });
       return data;
     } catch (error) {
@@ -304,12 +305,15 @@ const CreateBlog = ({ blogData }) => {
   const handleImage = async (e) => {
     const { name, value } = e.target;
     if (name === 'image') {
-      setAvatarPreview(URL.createObjectURL(e.target.files[0]));
-      setImage(e.target.files[0]);
+      await setAvatarPreview(URL.createObjectURL(e.target.files[0]));
+      await setImage(e.target.files[0]);
     }
+    console.log('HandleImage Called', isUpdate);
+    console.log('HandleImage Called 2', image);
+    console.log('HandleImage Called 3', avatarPreview);
     if (isUpdate) {
       if (image && image != undefined) {
-        doUploadImageUpload(blogId);
+        await doUploadImageUpload(blogId);
       }
     }
   };
@@ -330,7 +334,7 @@ const CreateBlog = ({ blogData }) => {
     storedData.append('postTitle', postTitle);
     // storedData.append('postDesc', postDesc);
     storedData.append('content', content);
-    storedData.append('post_slug', post_slug);
+    storedData.append('post_slug', postTitle);
     const tagsArr = tags.split(',');
     // tagsArr.map((tagdata, index) => {
     //   return storedData.append(`tags[${index}]`, tagdata);
@@ -339,18 +343,18 @@ const CreateBlog = ({ blogData }) => {
     storedData.append('metaDesc', metaDesc);
     storedData.append('metaKeyword', metaKeyword);
     storedData.append('blogImg', image);
-    if(releventBlogOneId != undefined){
+    if (releventBlogOneId != undefined) {
       storedData.append('ReleventBlog[0]', releventBlogOneId);
     }
-    if(releventBlogTwoId != undefined){
+    if (releventBlogTwoId != undefined) {
       storedData.append('ReleventBlog[1]', releventBlogTwoId);
     }
-      if(releventBlogThreeId != undefined){
-        storedData.append('ReleventBlog[2]', releventBlogThreeId);
-      }
-      if(releventBlogFourId != undefined){
-        storedData.append('ReleventBlog[3]', releventBlogFourId);
-      }
+    if (releventBlogThreeId != undefined) {
+      storedData.append('ReleventBlog[2]', releventBlogThreeId);
+    }
+    if (releventBlogFourId != undefined) {
+      storedData.append('ReleventBlog[3]', releventBlogFourId);
+    }
     // storedData.append('blogImg', image);
 
     const addBlogresult = await addBlog(CategoryValueDropdown, storedData);
@@ -387,19 +391,8 @@ const CreateBlog = ({ blogData }) => {
 
   const setUpdateData = async (updatedData) => {
     // debugger;
-    const {
-      _id,
-      content,
-      metaDesc,
-      metaKeyword,
-      metaTitle,
-      postDesc,
-      postTitle,
-      post_slug,
-      subCategory,
-      tags,
-      thumbImage,
-    } = updatedData;
+    const { _id, content, metaDesc, metaKeyword, metaTitle, postDesc, postTitle, subCategory, tags, thumbImage } =
+      updatedData;
     // console.log(
     //   '🤩 ~ =========================================file: AddBlog.js:270 ~ setUpdateData ~ updatedData',
     //   updatedData
@@ -408,7 +401,7 @@ const CreateBlog = ({ blogData }) => {
     setpostTitle(postTitle);
     setpostDesc(metaDesc);
     setcontent(content);
-    setpost_slug(post_slug);
+    setpost_slug(postTitle);
     setAvatarPreview(thumbImage.url);
     // settags(tags.toString());
     setmetaTitle(updatedData.metaTitle);
@@ -436,7 +429,7 @@ const CreateBlog = ({ blogData }) => {
     const editedData = {
       postTitle,
       content,
-      post_slug,
+      post_slug: postTitle,
       cat_id: CategoryValueDropdown,
       metaTitle,
       metaDesc,
@@ -537,7 +530,21 @@ const CreateBlog = ({ blogData }) => {
                     accept="image/*"
                     style={{ display: 'none' }}
                     id="ImageUpload"
-                    onChange={(e) => handleImage(e)}
+                    onChange={async (e) => {
+                      // const { name, value } = e.target;
+                      if (e.target.name === 'image') {
+                        await setAvatarPreview(URL.createObjectURL(e.target.files[0]));
+                        await setImage(e.target.files[0]);
+                      }
+                      console.log('HandleImage Called', isUpdate);
+                      console.log('HandleImage Called 2', image);
+                      console.log('HandleImage Called 3', avatarPreview);
+                      if (isUpdate) {
+                        if (image && image != undefined) {
+                          await doUploadImageUpload(blogId);
+                        }
+                      }
+                    }}
                   />
                 </div>
                 <Box
@@ -547,6 +554,10 @@ const CreateBlog = ({ blogData }) => {
                     rowGap: 3,
                   }}
                 >
+                  <p style={{ color: 'red' }}>
+                    Sometime images will not upload to cloudinary because of cloudinary free tier plan so try to upload
+                    image more then once
+                  </p>
                   <TextField
                     id="outlined-firstname"
                     label="Post Title"
@@ -676,13 +687,13 @@ const CreateBlog = ({ blogData }) => {
                       }}
                     />
                   </div>
-                  <TextField
+                  {/* <TextField
                     id="outlined-firstname"
                     label="Post Slug"
                     variant="outlined"
                     value={post_slug}
                     onChange={(e) => setpost_slug(e.target.value)}
-                  />
+                    />  */}
                   {/* <TextField
                     id="outlined-tags"
                     label="Tags"
