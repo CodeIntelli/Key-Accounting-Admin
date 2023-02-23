@@ -37,7 +37,7 @@ const FooterPageContent = () => {
   const setStateData = (data) => {
     setatitle(data.title);
     setasubtitle(data.desc);
-    setadata(data.socialsection.data);
+    setadata(data.socialsection);
     // setafacebooklink(data.mainTitle.facebooklink);
     // setainstalink(data.mainTitle.instalink);
     // setalinkdinlink(data.mainTitle.linkdinlink);
