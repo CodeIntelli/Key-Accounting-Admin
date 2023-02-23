@@ -6,6 +6,25 @@ import axios from 'axios';
 import Cookies from 'js-cookie';
 import React, { useState, useEffect } from 'react';
 import LoadingAnimation from 'src/components/LoadingAnimation';
+import JoditEditor from 'jodit-react';
+
+const editorConfig = {
+  readonly: false,
+  toolbar: true,
+  spellcheck: true,
+  language: 'en',
+  toolbarButtonSize: 'medium',
+  toolbarAdaptive: false,
+  showCharsCounter: true,
+  showWordsCounter: true,
+  showXPathInStatusbar: false,
+  askBeforePasteHTML: true,
+  askBeforePasteFromWord: true,
+  //defaultActionOnPaste: "insert_clear_html",
+
+  width: '100%',
+  height: 300,
+};
 
 const CarrierPageContent = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -25,8 +44,8 @@ const CarrierPageContent = () => {
   const [bsubtitle, bsetsubtitle] = useState('');
   const [btitle, bsettitle] = useState('');
   const [bdesc, bsetdesc] = useState('');
-  const [bdesc2, bsetdesc2] = useState('');
-  const [bdesc3, bsetdesc3] = useState('');
+  // const [bdesc2, bsetdesc2] = useState('');
+  // const [bdesc3, bsetdesc3] = useState('');
   const [bdata, bsetdata] = useState('');
 
   /* Section 2 */
@@ -43,8 +62,8 @@ const CarrierPageContent = () => {
     bsetsubtitle(data.section1.subtitle);
     bsettitle(data.section1.title);
     bsetdesc(data.section1.desc);
-    bsetdesc2(data.section1.desc2);
-    bsetdesc3(data.section1.desc3);
+    // bsetdesc2(data.section1.desc2);
+    // bsetdesc3(data.section1.desc3);
     bsetdata(data?.section1?.data);
     csetsubtitle(data.section2.subtitle);
     csettitle(data.section2.title);
@@ -116,8 +135,6 @@ const CarrierPageContent = () => {
             subtitle: bsubtitle,
             title: btitle,
             desc: bdesc,
-            desc2: bdesc2,
-            desc3: bdesc3,
             data: bdata,
           },
           section2: {
@@ -226,7 +243,7 @@ const CarrierPageContent = () => {
                           bsetsubtitle(e.target.value);
                         }}
                       />
-                      <TextField
+                      {/* <TextField
                         name="title"
                         label="Description"
                         value={bdesc}
@@ -252,8 +269,16 @@ const CarrierPageContent = () => {
                         onChange={(e) => {
                           bsetdesc3(e.target.value);
                         }}
+                      /> */}
+
+                      <h5>Description</h5>
+                      <JoditEditor
+                        value={bdesc}
+                        config={editorConfig}
+                        onChange={(value) => bsetdesc(value)}
+                        style={{ width: '100%' }}
                       />
-                      {bdata.map((cardData, index) => {
+                      {bdata?.map((cardData, index) => {
                         console.log(cardData);
                         return (
                           <div>

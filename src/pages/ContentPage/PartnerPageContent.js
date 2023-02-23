@@ -7,6 +7,26 @@ import Cookies from 'js-cookie';
 import React, { useState, useEffect } from 'react';
 import LoadingAnimation from 'src/components/LoadingAnimation';
 
+import JoditEditor from 'jodit-react';
+
+const editorConfig = {
+  readonly: false,
+  toolbar: true,
+  spellcheck: true,
+  language: 'en',
+  toolbarButtonSize: 'medium',
+  toolbarAdaptive: false,
+  showCharsCounter: true,
+  showWordsCounter: true,
+  showXPathInStatusbar: false,
+  askBeforePasteHTML: true,
+  askBeforePasteFromWord: true,
+  //defaultActionOnPaste: "insert_clear_html",
+
+  width: '100%',
+  height: 300,
+};
+
 const PartnerPageContent = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [homeContent, setHomeContent] = useState();
@@ -22,7 +42,6 @@ const PartnerPageContent = () => {
   const [bsubtitle, bsetsubtitle] = useState('');
   const [btitle, bsettitle] = useState('');
   const [bdesc, bsetdesc] = useState('');
-  const [bdesc2, bsetdesc2] = useState('');
   /* section2 */
   const [csubtitle, csetsubtitle] = useState('');
   const [ctitle, csettitle] = useState('');
@@ -35,7 +54,6 @@ const PartnerPageContent = () => {
     bsetsubtitle(data.section1.subtitle);
     bsettitle(data.section1.title);
     bsetdesc(data.section1.desc);
-    bsetdesc2(data.section1.desc2);
     csetsubtitle(data.section2.subtitle);
     csettitle(data.section2.title);
     csetdata(data.section2.data);
@@ -105,7 +123,6 @@ const PartnerPageContent = () => {
             subtitle: bsubtitle,
             title: btitle,
             desc: bdesc,
-            desc2: bdesc2,
           },
           section2: {
             subtitle: csubtitle,
@@ -196,7 +213,8 @@ const PartnerPageContent = () => {
                           bsettitle(e.target.value);
                         }}
                       />
-                      <TextField
+                      <h5>Description</h5>
+                      {/* <TextField
                         name="title"
                         label="Sub Title"
                         value={bdesc}
@@ -204,15 +222,13 @@ const PartnerPageContent = () => {
                         onChange={(e) => {
                           bsetdesc(e.target.value);
                         }}
-                      />
-                      <TextField
-                        name="title"
-                        label="Sub Title"
-                        value={bdesc2}
-                        style={{ margin: '10px' }}
-                        onChange={(e) => {
-                          bsetdesc2(e.target.value);
-                        }}
+                      /> */}
+
+                      <JoditEditor
+                        value={bdesc}
+                        config={editorConfig}
+                        onChange={(value) => bsetdesc(value)}
+                        style={{ width: '100%' }}
                       />
                     </div>
                   </Grid>

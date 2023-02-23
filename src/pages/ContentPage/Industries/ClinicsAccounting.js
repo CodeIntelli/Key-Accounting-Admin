@@ -7,6 +7,26 @@ import Cookies from 'js-cookie';
 import React, { useState, useEffect } from 'react';
 import LoadingAnimation from 'src/components/LoadingAnimation';
 
+import JoditEditor from 'jodit-react';
+
+const editorConfig = {
+  readonly: false,
+  toolbar: true,
+  spellcheck: true,
+  language: 'en',
+  toolbarButtonSize: 'medium',
+  toolbarAdaptive: false,
+  showCharsCounter: true,
+  showWordsCounter: true,
+  showXPathInStatusbar: false,
+  askBeforePasteHTML: true,
+  askBeforePasteFromWord: true,
+  //defaultActionOnPaste: "insert_clear_html",
+
+  width: '100%',
+  height: 300,
+};
+
 const ServicePageContent = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [homeContent, setHomeContent] = useState();
@@ -272,6 +292,13 @@ const ServicePageContent = () => {
                   <h2>Section 1</h2>
                   <Grid item xs={12} md={12}>
                     <div style={{ padding: '0px 40px' }}>
+                      <h5>Description</h5>
+                      <JoditEditor
+                        value={bdesc}
+                        config={editorConfig}
+                        onChange={(value) => bsetdesc(value)}
+                        style={{ width: '100%' }}
+                      />
                       <Box
                         sx={{
                           display: 'grid',
@@ -298,7 +325,7 @@ const ServicePageContent = () => {
                             bsettitle(e.target.value);
                           }}
                         />
-                        <TextField
+                        {/* <TextField
                           name="email"
                           label="Description"
                           style={{ width: '100%', marginTop: '24px' }}
@@ -306,7 +333,7 @@ const ServicePageContent = () => {
                           onChange={(e) => {
                             bsetdesc(e.target.value);
                           }}
-                        />
+                        /> */}
                         <TextField
                           name="email"
                           label="Main image"

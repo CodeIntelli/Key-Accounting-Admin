@@ -6,6 +6,25 @@ import axios from 'axios';
 import Cookies from 'js-cookie';
 import React, { useState, useEffect } from 'react';
 import LoadingAnimation from 'src/components/LoadingAnimation';
+import JoditEditor from 'jodit-react';
+
+const editorConfig = {
+  readonly: false,
+  toolbar: true,
+  spellcheck: true,
+  language: 'en',
+  toolbarButtonSize: 'medium',
+  toolbarAdaptive: false,
+  showCharsCounter: true,
+  showWordsCounter: true,
+  showXPathInStatusbar: false,
+  askBeforePasteHTML: true,
+  askBeforePasteFromWord: true,
+  //defaultActionOnPaste: "insert_clear_html",
+
+  width: '100%',
+  height: 300,
+};
 
 const OurStoryPageContent = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -22,8 +41,8 @@ const OurStoryPageContent = () => {
   const [bsubtitle, bsetsubtitle] = useState('');
   const [btitle, bsettitle] = useState('');
   const [bdesc, bsetdesc] = useState('');
-  const [bdesc1, bsetdesc1] = useState('');
-  const [bdesc2, bsetdesc2] = useState('');
+  // const [bdesc1, bsetdesc1] = useState('');
+  // const [bdesc2, bsetdesc2] = useState('');
   const [bmainImg, bsetmainImg] = useState('');
   const [bbtnTxt, bsetbtnTxt] = useState('');
   const [bbtnUrl, bsetbtnUrl] = useState('');
@@ -31,7 +50,7 @@ const OurStoryPageContent = () => {
   const [csubtitle, csetsubtitle] = useState('');
   const [ctitle, csettitle] = useState('');
   const [cdesc, csetdesc] = useState('');
-  const [cdesc1, csetdesc1] = useState('');
+  // const [cdesc1, csetdesc1] = useState('');
   const [cmainImg, csetmainImg] = useState('');
   /* Section 3 */
   const [dsubtitle1, dsetsubtitle1] = useState('');
@@ -61,15 +80,15 @@ const OurStoryPageContent = () => {
     bsetsubtitle(data.section1.subtitle);
     bsettitle(data.section1.title);
     bsetdesc(data.section1.desc);
-    bsetdesc1(data.section1.desc1);
-    bsetdesc2(data.section1.desc2);
+    // bsetdesc1(data.section1.desc1);
+    // bsetdesc2(data.section1.desc2);
     bsetmainImg(data.section1.mainImg);
     bsetbtnTxt(data.section1.btnTxt);
     bsetbtnUrl(data.section1.btnUrl);
     csetsubtitle(data.section2.subtitle);
     csettitle(data.section2.title);
     csetdesc(data.section2.desc);
-    csetdesc1(data.section2.desc1);
+    // csetdesc1(data.section2.desc1);
     csetmainImg(data.section2.mainImg);
     dsetsubtitle1(data.section3.subtitle1);
     dsetTitle1(data.section3.Title1);
@@ -149,8 +168,8 @@ const OurStoryPageContent = () => {
             subtitle: bsubtitle,
             title: btitle,
             desc: bdesc,
-            desc1: bdesc1,
-            desc2: bdesc2,
+            // desc1: bdesc1,
+            // desc2: bdesc2,
             mainImg: bmainImg,
             btnTxt: bbtnTxt,
             btnUrl: bbtnUrl,
@@ -159,7 +178,7 @@ const OurStoryPageContent = () => {
             subtitle: csubtitle,
             title: ctitle,
             desc: cdesc,
-            desc1: cdesc1,
+            // desc1: cdesc1,
             mainImg: cmainImg,
           },
           section3: {
@@ -296,7 +315,7 @@ const OurStoryPageContent = () => {
                             bsettitle(e.target.value);
                           }}
                         />
-                        <TextField
+                        {/*  <TextField
                           name="email"
                           label="Description 1"
                           style={{ width: '100%', marginTop: '24px' }}
@@ -305,7 +324,8 @@ const OurStoryPageContent = () => {
                             bsetdesc(e.target.value);
                           }}
                         />
-                        <TextField
+
+                         <TextField
                           name="email"
                           label="Description 2"
                           style={{ width: '100%', marginTop: '24px' }}
@@ -322,7 +342,7 @@ const OurStoryPageContent = () => {
                           onChange={(e) => {
                             bsetdesc2(e.target.value);
                           }}
-                        />
+                        /> */}
                         <TextField
                           name="email"
                           label="Main image"
@@ -351,6 +371,14 @@ const OurStoryPageContent = () => {
                           }}
                         />
                       </Box>
+                      <h5>Description</h5>
+
+                      <JoditEditor
+                        value={bdesc}
+                        config={editorConfig}
+                        onChange={(value) => bsetdesc(value)}
+                        style={{ width: '100%' }}
+                      />
                     </div>
                   </Grid>
                 </Card>
@@ -373,24 +401,25 @@ const OurStoryPageContent = () => {
                           gridTemplateColumns: { xs: 'repeat(1, 1fr)', sm: 'repeat(2, 1fr)' },
                         }}
                       >
-                        <TextField
+                        {/* <TextField
                           name="email"
-                          label="Description 1"
+                          label="Title"
                           style={{ width: '100%', marginTop: '24px' }}
                           value={cdesc}
                           onChange={(e) => {
                             csetdesc(e.target.value);
                           }}
                         />
-                        <TextField
+                         <TextField
                           name="email"
-                          label="Description 2"
+                          label="Main Title"
                           style={{ width: '100%', marginTop: '24px' }}
                           value={cdesc1}
                           onChange={(e) => {
                             csetdesc1(e.target.value);
                           }}
-                        />
+                        /> */}
+
                         <TextField
                           name="email"
                           label="Description"
@@ -419,6 +448,13 @@ const OurStoryPageContent = () => {
                           }}
                         />
                       </Box>
+                      <h5>Description</h5>
+                      <JoditEditor
+                        value={cdesc}
+                        config={editorConfig}
+                        onChange={(value) => csetdesc(value)}
+                        style={{ width: '100%' }}
+                      />
                     </div>
                   </Grid>
                 </Card>

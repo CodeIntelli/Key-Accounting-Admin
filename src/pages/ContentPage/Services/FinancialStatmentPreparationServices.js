@@ -6,6 +6,25 @@ import axios from 'axios';
 import Cookies from 'js-cookie';
 import React, { useState, useEffect } from 'react';
 import LoadingAnimation from 'src/components/LoadingAnimation';
+import JoditEditor from 'jodit-react';
+
+const editorConfig = {
+  readonly: false,
+  toolbar: true,
+  spellcheck: true,
+  language: 'en',
+  toolbarButtonSize: 'medium',
+  toolbarAdaptive: false,
+  showCharsCounter: true,
+  showWordsCounter: true,
+  showXPathInStatusbar: false,
+  askBeforePasteHTML: true,
+  askBeforePasteFromWord: true,
+  //defaultActionOnPaste: "insert_clear_html",
+
+  width: '100%',
+  height: 300,
+};
 
 const AccountPayAndReceivablesService = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -295,7 +314,7 @@ const AccountPayAndReceivablesService = () => {
                             bsettitle(e.target.value);
                           }}
                         />
-                        <TextField
+                        {/*    <TextField
                           name="email"
                           label="Description"
                           style={{ width: '100%', marginTop: '24px' }}
@@ -303,7 +322,7 @@ const AccountPayAndReceivablesService = () => {
                           onChange={(e) => {
                             bsetdesc(e.target.value);
                           }}
-                        />
+                        /> */}
                         <TextField
                           name="email"
                           label="Main image"
@@ -314,6 +333,14 @@ const AccountPayAndReceivablesService = () => {
                           }}
                         />
                       </Box>
+
+                      <h5>Description</h5>
+                      <JoditEditor
+                        value={bdesc}
+                        config={editorConfig}
+                        onChange={(value) => bsetdesc(value)}
+                        style={{ width: '100%' }}
+                      />
                     </div>
                   </Grid>
                 </Card>
@@ -328,6 +355,13 @@ const AccountPayAndReceivablesService = () => {
                   <h2>Section 2</h2>
                   <Grid item xs={12} md={12}>
                     <div style={{ padding: '0px 40px' }}>
+                      <h5>Description</h5>
+                      <JoditEditor
+                        value={cdesc}
+                        config={editorConfig}
+                        onChange={(value) => csetdesc(value)}
+                        style={{ width: '100%' }}
+                      />
                       <Box
                         sx={{
                           display: 'grid',
@@ -336,7 +370,7 @@ const AccountPayAndReceivablesService = () => {
                           gridTemplateColumns: { xs: 'repeat(1, 1fr)', sm: 'repeat(2, 1fr)' },
                         }}
                       >
-                        <TextField
+                        {/* <TextField
                           name="email"
                           label="Description"
                           style={{ width: '100%', marginTop: '24px' }}
@@ -344,7 +378,7 @@ const AccountPayAndReceivablesService = () => {
                           onChange={(e) => {
                             csetdesc(e.target.value);
                           }}
-                        />
+                        /> */}
                         <TextField
                           name="email"
                           label="Image"
@@ -354,7 +388,6 @@ const AccountPayAndReceivablesService = () => {
                             csetimg(e.target.value);
                           }}
                         />
-
                         <TextField
                           name="email"
                           label="Button Text"

@@ -7,6 +7,26 @@ import Cookies from 'js-cookie';
 import React, { useState, useEffect } from 'react';
 import LoadingAnimation from 'src/components/LoadingAnimation';
 
+import JoditEditor from 'jodit-react';
+
+const editorConfig = {
+  readonly: false,
+  toolbar: true,
+  spellcheck: true,
+  language: 'en',
+  toolbarButtonSize: 'medium',
+  toolbarAdaptive: false,
+  showCharsCounter: true,
+  showWordsCounter: true,
+  showXPathInStatusbar: false,
+  askBeforePasteHTML: true,
+  askBeforePasteFromWord: true,
+  //defaultActionOnPaste: "insert_clear_html",
+
+  width: '100%',
+  height: 300,
+};
+
 const HomePageContent = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [homeContent, setHomeContent] = useState();
@@ -123,7 +143,7 @@ const HomePageContent = () => {
     fsetbtnTxt(data?.companyChoose?.btnTxt);
     fsetbtnUrl(data?.companyChoose?.btnUrl);
     fsetmainImg(data?.companyChoose?.mainImg);
-    fsetdata(data?.companyChoose?.data);
+    // fsetdata(data?.companyChoose?.data);
 
     //
     gsetsubtitle(data?.SliderSection1?.subtitle);
@@ -252,7 +272,7 @@ const HomePageContent = () => {
             btnTxt: fbtnTxt,
             btnUrl: fbtnUrl,
             mainImg: fmainImg,
-            data: fdata,
+            // data: fdata,
           },
           SliderSection1: {
             subtitle: gsubtitle,
@@ -264,7 +284,6 @@ const HomePageContent = () => {
             subtitle: hsubtitle,
             title: htitle,
             desc: hdesc,
-            desc2: hdesc2,
             mainImg: hmainImg,
             contents: [hcontent, hcontent2],
             contentTitle: hcontenttitle,
@@ -780,6 +799,7 @@ const HomePageContent = () => {
           </div>
 
           {/* Choose Company */}
+
           <div style={{ marginTop: '50px' }}>
             <Grid container spacing={3}>
               <Grid item xs={12} md={12}>
@@ -812,9 +832,9 @@ const HomePageContent = () => {
                         }}
                       />
                     </Box>
-
                     <div style={{ padding: '0px 40px' }}>
-                      <TextField
+                      <h4>Description</h4>
+                      {/*  <TextField
                         name="email"
                         label="Last Description"
                         style={{ width: '100%' }}
@@ -823,7 +843,12 @@ const HomePageContent = () => {
                         rows={4}
                         onChange={(e) => {
                           fsetlastDesc(e.target.value);
-                        }}
+                        }} /> */}
+                      <JoditEditor
+                        value={flastDesc}
+                        config={editorConfig}
+                        onChange={(value) => fsetlastDesc(value)}
+                        style={{ width: '100%' }}
                       />
                     </div>
                     <Box
@@ -863,7 +888,7 @@ const HomePageContent = () => {
                         }}
                       />
 
-                      <h3>Icon Section Data</h3>
+                      {/* <h3>Icon Section Data</h3>
                       {fdata.map((cardData, index) => {
                         return (
                           <>
@@ -905,7 +930,7 @@ const HomePageContent = () => {
                             </Box>
                           </>
                         );
-                      })}
+                      })} */}
                     </div>
                   </Grid>
                 </Card>
@@ -1092,7 +1117,7 @@ const HomePageContent = () => {
                     </Box>
 
                     <div style={{ padding: '0px 40px' }}>
-                      <TextField
+                      {/*  <TextField
                         name="email"
                         label="Description"
                         style={{ width: '100%' }}
@@ -1102,22 +1127,16 @@ const HomePageContent = () => {
                         onChange={(e) => {
                           hsetdesc(e.target.value);
                         }}
+                      /> */}
+                      <h4>Description</h4>
+                      <JoditEditor
+                        value={hdesc}
+                        config={editorConfig}
+                        onChange={(value) => hsetdesc(value)}
+                        style={{ width: '100%' }}
                       />
                     </div>
 
-                    <div style={{ padding: '0px 40px', marginTop: '50px' }}>
-                      <TextField
-                        name="email"
-                        label="Description 2"
-                        style={{ width: '100%' }}
-                        value={hdesc2}
-                        multiline
-                        rows={4}
-                        onChange={(e) => {
-                          hsetdesc2(e.target.value);
-                        }}
-                      />
-                    </div>
                     <Box
                       sx={{
                         display: 'grid',
