@@ -51,7 +51,7 @@ const AccountPayAndReceivablesService = () => {
     /*  */
     // debugger;
     asettitle(data.herosection.title);
-    asetdesc(data.herosection.subTitle);
+    asetdesc(data.herosection.desc);
     asetbtnTxt(data.herosection.btnTxt);
     asetbtnUrl(data.herosection.btnUrl);
     asetmainImg(data.herosection.mainImg);
@@ -137,7 +137,7 @@ const AccountPayAndReceivablesService = () => {
         content: {
           herosection: {
             title: atitle,
-            subTitle: adesc,
+            desc: adesc,
             btnTxt: abtnTxt,
             btnUrl: abtnUrl,
             mainImg: amainImg,
