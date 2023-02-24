@@ -27,6 +27,9 @@ const CarrierApplyPageContent = () => {
   const [bdesc2, bsetdesc2] = useState('');
   const [bdata, bsetdata] = useState('');
   const [bbtndata, bsetbtndata] = useState('');
+  const [metaTitle, setMetaTitle] = useState('');
+  const [metaDesc, setMetaDesc] = useState('');
+  const [metakeyword, setMetaKeyword] = useState('');
 
   const setStateData = (data) => {
     asettitle(data.heroSection.title);
@@ -39,6 +42,10 @@ const CarrierApplyPageContent = () => {
     bsetdesc2(data.RolesSection.desc2);
     bsetdata(data?.RolesSection?.pointData);
     bsetbtndata(data?.RolesSection?.btnData);
+
+    setMetaTitle(data?.metaTags?.metaTitle);
+    setMetaDesc(data?.metaTags?.metaDesc);
+    setMetaKeyword(data?.metaTags?.metakeyword);
   };
 
   const fetchContent = async () => {
@@ -108,6 +115,11 @@ const CarrierApplyPageContent = () => {
             desc2: bdesc2,
             pointData: bdata,
             btnData: bbtndata,
+          },
+          metaTags: {
+            metaTitle,
+            metaDesc,
+            metakeyword,
           },
         },
       },
@@ -286,6 +298,50 @@ const CarrierApplyPageContent = () => {
                           </div>
                         );
                       })}
+                    </div>
+                  </Grid>
+                </Card>
+              </Grid>
+            </Grid>
+          </div>
+
+          <div style={{ marginTop: '50px' }}>
+            <Grid container spacing={3}>
+              <Grid item xs={12} md={12}>
+                <Card sx={{ py: 2, px: 3 }}>
+                  <h2>Meta Data Section</h2>
+                  <Grid item xs={12} md={12}>
+                    <div style={{ padding: '0px 40px' }}>
+                      <TextField
+                        name="email"
+                        label={`Meta Title`}
+                        style={{ width: '100%', marginTop: '24px' }}
+                        value={metaTitle}
+                        onChange={(e) => {
+                          setMetaTitle(e.target.value);
+                          // esetdata[index].title(e.target.value);
+                        }}
+                      />
+                      <TextField
+                        name="email"
+                        label={`Meta Description`}
+                        style={{ width: '100%', marginTop: '24px' }}
+                        value={metaDesc}
+                        onChange={(e) => {
+                          setMetaDesc(e.target.value);
+                          // esetdata[index].subTitle(e.target.value);
+                        }}
+                      />
+                      <TextField
+                        name="email"
+                        label={`Meta Keyword`}
+                        style={{ width: '100%', marginTop: '24px' }}
+                        value={metakeyword}
+                        onChange={(e) => {
+                          setMetaKeyword(e.target.value);
+                          // esetdata[index].subTitle(e.target.value);
+                        }}
+                      />
                     </div>
                   </Grid>
                 </Card>

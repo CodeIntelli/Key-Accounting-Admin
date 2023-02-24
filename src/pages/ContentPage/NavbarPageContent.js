@@ -28,6 +28,11 @@ const NavbarPageContent = () => {
   const [aboutdata, setaboutdata] = useState('');
   const [resourcesdata, setresourcesdata] = useState('');
   const [industriesdata, setindustriesdata] = useState('');
+  const [servicedata, setservicedata] = useState('');
+
+  const [metaTitle, setMetaTitle] = useState('');
+  const [metaDesc, setMetaDesc] = useState('');
+  const [metakeyword, setMetaKeyword] = useState('');
 
   const setStateData = (data) => {
     sethome(data.home);
@@ -40,8 +45,13 @@ const NavbarPageContent = () => {
     setresources(data.resources);
     setindustries(data.industries);
     setaboutdata(data.aboutData);
+    setservicedata(data.serviceData);
     setresourcesdata(data.ResourcesData);
     setindustriesdata(data.IndustriesData);
+
+    setMetaTitle(data?.metaTags?.metaTitle);
+    setMetaDesc(data?.metaTags?.metaDesc);
+    setMetaKeyword(data?.metaTags?.metakeyword);
   };
 
   const fetchContent = async () => {
@@ -102,14 +112,19 @@ const NavbarPageContent = () => {
           homeUrl: homeurl,
           about,
           service,
-          serviceUrl: serviceurl,
           industries,
           resources,
           aboutData: aboutdata,
-          IndustriesData: resourcesdata,
-          ResourcesData: industriesdata,
+          IndustriesData: industriesdata,
+          serviceData: servicedata,
+          ResourcesData: resourcesdata,
           contactUrl: contacturl,
           contact: contact,
+          metaTags: {
+            metaTitle,
+            metaDesc,
+            metakeyword,
+          },
         },
       },
     };
@@ -160,7 +175,7 @@ const NavbarPageContent = () => {
                           sethomeUrl(e.target.value);
                         }}
                       />
-                      <TextField
+                      {/*  <TextField
                         name="email"
                         label="Service Title"
                         value={service}
@@ -168,8 +183,8 @@ const NavbarPageContent = () => {
                         onChange={(e) => {
                           setservice(e.target.value);
                         }}
-                      />
-                      <TextField
+                      /> */}
+                      {/*  <TextField
                         name="email"
                         label="Service Routes"
                         value={serviceurl}
@@ -177,7 +192,7 @@ const NavbarPageContent = () => {
                         onChange={(e) => {
                           setserviceUrl(e.target.value);
                         }}
-                      />
+                      /> */}
                       <TextField
                         name="email"
                         label="Contact Title"
@@ -203,6 +218,70 @@ const NavbarPageContent = () => {
             </Grid>
           </Grid>
 
+          <div style={{ marginTop: '50px' }}>
+            <Grid container spacing={3}>
+              <Grid item xs={12} md={12}>
+                <Card sx={{ py: 2, px: 3 }}>
+                  <h2> Services Section</h2>
+                  <Grid item xs={12} md={12}>
+                    <div style={{ padding: '0px 40px', display: 'flex', flexDirection: 'column' }}>
+                      <TextField
+                        name="email"
+                        label="Service Title"
+                        value={service}
+                        style={{ margin: '10px' }}
+                        onChange={(e) => {
+                          setservice(e.target.value);
+                        }}
+                      />
+
+                      <h3>Service Dropdown Data</h3>
+                      {servicedata.map((cardData, index) => {
+                        return (
+                          <>
+                            {index === 0 ? '' : <Divider style={{ marginTop: '18px' }} />}
+                            <Box
+                              sx={{
+                                display: 'grid',
+                                columnGap: 2,
+                                rowGap: 3,
+                                gridTemplateColumns: { xs: 'repeat(1, 1fr)', sm: 'repeat(2, 1fr)' },
+                              }}
+                            >
+                              <TextField
+                                name="email"
+                                label="Title"
+                                style={{ width: '100%', marginTop: '24px' }}
+                                value={cardData.title}
+                                onChange={(e) => {
+                                  const value = e.target.value;
+                                  const dta = [...aboutdata];
+                                  dta[index].title = value;
+                                  setaboutdata(dta);
+                                }}
+                              />
+                              <TextField
+                                name="email"
+                                label="Routes"
+                                style={{ width: '100%', marginTop: '24px' }}
+                                value={cardData.url}
+                                onChange={(e) => {
+                                  const value = e.target.value;
+                                  const dta = [...aboutdata];
+                                  dta[index].url = value;
+                                  setaboutdata(dta);
+                                }}
+                              />
+                            </Box>
+                          </>
+                        );
+                      })}
+                    </div>
+                  </Grid>
+                </Card>
+              </Grid>
+            </Grid>
+          </div>
           <div style={{ marginTop: '50px' }}>
             <Grid container spacing={3}>
               <Grid item xs={12} md={12}>
@@ -392,6 +471,50 @@ const NavbarPageContent = () => {
                           </>
                         );
                       })}
+                    </div>
+                  </Grid>
+                </Card>
+              </Grid>
+            </Grid>
+          </div>
+
+          <div style={{ marginTop: '50px' }}>
+            <Grid container spacing={3}>
+              <Grid item xs={12} md={12}>
+                <Card sx={{ py: 2, px: 3 }}>
+                  <h2>Meta Data Section</h2>
+                  <Grid item xs={12} md={12}>
+                    <div style={{ padding: '0px 40px' }}>
+                      <TextField
+                        name="email"
+                        label={`Meta Title`}
+                        style={{ width: '100%', marginTop: '24px' }}
+                        value={metaTitle}
+                        onChange={(e) => {
+                          setMetaTitle(e.target.value);
+                          // esetdata[index].title(e.target.value);
+                        }}
+                      />
+                      <TextField
+                        name="email"
+                        label={`Meta Description`}
+                        style={{ width: '100%', marginTop: '24px' }}
+                        value={metaDesc}
+                        onChange={(e) => {
+                          setMetaDesc(e.target.value);
+                          // esetdata[index].subTitle(e.target.value);
+                        }}
+                      />
+                      <TextField
+                        name="email"
+                        label={`Meta Keyword`}
+                        style={{ width: '100%', marginTop: '24px' }}
+                        value={metakeyword}
+                        onChange={(e) => {
+                          setMetaKeyword(e.target.value);
+                          // esetdata[index].subTitle(e.target.value);
+                        }}
+                      />
                     </div>
                   </Grid>
                 </Card>

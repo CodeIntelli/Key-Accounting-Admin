@@ -26,6 +26,10 @@ const FAQPageContent = () => {
   const [bsidebarImg, bsetsidebarImg] = useState('');
   const [btexts, bsettexts] = useState('');
 
+  const [metaTitle, setMetaTitle] = useState('');
+  const [metaDesc, setMetaDesc] = useState('');
+  const [metakeyword, setMetaKeyword] = useState('');
+
   const setStateData = (data) => {
     asettitle(data.heroSection.title);
     asetdesc(data.heroSection.desc);
@@ -36,6 +40,9 @@ const FAQPageContent = () => {
     bsettitle(data.section1.title);
     bsetsidebarImg(data.section1.sidebarImg);
     bsettexts(data.section1.texts);
+    setMetaTitle(data?.metaTags?.metaTitle);
+    setMetaDesc(data?.metaTags?.metaDesc);
+    setMetaKeyword(data?.metaTags?.metakeyword);
   };
 
   const fetchContent = async () => {
@@ -105,6 +112,12 @@ const FAQPageContent = () => {
             title: btitle,
             sidebarImg: bsidebarImg,
             texts: btexts,
+          },
+
+          metaTags: {
+            metaTitle,
+            metaDesc,
+            metakeyword,
           },
         },
       },
@@ -254,6 +267,51 @@ const FAQPageContent = () => {
               </Grid>
             </Grid>
           </div>
+
+          <div style={{ marginTop: '50px' }}>
+            <Grid container spacing={3}>
+              <Grid item xs={12} md={12}>
+                <Card sx={{ py: 2, px: 3 }}>
+                  <h2>Meta Data Section</h2>
+                  <Grid item xs={12} md={12}>
+                    <div style={{ padding: '0px 40px' }}>
+                      <TextField
+                        name="email"
+                        label={`Meta Title`}
+                        style={{ width: '100%', marginTop: '24px' }}
+                        value={metaTitle}
+                        onChange={(e) => {
+                          setMetaTitle(e.target.value);
+                          // esetdata[index].title(e.target.value);
+                        }}
+                      />
+                      <TextField
+                        name="email"
+                        label={`Meta Description`}
+                        style={{ width: '100%', marginTop: '24px' }}
+                        value={metaDesc}
+                        onChange={(e) => {
+                          setMetaDesc(e.target.value);
+                          // esetdata[index].subTitle(e.target.value);
+                        }}
+                      />
+                      <TextField
+                        name="email"
+                        label={`Meta Keyword`}
+                        style={{ width: '100%', marginTop: '24px' }}
+                        value={metakeyword}
+                        onChange={(e) => {
+                          setMetaKeyword(e.target.value);
+                          // esetdata[index].subTitle(e.target.value);
+                        }}
+                      />
+                    </div>
+                  </Grid>
+                </Card>
+              </Grid>
+            </Grid>
+          </div>
+
           <div
             style={{
               marginTop: '30px',
