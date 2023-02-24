@@ -26,7 +26,7 @@ import Iconify from '../components/iconify';
 import errAnimationData from '../lotties/error.json';
 import successAnimationData from '../lotties/success.json';
 import { AddUser } from '../redux/Actions/userAction';
-import ReactChipInput from 'react-chip-input';
+
 import Cookies from 'js-cookie';
 import axios from 'axios';
 import 'jodit';
