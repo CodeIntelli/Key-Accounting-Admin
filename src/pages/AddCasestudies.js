@@ -1,37 +1,17 @@
 /* eslint-disable */
 import { LoadingButton } from '@mui/lab';
-import {
-  Box,
-  Card,
-  Grid,
-  IconButton,
-  InputAdornment,
-  TextField,
-  Modal,
-  Typography,
-  Button,
-  InputLabel,
-  CircularProgress,
-} from '@mui/material';
+import { Card, Grid, TextField, CircularProgress } from '@mui/material';
 import Cookies from 'js-cookie';
 import axios from 'axios';
-import { Country, State } from 'country-state-city';
-import Lottie from 'react-lottie';
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useState } from 'react';
 import JoditEditor from 'jodit-react';
 import Select from 'react-select';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import Iconify from '../components/iconify';
 // import { AddUser } from '../redux/Actions/userAction';
-import errAnimationData from '../lotties/error.json';
-import successAnimationData from '../lotties/success.json';
-import { AddUser } from '../redux/Actions/userAction';
 import 'jodit';
 import 'jodit/build/jodit.min.css';
 import { errorToast, successToast } from 'src/utils/Toast';
 import Loader from 'src/components/Loading';
-import { Label } from '@mui/icons-material';
 
 const style = {
   position: 'absolute',

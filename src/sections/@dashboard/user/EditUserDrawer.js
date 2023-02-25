@@ -28,6 +28,7 @@ import Cookies from 'js-cookie';
 import axios from 'axios';
 
 import Iconify from '../../../components/iconify';
+import { errorToast, successToast } from 'src/utils/Toast';
 /* 
    <div style={{ margin: '10px 20px' }}>
             <Select
@@ -66,7 +67,7 @@ const EditUserDrawer = ({ data, changeFunc, closeDrawer }) => {
   const [isUpdateLoading, setIsUpdateLoading] = useState(false);
   const [avatarPreview, setAvatarPreview] = useState('/assets/images/avatars/avatar_18.jpg');
   const [image, setImage] = useState();
-  const doUploadFile = async (id) => {
+  const doUploadFile = async (id, imgData) => {
     try {
       setIsUpdateLoading(true);
       // // debugger;
@@ -78,7 +79,7 @@ const EditUserDrawer = ({ data, changeFunc, closeDrawer }) => {
         : null;
 
       const newImageContent = new FormData();
-      newImageContent.append('profile', image);
+      newImageContent.append('profile', imgData);
       newImageContent.append('type', 'edit');
       const { data } = await axios.post(`${BASE_URL}user/profile/${id}`, newImageContent, {
         headers: {
@@ -89,9 +90,11 @@ const EditUserDrawer = ({ data, changeFunc, closeDrawer }) => {
       // setAllUserList(data.result);
       // setFilterData(data.result);
       setIsUpdateLoading(false);
+      successToast('Image Edited Successfully');
       console.log('🤩 ~ file: UserPage.js:179 ~ updateUserData ~ data', data);
     } catch (error) {
       // // debugger;
+      errorToast('Image Edited Failed');
       console.log('🤩 ~ file: UserPage.js:180 ~ updateUserData ~ error', error.response.data);
     }
   };
@@ -104,10 +107,10 @@ const EditUserDrawer = ({ data, changeFunc, closeDrawer }) => {
 
       setImage(e.target.files[0]);
       const storedData = new FormData();
-      storedData.append('profile', image);
+      storedData.append('profile', e.target.files[0]);
       storedData.append('type', 'edit');
 
-      doUploadFile(data._id, image);
+      doUploadFile(data._id, e.target.files[0]);
     }
   };
 
