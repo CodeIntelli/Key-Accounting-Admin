@@ -619,7 +619,7 @@ export default function SubCategoriesPage() {
                         }}
                         onClick={() => handleSubmit()}
                       >
-                        Add Category
+                        Add Subcategory
                       </LoadingButton>
                     )}
                   </div>

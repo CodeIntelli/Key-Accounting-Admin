@@ -12,7 +12,6 @@ const CarrierApplyPageContent = () => {
   const [homeContent, setHomeContent] = useState();
   const [addRecordLoader, setaddLoader] = useState(false);
   const [id, setid] = useState();
-  // Context States
 
   /* herosection */
   const [atitle, asettitle] = useState('');

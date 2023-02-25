@@ -26,6 +26,7 @@ import Iconify from '../components/iconify';
 import errAnimationData from '../lotties/error.json';
 import successAnimationData from '../lotties/success.json';
 import { AddUser } from '../redux/Actions/userAction';
+
 import Cookies from 'js-cookie';
 import axios from 'axios';
 import 'jodit';
@@ -105,7 +106,7 @@ const CreateBlog = ({ blogData }) => {
   const [check, setCheck] = useState();
 
   const [avatarPreview, setAvatarPreview] = useState('/assets/images/avatars/avatar_18.jpg');
-  const [image, setImage] = useState();
+  const [image, setImage] = useState('');
 
   const [releventBlogOne, setreleventBlogOne] = useState();
   const [releventBlogTwo, setreleventBlogTwo] = useState();
@@ -180,7 +181,7 @@ const CreateBlog = ({ blogData }) => {
     }
   };
 
-  const doUploadImageUpload = async (id) => {
+  const doUploadImageUpload = async (id, imageData) => {
     try {
       const BASE_URL = process.env.REACT_APP_API_ENDPOINT;
       const bearerToken = Cookies.get('x-access-token')
@@ -190,7 +191,7 @@ const CreateBlog = ({ blogData }) => {
         : null;
 
       const newImageData = new FormData();
-      newImageData.append('blog_img', image && image);
+      newImageData.append('blog_img', imageData);
       newImageData.append('type', 'editImage');
       const { data } = await axios.post(`${BASE_URL}blog/${id}`, newImageData, {
         headers: {
@@ -301,21 +302,21 @@ const CreateBlog = ({ blogData }) => {
   };
 
   /* Image Uploading */
-  const handleImage = async (e) => {
-    const { name, value } = e.target;
-    if (name === 'image') {
-      await setAvatarPreview(URL.createObjectURL(e.target.files[0]));
-      await setImage(e.target.files[0]);
-    }
-    console.log('HandleImage Called', isUpdate);
-    console.log('HandleImage Called 2', image);
-    console.log('HandleImage Called 3', avatarPreview);
-    if (isUpdate) {
-      if (image && image != undefined) {
-        await doUploadImageUpload(blogId);
-      }
-    }
-  };
+  // const handleImage = async (e) => {
+  //   const { name, value } = e.target;
+  //   if (name === 'image') {
+  //     await setAvatarPreview(URL.createObjectURL(e.target.files[0]));
+  //     await setImage(e.target.files[0]);
+  //   }
+  //   console.log('HandleImage Called', isUpdate);
+  //   console.log('HandleImage Called 2', image);
+  //   console.log('HandleImage Called 3', avatarPreview);
+  //   if (isUpdate) {
+  //     if (image && image != undefined) {
+  //       await doUploadImageUpload(blogId);
+  //     }
+  //   }
+  // };
 
   const handleSubmit = async () => {
     /* 
@@ -408,22 +409,31 @@ const CreateBlog = ({ blogData }) => {
     setmetaKeyword(updatedData.metaKeyword.toString());
     setCategoryIdDropdown(subCategory.subTitle);
     setCategoryValueDropdown(subCategory._id);
-    console.log(updatedData.ReleventBlog[0]);
+    // console.log(updatedData.ReleventBlog[0]);
     setreleventBlogOneId(updatedData.ReleventBlog[0] ? updatedData.ReleventBlog[0]._id : null);
     setreleventBlogOne(updatedData.ReleventBlog[0] ? updatedData.ReleventBlog[0].postTitle : null);
-    console.log(updatedData.ReleventBlog[1]);
+    // console.log(updatedData.ReleventBlog[1]);
     setreleventBlogTwoId(updatedData.ReleventBlog[1] ? updatedData.ReleventBlog[1]._id : null);
     setreleventBlogTwo(updatedData.ReleventBlog[1] ? updatedData.ReleventBlog[1].postTitle : null);
-    console.log(updatedData.ReleventBlog[2]);
+    // console.log(updatedData.ReleventBlog[2]);
     setreleventBlogThreeId(updatedData.ReleventBlog[2] ? updatedData.ReleventBlog[2]._id : null);
     setreleventBlogThree(updatedData.ReleventBlog[2] ? updatedData.ReleventBlog[2].postTitle : null);
     setreleventBlogFourId(updatedData.ReleventBlog[3] ? updatedData.ReleventBlog[3]._id : null);
     setreleventBlogFour(updatedData.ReleventBlog[3] ? updatedData.ReleventBlog[3].postTitle : null);
-    console.log(updatedData.ReleventBlog[3]);
+    // console.log(updatedData.ReleventBlog[3]);
     setBlogId(_id);
     setisUpdate(true);
   };
 
+  const handleImageUpload = async (e) => {
+    console.log(e);
+    setImage(e);
+    if (isUpdate) {
+      await doUploadImageUpload(blogId, e);
+    }
+  };
+
+  console.log(image);
   const handleEditSubmit = async () => {
     const editedData = {
       postTitle,
@@ -529,20 +539,23 @@ const CreateBlog = ({ blogData }) => {
                     accept="image/*"
                     style={{ display: 'none' }}
                     id="ImageUpload"
-                    onChange={async (e) => {
-                      // const { name, value } = e.target;
-                      if (e.target.name === 'image') {
-                        await setAvatarPreview(URL.createObjectURL(e.target.files[0]));
-                        await setImage(e.target.files[0]);
-                      }
-                      console.log('HandleImage Called', isUpdate);
-                      console.log('HandleImage Called 2', image);
-                      console.log('HandleImage Called 3', avatarPreview);
-                      if (isUpdate) {
-                        if (image && image != undefined) {
-                          await doUploadImageUpload(blogId);
-                        }
-                      }
+                    onChange={(e) => {
+                      console.log(e.target.files[0]);
+                      handleImageUpload(e.target.files[0]);
+                      setAvatarPreview(URL.createObjectURL(e.target.files[0]));
+                      // // const { name, value } = e.target;
+                      // if (e.target.name === 'image') {
+                      //   await setAvatarPreview(URL.createObjectURL(e.target.files[0]));
+                      //   await setImage(e.target.files[0]);
+                      // }
+                      // console.log('HandleImage Called', isUpdate);
+                      // console.log('HandleImage Called 2', image);
+                      // console.log('HandleImage Called 3', avatarPreview);
+                      // if (isUpdate) {
+                      //   if (image && image != undefined) {
+                      //     await doUploadImageUpload(blogId);
+                      //   }
+                      // }
                     }}
                   />
                 </div>
@@ -601,7 +614,7 @@ const CreateBlog = ({ blogData }) => {
                     <h4>Select Subcategory</h4>
                     <Select
                       styles={customStyles}
-                      placeholder="Select Category"
+                      placeholder="Select Subcategory"
                       value={{
                         label: CategoryIdDropdown ? CategoryIdDropdown : 'Select Category',
                         value: CategoryValueDropdown,
