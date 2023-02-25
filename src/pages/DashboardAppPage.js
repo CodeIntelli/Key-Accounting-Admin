@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { Link, useNavigate, useNavigation } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import { Helmet } from 'react-helmet-async';
-import { faker } from '@faker-js/faker';
+
 // @mui
 import { useTheme } from '@mui/material/styles';
 import { Grid, Container, Typography } from '@mui/material';

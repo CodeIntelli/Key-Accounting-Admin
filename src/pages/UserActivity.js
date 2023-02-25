@@ -1,6 +1,6 @@
 /* eslint-disable */
 import { Helmet } from 'react-helmet-async';
-import { faker } from '@faker-js/faker';
+
 // @mui
 import { Grid, Container } from '@mui/material';
 import { useParams } from 'react-router-dom';
