@@ -62,10 +62,6 @@ export default function ActivityPage() {
       url: 'partner',
     },
     {
-      title: 'Carrier Apply Page',
-      url: 'carrierapply',
-    },
-    {
       title: 'Carrier',
       url: 'carrier',
     },

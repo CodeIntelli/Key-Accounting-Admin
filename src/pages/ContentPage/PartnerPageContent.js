@@ -187,7 +187,7 @@ const PartnerPageContent = () => {
                     />
                     <TextField
                       name="title"
-                      label="Sub Title"
+                      label="Main Image"
                       value={amainImg}
                       style={{ margin: '10px' }}
                       onChange={(e) => {
@@ -273,13 +273,14 @@ const PartnerPageContent = () => {
                           csettitle(e.target.value);
                         }}
                       />
+                      <h3>Card Section</h3>
                       {cdata.map((cardData, index) => {
                         return (
                           <>
                             {index === 0 ? '' : <Divider style={{ marginTop: '18px' }} />}
                             <TextField
                               name="email"
-                              label="Title"
+                              label={`Card Title ${index + 1}`}
                               style={{ width: '100%', marginTop: '24px' }}
                               value={cardData.title}
                               onChange={(e) => {
@@ -291,7 +292,7 @@ const PartnerPageContent = () => {
                             />
                             <TextField
                               name="email"
-                              label="Image"
+                              label={`Image ${index + 1}`}
                               style={{ width: '100%', marginTop: '24px' }}
                               value={cardData.img}
                               onChange={(e) => {

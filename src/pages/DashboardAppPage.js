@@ -109,7 +109,7 @@ export default function DashboardAppPage() {
             </Grid>
             <Grid item xs={12} sm={6} md={3}>
               <Link to={'/dashboard/checklist'}>
-                <AppWidgetSummary title="Total Checklist" color="info" icon={'material-symbols:checklist'} />
+                <AppWidgetSummary title="Checklist" color="info" icon={'material-symbols:checklist'} />
               </Link>
             </Grid>
             <Grid item xs={12} sm={6} md={3}>
@@ -125,6 +125,15 @@ export default function DashboardAppPage() {
             <Grid item xs={12} sm={6} md={3}>
               <Link to={'/dashboard/featured/blog'}>
                 <AppWidgetSummary title="Featured Blog" color="success" icon={'mdi:feature-highlight'} />
+              </Link>
+            </Grid>
+            <Grid item xs={12} sm={6} md={3}>
+              <Link to={'/dashboard/become-our-partner-list'}>
+                <AppWidgetSummary
+                  title="Become Our Partner User List"
+                  color="info"
+                  icon={'material-symbols:checklist'}
+                />
               </Link>
             </Grid>
           </Grid>

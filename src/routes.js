@@ -63,6 +63,7 @@ import RentalServicesAccounting from './pages/ContentPage/Industries/RentalServi
 import RestaurantAccounting from './pages/ContentPage/Industries/RestaurantAccounting';
 import FeaturedBlog from './pages/FeaturedBlog';
 import ActivityCardList from './pages/ActivityCardList';
+import BpartnerContact from './pages/BpartnerContact';
 
 // ----------------------------------------------------------------------
 
@@ -119,6 +120,7 @@ export default function Router() {
         { path: 'blog', element: <BlogPage /> },
         { path: 'featured/blog', element: <FeaturedBlog /> },
         { path: 'activity', element: <ActivityCardList /> },
+        { path: 'become-our-partner-list', element: <BpartnerContact /> },
         { path: 'activity/:id', element: <UserActivityPage /> },
         { path: 'checklist', element: <ChecklistPage /> },
         { path: 'ebook', element: <EbookPage /> },

@@ -247,7 +247,7 @@ const ContactPageContent = () => {
                               name="email"
                               label="Title"
                               style={{ width: '100%', marginTop: '24px' }}
-                              value={cardData.title}
+                              value={cardData?.title}
                               onChange={(e) => {
                                 const value = e.target.value;
                                 const dta = [...cdata];
@@ -259,11 +259,23 @@ const ContactPageContent = () => {
                               name="email"
                               label="Image"
                               style={{ width: '100%', marginTop: '24px' }}
-                              value={cardData.img}
+                              value={cardData?.img}
                               onChange={(e) => {
                                 const value = e.target.value;
                                 const dta = [...cdata];
                                 dta[index].img = value;
+                                bsetdata(dta);
+                              }}
+                            />
+                            <TextField
+                              name="email"
+                              label="Description"
+                              style={{ width: '100%', marginTop: '24px' }}
+                              value={cardData?.desc}
+                              onChange={(e) => {
+                                const value = e.target.value;
+                                const dta = [...cdata];
+                                dta[index].desc = value;
                                 bsetdata(dta);
                               }}
                             />

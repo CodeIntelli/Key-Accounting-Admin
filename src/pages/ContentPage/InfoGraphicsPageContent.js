@@ -156,7 +156,7 @@ const InfographicPageContent = () => {
                     />
                     <TextField
                       name="title"
-                      label="Txt"
+                      label="Button Text"
                       value={abtnTxt}
                       style={{ margin: '10px' }}
                       onChange={(e) => {

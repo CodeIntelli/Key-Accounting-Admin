@@ -693,7 +693,7 @@ export default function SubCategoriesPage() {
                         }}
                         onClick={() => handleUpdate()}
                       >
-                        Edit Category
+                        Edit Subcategory
                       </LoadingButton>
                     )}
                   </div>

@@ -329,34 +329,7 @@ const OurStoryPageContent = () => {
                             bsettitle(e.target.value);
                           }}
                         />
-                        {/*  <TextField
-                          name="email"
-                          label="Description 1"
-                          style={{ width: '100%', marginTop: '24px' }}
-                          value={bdesc}
-                          onChange={(e) => {
-                            bsetdesc(e.target.value);
-                          }}
-                        />
 
-                         <TextField
-                          name="email"
-                          label="Description 2"
-                          style={{ width: '100%', marginTop: '24px' }}
-                          value={bdesc1}
-                          onChange={(e) => {
-                            bsetdesc1(e.target.value);
-                          }}
-                        />
-                        <TextField
-                          name="email"
-                          label="Description 3"
-                          style={{ width: '100%', marginTop: '24px' }}
-                          value={bdesc2}
-                          onChange={(e) => {
-                            bsetdesc2(e.target.value);
-                          }}
-                        /> */}
                         <TextField
                           name="email"
                           label="Main image"
@@ -368,7 +341,7 @@ const OurStoryPageContent = () => {
                         />
                         <TextField
                           name="email"
-                          label="Main image"
+                          label="Button Text"
                           style={{ width: '100%', marginTop: '24px' }}
                           value={bbtnTxt}
                           onChange={(e) => {
@@ -377,7 +350,7 @@ const OurStoryPageContent = () => {
                         />
                         <TextField
                           name="email"
-                          label="Main image"
+                          label="Main Url"
                           style={{ width: '100%', marginTop: '24px' }}
                           value={bbtnUrl}
                           onChange={(e) => {
@@ -415,28 +388,9 @@ const OurStoryPageContent = () => {
                           gridTemplateColumns: { xs: 'repeat(1, 1fr)', sm: 'repeat(2, 1fr)' },
                         }}
                       >
-                        {/* <TextField
-                          name="email"
-                          label="Title"
-                          style={{ width: '100%', marginTop: '24px' }}
-                          value={cdesc}
-                          onChange={(e) => {
-                            csetdesc(e.target.value);
-                          }}
-                        />
-                         <TextField
-                          name="email"
-                          label="Main Title"
-                          style={{ width: '100%', marginTop: '24px' }}
-                          value={cdesc1}
-                          onChange={(e) => {
-                            csetdesc1(e.target.value);
-                          }}
-                        /> */}
-
                         <TextField
                           name="email"
-                          label="Description"
+                          label="Title"
                           style={{ width: '100%', marginTop: '24px' }}
                           value={ctitle}
                           onChange={(e) => {
@@ -445,7 +399,7 @@ const OurStoryPageContent = () => {
                         />
                         <TextField
                           name="email"
-                          label="Description"
+                          label="Sub Title"
                           style={{ width: '100%', marginTop: '24px' }}
                           value={csubtitle}
                           onChange={(e) => {
@@ -494,7 +448,7 @@ const OurStoryPageContent = () => {
                       />
                       <TextField
                         name="email"
-                        label="Title"
+                        label="Title 2"
                         style={{ width: '100%', marginTop: '24px' }}
                         value={dTitle2}
                         onChange={(e) => {
@@ -512,7 +466,7 @@ const OurStoryPageContent = () => {
                       />
                       <TextField
                         name="email"
-                        label="Sub title"
+                        label="Sub title 2"
                         style={{ width: '100%', marginTop: '24px' }}
                         value={dsubtitle2}
                         onChange={(e) => {
@@ -521,7 +475,7 @@ const OurStoryPageContent = () => {
                       />
                       <TextField
                         name="email"
-                        label="Sub title"
+                        label="Button Text"
                         style={{ width: '100%', marginTop: '24px' }}
                         value={dbtnTxt}
                         onChange={(e) => {
@@ -530,7 +484,7 @@ const OurStoryPageContent = () => {
                       />
                       <TextField
                         name="email"
-                        label="Sub title"
+                        label="Button Routes"
                         style={{ width: '100%', marginTop: '24px' }}
                         value={droutes}
                         onChange={(e) => {
@@ -608,7 +562,7 @@ const OurStoryPageContent = () => {
                               />
                               <TextField
                                 name="email"
-                                label={`Card Image ${index + 1}`}
+                                label={`Card Subtitle ${index + 1}`}
                                 style={{ width: '100%', marginTop: '24px' }}
                                 value={cardData.subTitle}
                                 onChange={(e) => {
@@ -693,7 +647,7 @@ const OurStoryPageContent = () => {
                               />
                               <TextField
                                 name="email"
-                                label={`Card Image ${index + 1}`}
+                                label={`Card Subtitle ${index + 1}`}
                                 style={{ width: '100%', marginTop: '24px' }}
                                 value={cardData.subtitle}
                                 onChange={(e) => {

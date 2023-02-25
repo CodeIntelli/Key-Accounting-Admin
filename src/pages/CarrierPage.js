@@ -231,7 +231,7 @@ export default function CarrierPage() {
   return (
     <>
       <Helmet>
-        <title> Carrier | Key CMS Accounting </title>
+        <title> Careers User List | Key CMS Accounting </title>
       </Helmet>
       {isLoading ? (
         <LoadingAnimation />
@@ -240,7 +240,7 @@ export default function CarrierPage() {
           <Container>
             <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
               <Typography variant="h4" gutterBottom>
-                Career
+                Careers User List
               </Typography>
               <Link to={'/dashboard/carrier/new'}>
                 <Button

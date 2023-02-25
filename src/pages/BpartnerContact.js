@@ -59,7 +59,7 @@ const TABLE_HEAD = [
   { id: '' },
 ];
 
-export default function UserPage() {
+export default function BpartnerContact() {
   const [allUserList, setAllUserList] = useState();
   const [filterData, setFilterData] = useState();
   const [isLoading, setIsLoading] = useState(true);
@@ -75,7 +75,7 @@ export default function UserPage() {
         ? localStorage.getItem('x-access-token')
         : null;
 
-      const { data } = await axios.get(`${BASE_URL}user/auth/contact?type=contact`, {
+      const { data } = await axios.get(`${BASE_URL}user/auth/contact?type=partner`, {
         headers: {
           authorization: `Bearer ${bearerToken}`,
         },
@@ -118,7 +118,7 @@ export default function UserPage() {
   return (
     <>
       <Helmet>
-        <title> Feedback | Key CMS Accounting </title>
+        <title> Become Our Partner User List | Key CMS Accounting </title>
       </Helmet>
       {isLoading ? (
         <LoadingAnimation />
@@ -127,7 +127,7 @@ export default function UserPage() {
           <Container>
             <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
               <Typography variant="h4" gutterBottom>
-                List Of User Who Filled Contact Form
+                Become Our Partner User List
               </Typography>
             </Stack>
 
