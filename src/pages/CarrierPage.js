@@ -240,7 +240,7 @@ export default function CarrierPage() {
           <Container>
             <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
               <Typography variant="h4" gutterBottom>
-                Carrier
+                Career
               </Typography>
               <Link to={'/dashboard/carrier/new'}>
                 <Button

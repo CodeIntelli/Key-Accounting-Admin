@@ -602,7 +602,7 @@ const CreateBlog = ({ blogData }) => {
                     <h4>Select Subcategory</h4>
                     <Select
                       styles={customStyles}
-                      placeholder="Select Category"
+                      placeholder="Select Subcategory"
                       value={{
                         label: CategoryIdDropdown ? CategoryIdDropdown : 'Select Category',
                         value: CategoryValueDropdown,
