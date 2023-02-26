@@ -64,6 +64,7 @@ import RestaurantAccounting from './pages/ContentPage/Industries/RestaurantAccou
 import FeaturedBlog from './pages/FeaturedBlog';
 import ActivityCardList from './pages/ActivityCardList';
 import BpartnerContact from './pages/BpartnerContact';
+import ResetPassword from './pages/ResetPassword';
 
 // ----------------------------------------------------------------------
 
@@ -152,6 +153,10 @@ export default function Router() {
     {
       path: 'login',
       element: <LoginPage />,
+    },
+    {
+      path: 'password/reset/:token',
+      element: <ResetPassword />,
     },
     {
       element: <SimpleLayout />,

@@ -192,7 +192,6 @@ export default function UserPage() {
               <Scrollbar>
                 <TableContainer sx={{ minWidth: 800 }}>
                   <Table>
-                    {console.log(filterData, '<==========================================')}
                     {filterData && filterData.length == 0 ? (
                       <NoRecordFound />
                     ) : (

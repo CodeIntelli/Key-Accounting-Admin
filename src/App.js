@@ -24,9 +24,11 @@ export default function App() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
+  debugger;
   const redirect = location.pathname ? location.pathname.split('=')[1] : '/dashboard/app';
+  debugger;
   React.useEffect(() => {
-    if (!isLoading && error) {
+    if (!isLoading && error && !location.pathname.includes('password/reset')) {
       const errMsg =
         error.includes('JsonWebTokenError') || error.includes('TokenExpiredError') ? 'Session Time Out' : error;
       if (Cookies.get('x-access-token') || localStorage.getItem('x-access-token')) {
