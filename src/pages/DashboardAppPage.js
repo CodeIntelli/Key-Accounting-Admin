@@ -99,7 +99,7 @@ export default function DashboardAppPage() {
             </Grid>
             <Grid item xs={12} sm={6} md={3}>
               <Link to={'/dashboard/carrier'}>
-                <AppWidgetSummary title="Carrier" color="error" icon={'mdi:resume'} />
+                <AppWidgetSummary title="Career" color="error" icon={'mdi:resume'} />
               </Link>
             </Grid>
             <Grid item xs={12} sm={6} md={3}>
