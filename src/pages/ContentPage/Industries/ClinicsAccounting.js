@@ -634,16 +634,17 @@ const ServicePageContent = () => {
                       />
                       <TextField
                         name="email"
-                        label="Sub title"
+                        label="Main Images Link"
                         style={{ width: '100%', marginTop: '24px' }}
                         value={emainImg}
                         onChange={(e) => {
                           esetmainImg(e.target.value);
                         }}
                       />
+                      /*{' '}
                       <TextField
                         name="email"
-                        label="Sub title"
+                        label="Main button"
                         style={{ width: '100%', marginTop: '24px' }}
                         value={emainBtn}
                         onChange={(e) => {
@@ -658,7 +659,8 @@ const ServicePageContent = () => {
                         onChange={(e) => {
                           esetmainBtnRoute(e.target.value);
                         }}
-                      />
+                      />{' '}
+                      */
                       {eData.map((cardData, index) => {
                         return (
                           <>
