@@ -255,9 +255,9 @@ const NavbarPageContent = () => {
                                 value={cardData.title}
                                 onChange={(e) => {
                                   const value = e.target.value;
-                                  const dta = [...aboutdata];
+                                  const dta = [...servicedata];
                                   dta[index].title = value;
-                                  setaboutdata(dta);
+                                  setservicedata(dta);
                                 }}
                               />
                               <TextField
@@ -267,9 +267,9 @@ const NavbarPageContent = () => {
                                 value={cardData.url}
                                 onChange={(e) => {
                                   const value = e.target.value;
-                                  const dta = [...aboutdata];
+                                  const dta = [...servicedata];
                                   dta[index].url = value;
-                                  setaboutdata(dta);
+                                  setservicedata(dta);
                                 }}
                               />
                             </Box>

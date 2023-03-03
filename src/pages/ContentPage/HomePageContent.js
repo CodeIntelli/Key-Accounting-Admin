@@ -609,7 +609,7 @@ const HomePageContent = () => {
                                   console.log(cardData, cimgData);
                                   let value = e.target.value;
                                   let dta = [...cimgData];
-                                  dta[index].subTitle = value;
+                                  dta[index].img = value;
                                   csetimgData(dta);
                                   // csetimgData[index].img(e.target.value);
                                 }}
