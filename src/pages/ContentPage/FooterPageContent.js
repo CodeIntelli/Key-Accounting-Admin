@@ -290,11 +290,11 @@ const FooterPageContent = () => {
                                 name="email"
                                 label="Routes"
                                 style={{ width: '100%', marginTop: '24px' }}
-                                value={cardData.url}
+                                value={cardData.routes}
                                 onChange={(e) => {
                                   const value = e.target.value;
                                   const dta = [...bdata];
-                                  dta[index].url = value;
+                                  dta[index].routes = value;
                                   setbdata(dta);
                                 }}
                               />
@@ -355,11 +355,11 @@ const FooterPageContent = () => {
                                 name="email"
                                 label="Routes"
                                 style={{ width: '100%', marginTop: '24px' }}
-                                value={cardData.url}
+                                value={cardData.routes}
                                 onChange={(e) => {
                                   const value = e.target.value;
                                   const dta = [...cdata];
-                                  dta[index].url = value;
+                                  dta[index].routes = value;
                                   setcdata(dta);
                                 }}
                               />
@@ -420,11 +420,11 @@ const FooterPageContent = () => {
                                 name="email"
                                 label="Routes"
                                 style={{ width: '100%', marginTop: '24px' }}
-                                value={cardData.url}
+                                value={cardData.routes}
                                 onChange={(e) => {
                                   const value = e.target.value;
                                   const dta = [...ddata];
-                                  dta[index].url = value;
+                                  dta[index].routes = value;
                                   setddata(dta);
                                 }}
                               />
@@ -485,11 +485,11 @@ const FooterPageContent = () => {
                                 name="email"
                                 label="Routes"
                                 style={{ width: '100%', marginTop: '24px' }}
-                                value={cardData.url}
+                                value={cardData.routes}
                                 onChange={(e) => {
                                   const value = e.target.value;
                                   const dta = [...edata];
-                                  dta[index].url = value;
+                                  dta[index].routes = value;
                                   setedata(dta);
                                 }}
                               />
