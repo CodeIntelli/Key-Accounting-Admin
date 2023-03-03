@@ -257,7 +257,7 @@ const NavbarPageContent = () => {
                                   const value = e.target.value;
                                   const dta = [...aboutdata];
                                   dta[index].title = value;
-                                  setaboutdata(dta);
+                                  setservicedata(dta);
                                 }}
                               />
                               <TextField
@@ -269,7 +269,7 @@ const NavbarPageContent = () => {
                                   const value = e.target.value;
                                   const dta = [...aboutdata];
                                   dta[index].url = value;
-                                  setaboutdata(dta);
+                                  setservicedata(dta);
                                 }}
                               />
                             </Box>
