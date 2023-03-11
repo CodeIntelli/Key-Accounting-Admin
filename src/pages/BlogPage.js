@@ -177,15 +177,17 @@ export default function BlogPage() {
 
           <Grid container spacing={3}>
             {allBlog &&
-              allBlog.map((post, index) => (
-                <BlogPostCard
-                  key={post._id}
-                  post={post}
-                  index={index}
-                  blogToggler={blogToggler}
-                  deleteBlog={deleteBlog}
-                />
-              ))}
+              allBlog.map((post, index) => {
+                return (
+                  <BlogPostCard
+                    key={index}
+                    post={post}
+                    index={index}
+                    blogToggler={blogToggler}
+                    deleteBlog={deleteBlog}
+                  />
+                );
+              })}
           </Grid>
         </Container>
       )}
@@ -205,17 +207,17 @@ export default function BlogPage() {
               <Grid container spacing={3}>
                 <Grid item xs={12} sm={6} md={4}>
                   <Link to={'/dashboard/category'}>
-                    <AppWidgetSummary title="Categories" color="info" small={true} icon="eva:plus-fill" />
+                    <AppWidgetSummary title="Categories" color="info" small={'true'} icon="eva:plus-fill" />
                   </Link>
                 </Grid>
                 <Grid item xs={12} sm={6} md={4}>
                   <Link to={'/dashboard/subcategory'}>
-                    <AppWidgetSummary title="Sub Categories" color="success" small={true} icon="eva:plus-fill" />
+                    <AppWidgetSummary title="Sub Categories" color="success" small={'true'} icon="eva:plus-fill" />
                   </Link>
                 </Grid>
                 <Grid item xs={12} sm={6} md={4}>
                   <Link to={'/dashboard/addblog'}>
-                    <AppWidgetSummary title="Blog" color="warning" small={true} icon="eva:plus-fill" />
+                    <AppWidgetSummary title="Blog" color="warning" small={'true'} icon="eva:plus-fill" />
                   </Link>
                 </Grid>
               </Grid>

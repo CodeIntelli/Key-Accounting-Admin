@@ -315,7 +315,7 @@ const Createchecklist = () => {
       setfileSuccess(true);
     } else {
       setFileErrMessage('File Not Supported');
-      setFileSuccess(false);
+      setfileSuccess(false);
     }
   };
 

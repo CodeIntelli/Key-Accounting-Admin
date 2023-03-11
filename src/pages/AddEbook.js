@@ -287,7 +287,7 @@ const Createebook = () => {
       setfileSuccess(true);
     } else {
       setFileErrMessage('File Not Supported');
-      setFileSuccess(false);
+      setfileSuccess(false);
     }
   };
 
