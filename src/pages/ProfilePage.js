@@ -97,15 +97,18 @@ const ProfilePage = () => {
     } else if (!isLoading && isAuthenticated) {
       dispatch(loadUser());
     }
-    if (!isLoading && isAuthenticated && user) {
+    if (!isLoading && isAuthenticated) {
       setFetchData(user);
-      setAvatarPreview(user?.profileImg.url);
+      if (user.profileImg) {
+        setAvatarPreview(user?.profileImg?.url);
+      }
     }
   }, [error, dispatch]);
 
   const [avatarPreview, setAvatarPreview] = useState('/assets/images/avatars/avatar_18.jpg');
 
   const [fetchData, setFetchData] = useState();
+  console.log('🤩 ~ file: ProfilePage.js:109 ~ ProfilePage ~ fetchData:', fetchData);
 
   const responseData = [
     {
@@ -246,8 +249,8 @@ const ProfilePage = () => {
                                   width: '100%',
                                 }}
                               >
-                                <h3>{result.title}</h3>
-                                <p style={contentDesign}>{result.content}</p>
+                                <h3>{result?.title}</h3>
+                                <p style={contentDesign}>{result?.content}</p>
                               </div>
                             );
                           })}
