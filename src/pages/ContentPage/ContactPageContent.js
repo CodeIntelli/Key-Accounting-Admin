@@ -252,7 +252,7 @@ const ContactPageContent = () => {
                                 const value = e.target.value;
                                 const dta = [...cdata];
                                 dta[index].title = value;
-                                bsetdata(dta);
+                                csetdata(dta);
                               }}
                             />
                             <TextField
@@ -264,7 +264,7 @@ const ContactPageContent = () => {
                                 const value = e.target.value;
                                 const dta = [...cdata];
                                 dta[index].img = value;
-                                bsetdata(dta);
+                                csetdata(dta);
                               }}
                             />
                             <TextField
@@ -276,7 +276,7 @@ const ContactPageContent = () => {
                                 const value = e.target.value;
                                 const dta = [...cdata];
                                 dta[index].desc = value;
-                                bsetdata(dta);
+                                csetdata(dta);
                               }}
                             />
                           </>
