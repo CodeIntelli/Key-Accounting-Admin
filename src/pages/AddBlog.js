@@ -116,6 +116,7 @@ const CreateBlog = ({ blogData }) => {
   const [releventBlogTwoId, setreleventBlogTwoId] = useState();
   const [releventBlogThreeId, setreleventBlogThreeId] = useState();
   const [releventBlogFourId, setreleventBlogFourId] = useState();
+  const [catTitle, setCatTitle] = useState('');
 
   /* Modal States */
   const [open, setOpen] = React.useState(false);
@@ -168,7 +169,7 @@ const CreateBlog = ({ blogData }) => {
         data?.result.map((mapdata) => {
           if (mapdata.isActive) {
             return dropDownData.push({
-              name: '',
+              name: mapdata?.categories?.catTitle,
               label: mapdata.subTitle,
               value: mapdata._id,
             });
@@ -397,7 +398,7 @@ const CreateBlog = ({ blogData }) => {
     //   '🤩 ~ =========================================file: AddBlog.js:270 ~ setUpdateData ~ updatedData',
     //   updatedData
     // );
-    // debugger;
+    debugger;
     setpostTitle(postTitle);
     setpostDesc(metaDesc);
     setcontent(content);
@@ -409,6 +410,7 @@ const CreateBlog = ({ blogData }) => {
     setmetaKeyword(updatedData.metaKeyword.toString());
     setCategoryIdDropdown(subCategory.subTitle);
     setCategoryValueDropdown(subCategory._id);
+    setCatTitle(updatedData?.categoryTitle);
     // console.log(updatedData.ReleventBlog[0]);
     setreleventBlogOneId(updatedData.ReleventBlog[0] ? updatedData.ReleventBlog[0]._id : null);
     setreleventBlogOne(updatedData.ReleventBlog[0] ? updatedData.ReleventBlog[0].postTitle : null);
@@ -621,6 +623,7 @@ const CreateBlog = ({ blogData }) => {
                       }}
                       options={catData}
                       onChange={(e) => {
+                        setCatTitle(e.name);
                         handleDropdown(e);
                       }}
                     />
@@ -630,6 +633,11 @@ const CreateBlog = ({ blogData }) => {
                         Add new one
                       </Link>
                     </p>
+                    {catTitle && (
+                      <p style={{ marginLeft: '5px', color: '#71b071' }}>
+                        <span style={{ fontWeight: 'bolder' }}>Selected Category :</span> {catTitle}
+                      </p>
+                    )}
                   </div>
                   <div styles={{ padding: '50px' }}>
                     <h4>Select Relevent Blog 1</h4>
@@ -720,7 +728,6 @@ const CreateBlog = ({ blogData }) => {
                     value={metaTitle}
                     onChange={(e) => setmetaTitle(e.target.value)}
                   />
-
                   <TextField
                     id="outlined-content"
                     label="Meta Keywords"
