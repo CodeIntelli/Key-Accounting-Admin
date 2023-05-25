@@ -400,17 +400,18 @@ const CreateBlog = ({ blogData }) => {
     // );
     debugger;
     setisUpdate(true);
+    setBlogId(_id);
     setpostTitle(postTitle);
     setpostDesc(metaDesc);
     setcontent(content);
     setpost_slug(postTitle);
-    setAvatarPreview(thumbImage.url);
+    setAvatarPreview(thumbImage?.url);
     // settags(tags.toString());
-    setmetaTitle(updatedData.metaTitle);
-    setmetaDesc(updatedData.metaDesc);
-    setmetaKeyword(updatedData.metaKeyword.toString());
-    setCategoryIdDropdown(subCategory.subTitle);
-    setCategoryValueDropdown(subCategory._id);
+    setmetaTitle(updatedData?.metaTitle);
+    setmetaDesc(updatedData?.metaDesc);
+    setmetaKeyword(updatedData?.metaKeyword.toString());
+    setCategoryIdDropdown(subCategory?.subTitle);
+    setCategoryValueDropdown(subCategory?._id);
     setCatTitle(updatedData?.categoryTitle);
     // console.log(updatedData.ReleventBlog[0]);
     setreleventBlogOneId(updatedData.ReleventBlog[0] ? updatedData.ReleventBlog[0]._id : null);
@@ -424,7 +425,6 @@ const CreateBlog = ({ blogData }) => {
     setreleventBlogFourId(updatedData.ReleventBlog[3] ? updatedData.ReleventBlog[3]._id : null);
     setreleventBlogFour(updatedData.ReleventBlog[3] ? updatedData.ReleventBlog[3].postTitle : null);
     // console.log(updatedData.ReleventBlog[3]);
-    setBlogId(_id);
   };
 
   const handleImageUpload = async (e) => {
