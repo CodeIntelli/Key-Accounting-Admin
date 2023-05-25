@@ -399,6 +399,7 @@ const CreateBlog = ({ blogData }) => {
     //   updatedData
     // );
     debugger;
+    setisUpdate(true);
     setpostTitle(postTitle);
     setpostDesc(metaDesc);
     setcontent(content);
@@ -424,7 +425,6 @@ const CreateBlog = ({ blogData }) => {
     setreleventBlogFour(updatedData.ReleventBlog[3] ? updatedData.ReleventBlog[3].postTitle : null);
     // console.log(updatedData.ReleventBlog[3]);
     setBlogId(_id);
-    setisUpdate(true);
   };
 
   const handleImageUpload = async (e) => {
