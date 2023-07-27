@@ -281,13 +281,30 @@ const Createebook = () => {
   const [attachment, setAttachment] = useState();
   const checkfiles = (fileData) => {
     console.log('=============================', fileData[0]?.name, fileData[0]?.type);
-    if (fileData[0]?.name.split('.').pop() == 'pdf') {
+    const file = fileData[0];
+    if (!file) {
+      errorToast('Please select a file to upload.');
+      return;
+    }
+
+    const fileSizeInMB = file.size / (1024 * 1024); // Convert bytes to megabytes
+    const maxSizeMB = 10;
+    if (fileSizeInMB >= maxSizeMB) {
+      errorToast('File size exceeds 10MB. Please choose a smaller file.');
+      setFileErrMessage('File size exceeds 10MB. Please choose a smaller file.');
+      setfileSuccess(false);
+      // Clear the file input if needed
+      // fileData = null;
+    } else if (!file.type.includes('pdf')) {
+      errorToast('Only PDF files are allowed. Please choose a PDF file.');
+      setFileErrMessage('Only PDF files are allowed. Please choose a PDF file.');
+      setfileSuccess(false);
+      // Clear the file input if needed
+      // fileData = null;
+    } else {
       setFiles(fileData);
       setAttachment(fileData[0]);
       setfileSuccess(true);
-    } else {
-      setFileErrMessage('File Not Supported');
-      setfileSuccess(false);
     }
   };
 
